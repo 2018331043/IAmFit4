@@ -3,8 +3,11 @@ package com.example.iamfit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,56 +20,48 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    EditText emailid,pass;
-    TextView text;
-    Button button;
-    FirebaseAuth mAuth;
+    Saver saver=new Saver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_up_main);
-        emailid =findViewById(R.id.Mail2);
-        pass =findViewById(R.id.pass2);
-        button=findViewById(R.id.button2);
-        mAuth=FirebaseAuth.getInstance();
-        text=findViewById(R.id.textView3);
-        button.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.starting_layout);
+        SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
 
-            @Override
-            public void onClick(View view) {
-                String email= emailid.getText().toString();
-                String pwd=pass.getText().toString();
-                if(email.isEmpty()){
-                    emailid.setError("Please Enter A valid email Id");
-                    emailid.requestFocus();
-                }
-                else if(pwd.isEmpty()){
-                    pass.setError("Please Enter a password");
-                    pass.requestFocus();
-                }
-                else if(!pwd.isEmpty()&&!email.isEmpty()){
-                    mAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                startActivity(new Intent(MainActivity.this,HomeActivity.class));
-                            }
-                            else{
-                                Toast.makeText(MainActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(MainActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT).show();
-                }
+        if(sharedPreferences.contains("In")) {
+            String info = sharedPreferences.getString("In", "No value");
+            Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
+            if (info.equals("1")) {
+                // Toast.makeText(MainActivity.this,"You are logged in",Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(i);
+                    }
+                }, 2000);
+            } else {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(i);
+                    }
+                }, 2000);
             }
-        });
-        text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
-            }
-        });
+        }
+        else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Intent i = new Intent(MainActivity.this, SignUpActivity.class);
+                    startActivity(i);
+                }
+            }, 2000);
+        }
     }
+
 }
+

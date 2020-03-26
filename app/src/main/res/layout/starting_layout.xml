@@ -7,28 +7,28 @@
     tools:context=".HomeActivity">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="375dp"
+        android:layout_marginTop="500dp"
         android:layout_marginBottom="337dp"
-        android:text="Welcome To the app"
+        android:text="Your Personal HealthCare System."
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/logoutbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="289dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="38dp"
-        android:text="Log Out"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="354dp"
+        android:layout_height="307dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="127dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/startingpic" />
 </androidx.constraintlayout.widget.ConstraintLayout>
