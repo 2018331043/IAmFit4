@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(new Intent(MainActivity.this,HomeActivity.class));
                             }
                             else{
-                                Toast.makeText(MainActivity.this,"SignUp Unsuccesful 1",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

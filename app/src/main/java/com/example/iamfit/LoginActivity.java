@@ -31,10 +31,11 @@ public class LoginActivity extends AppCompatActivity {
         mAuth2= FirebaseAuth.getInstance();
         text2=findViewById(R.id.textView2);
         button2.setOnClickListener(new View.OnClickListener() {
-            String email= emailid2.getText().toString();
-            String pwd=pass2.getText().toString();
+
             @Override
             public void onClick(View view) {
+                String email= emailid2.getText().toString();
+                String pwd=pass2.getText().toString();
                 if(email.isEmpty()){
                     emailid2.setError("Please Enter a valid Email Id");
                    // emailid2.setError("mahin");
