@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     });
                 }
                 else{
-                    Toast.makeText(LoginActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT);
+                    Toast.makeText(LoginActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT).show();
                 }
             }
         });

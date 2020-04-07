@@ -17,22 +17,29 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText emailid,pass;
+    EditText emailid,pass,name,dateOfbirth,height,weight,gender;
     TextView text;
     Button button;
     FirebaseAuth mAuth;
-    //Saver saver=new Saver();
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_up_main);
-        emailid =findViewById(R.id.Mail2);
-        pass =findViewById(R.id.pass2);
-        button=findViewById(R.id.button2);
+        setContentView(R.layout.sign_up);
+        emailid =findViewById(R.id.email);
+        pass =findViewById(R.id.password);
+        button=findViewById(R.id.buttonSignup);
+        name=findViewById(R.id.name);
+        height=findViewById(R.id.height);
+        weight=findViewById(R.id.weight);
+        gender=findViewById(R.id.gender);
         mAuth= FirebaseAuth.getInstance();
         text=findViewById(R.id.textView3);
+        databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -56,7 +63,21 @@ public class SignUpActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putString("In","1");
                                 editor.commit();
-                                startActivity(new Intent(SignUpActivity.this,HomeActivity.class));
+                               // databaseReference=FirebaseDatabase.getInstance().getReference();
+                                String email= emailid.getText().toString();
+                                String gender1=gender.getText().toString();
+                                String weight1= weight.getText().toString();
+                                String height1=height.getText().toString();
+                                String name1=name.getText().toString();
+                                User info =new User(name1,email,height1,weight1);
+                                FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        startActivity(new Intent(SignUpActivity.this,HomeActivity.class));
+                                    }
+                                });
+
                             }
                             else{
                                 Toast.makeText(SignUpActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT).show();

@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     Saver saver=new Saver();
@@ -26,10 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.starting_layout);
         SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
-
         if(sharedPreferences.contains("In")) {
             String info = sharedPreferences.getString("In", "No value");
-            Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
             if (info.equals("1")) {
                 // Toast.makeText(MainActivity.this,"You are logged in",Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
