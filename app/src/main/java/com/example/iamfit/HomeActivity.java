@@ -8,18 +8,19 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
 
-
+    private ImageButton button;
     //Saver saver=new Saver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Button button=findViewById(R.id.logoutbutton);
+        button = (ImageButton)findViewById(R.id.imageButton9);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
