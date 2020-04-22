@@ -22,24 +22,49 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     Saver saver=new Saver();
+    FirebaseAuth mAuth2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.starting_layout);
+        mAuth2=FirebaseAuth.getInstance();
         SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
         if(sharedPreferences.contains("In")) {
             String info = sharedPreferences.getString("In", "No value");
+
             //Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
             if (info.equals("1")) {
                 // Toast.makeText(MainActivity.this,"You are logged in",Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
+                SharedPreferences sharedPreferences2=getSharedPreferences("Username", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences3=getSharedPreferences("Pass", Context.MODE_PRIVATE);
+                String email= sharedPreferences2.getString("Email", "No value");
+                String pwd = sharedPreferences3.getString("Pass", "No value");
+                mAuth2.signInWithEmailAndPassword(email,pwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void run() {
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
 
-                        Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(i);
+                                    Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(i);
+                                }
+                            }, 2000);
+                        }
+                        else{
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Intent i = new Intent(MainActivity.this, SignUpActivity.class);
+                                    startActivity(i);
+                                }
+                            }, 2000);
+                        }
                     }
-                }, 2000);
+                });
+
             } else {
                 new Handler().postDelayed(new Runnable() {
                     @Override

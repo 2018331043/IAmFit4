@@ -27,12 +27,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        emailid2 =findViewById(R.id.Mail);
-        pass2 =findViewById(R.id.pass);
-        button2=findViewById(R.id.button);
+        setContentView(R.layout.activity_login);
+        emailid2 =findViewById(R.id.Email);
+        pass2 =findViewById(R.id.Password);
+        button2=findViewById(R.id.LoginButton);
         mAuth2= FirebaseAuth.getInstance();
-        text2=findViewById(R.id.textView2);
+        text2=findViewById(R.id.textViewLoginSignUpMessage);
         button2.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -48,25 +48,35 @@ public class LoginActivity extends AppCompatActivity {
                     pass2.setError("Please Enter a password");
                     pass2.requestFocus();
                 }
-                else if(!(pwd.isEmpty()&&email.isEmpty())){
+                else if(!pwd.isEmpty()&&!email.isEmpty()){
                     mAuth2.signInWithEmailAndPassword(email,pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            String email2=emailid2.getText().toString();
+                            String pwd2=pass2.getText().toString();
                             if(!task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this,"SignIn Unsuccesful",Toast.LENGTH_SHORT);
+                                Toast.makeText(LoginActivity.this,"SignIn Unsuccesful",Toast.LENGTH_SHORT).show();
                             }
                             else{
                                 SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putString("In","1");
                                 editor.commit();
+                                SharedPreferences sharedPreferences2=getSharedPreferences("Username", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor2=sharedPreferences2.edit();
+                                editor2.putString("Email",email2);
+                                editor2.commit();
+                                SharedPreferences sharedPreferences3=getSharedPreferences("Pass", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor3=sharedPreferences3.edit();
+                                editor3.putString("Pass",pwd2);
+                                editor3.commit();
                                 startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                             }
                         }
                     });
                 }
                 else{
-                    Toast.makeText(LoginActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"SignIn 2 Unsuccesful",Toast.LENGTH_SHORT).show();
                 }
             }
         });

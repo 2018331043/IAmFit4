@@ -69,11 +69,21 @@ public class SignUpActivity extends AppCompatActivity {
                                 String weight1= weight.getText().toString();
                                 String height1=height.getText().toString();
                                 String name1=name.getText().toString();
-                                User info =new User(name1,email,height1,weight1);
+                                User info =new User(name1,email,height1,weight1,"0");
                                 FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        String email2= emailid.getText().toString();
+                                        String pwd2=pass.getText().toString();
+                                        SharedPreferences sharedPreferences2=getSharedPreferences("Username", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor2=sharedPreferences2.edit();
+                                        editor2.putString("Email",email2);
+                                        editor2.commit();
+                                        SharedPreferences sharedPreferences3=getSharedPreferences("Pass", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor3=sharedPreferences3.edit();
+                                        editor3.putString("Pass",pwd2);
+                                        editor3.commit();
                                         startActivity(new Intent(SignUpActivity.this,HomeActivity.class));
                                     }
                                 });
