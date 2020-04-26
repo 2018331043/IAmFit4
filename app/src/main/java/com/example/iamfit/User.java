@@ -3,7 +3,8 @@ package com.example.iamfit;
 import java.util.ArrayList;
 
 public class User {
-    private String Name,Email,height,weight,stepcount;
+    private String Name,Email,height,weight;
+    private int stepcount;
     //fuad
 
     //fuad
@@ -12,7 +13,7 @@ public class User {
 
     }
 
-    public User(String name, String email, String height, String weight, String stepcount) {
+    public User(String name, String email, String height, String weight, int stepcount) {
         Name = name;
         Email = email;
         this.height = height;
@@ -24,7 +25,7 @@ public class User {
         return Name;
     }
 
-    public String getStepcount() {
+    public int getStepcount() {
         return stepcount;
     }
 

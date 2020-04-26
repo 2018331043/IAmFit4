@@ -69,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 String weight1= weight.getText().toString();
                                 String height1=height.getText().toString();
                                 String name1=name.getText().toString();
-                                User info =new User(name1,email,height1,weight1,"0");
+                                User info =new User(name1,email,height1,weight1,0);
                                 FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +24,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class HomeActivity extends AppCompatActivity {
 
     private ImageButton button;
-    public TextView stepCount;
+    public TextView stepCount,distanceCount,calorieCount;
     public DatabaseReference databaseReference;
     public User currentUser;
-
+    private Integer stepcount =0,temp=0,temp2=0,temp1=0;
+    double previous_step=0;
+    public TextView textView;
+    public TextView textView0,textView1,textView2,dates;
+    public Calendar time;
+    public Date tstart;
+    public SimpleDateFormat sf;
+    public String sdate;
+    public Integer dat[]=new Integer[100];
 
 
     //Saver saver=new Saver();
@@ -38,15 +54,34 @@ public class HomeActivity extends AppCompatActivity {
         button = findViewById(R.id.imageButton9);
         stepCount=findViewById(R.id.textViewStepsCount);
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
-        //currentUser=new User("Name","Email","Height","Weight","999");
-        //currentUser=new User();
-
+        time=Calendar.getInstance();
+        tstart=time.getTime();
+        sf=new SimpleDateFormat("dd");
+        sdate=sf.format(tstart);
+        //dates=findViewById(R.id.textView4);
+       // dates.setText(sdate);
+        textView = findViewById(R.id.textViewStepsCount);
+        distanceCount=findViewById(R.id.textViewDistanceCount);
+        calorieCount=findViewById(R.id.textViewCalorieCount);
+        //textView0=findViewById(R.id.textView);
+        //textView1=findViewById(R.id.textView2);
+        //textView2=findViewById(R.id.textView3);
+        temp1=0;
+        temp1+=sdate.toCharArray()[1]-48;
+        temp1+=10*(sdate.toCharArray()[0]-48);
+        dat[temp1]=0;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User currentUser2=dataSnapshot.child(FirebaseAuth.getInstance().getUid()).getValue(User.class);
-                stepCount.setText(currentUser2.getStepcount());
-                Toast.makeText(HomeActivity.this,"Data Faillure",Toast.LENGTH_SHORT).show();
+                User currentUser2=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+
+                dat[temp1]=currentUser2.getStepcount();
+                stepCount.setText(dat[temp1].toString());
+                Float dis=dat[temp1]*.76f;
+                distanceCount.setText(dis.toString()+"m");
+                Float cal=dat[temp1]*.05f;
+                calorieCount.setText(cal.toString()+"cal");
+                //Toast.makeText(HomeActivity.this,"Data Faillure",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -54,6 +89,75 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        SensorManager sensorManager= (SensorManager) getSystemService(SENSOR_SERVICE);
+        final Sensor sensor =sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        final SensorEventListener stepCounter=new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                time=Calendar.getInstance();
+                tstart=time.getTime();
+                sf=new SimpleDateFormat("dd");
+                sdate=sf.format(tstart);
+                //dates=findViewById(R.id.textView4);
+                //dates.setText(sdate);
+                temp1=0;
+                temp1+=sdate.toCharArray()[1]-48;
+                temp1+=10*(sdate.toCharArray()[0]-48);
+                final float alpha = 0.8f;
+
+                // Isolate the force of gravity with the low-pass filter.
+                float gravity[]=new float[100];
+                float linear_acceleration[]=new float[100];
+                gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+                gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+                gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+
+                // Remove the gravity contribution with the high-pass filter.
+                linear_acceleration[0] = event.values[0] - gravity[0];
+                linear_acceleration[1] = event.values[1] - gravity[1];
+                linear_acceleration[2] = event.values[2] - gravity[2];
+                if(event!=null){
+
+                    Integer x1=(int)linear_acceleration[0];
+                    Integer y1=(int)linear_acceleration[1];
+                    Integer z1=(int)linear_acceleration[2];
+                    //textView0.setText(x1.toString());
+                    //textView1.setText(y1.toString());
+                    //textView2.setText(z1.toString());
+                    float x= linear_acceleration[0];
+                    float y= linear_acceleration[1];
+                    float z= linear_acceleration[2];
+                    double val=Math.sqrt(Math.abs((x*x)+(y*y)+(z*z)-50));
+                    temp2++;
+                    if(temp2>=10) {
+                        double stepdif=val-previous_step;
+                        if (stepdif > 6) {
+                            temp++;
+
+                        }
+                        if (temp >= 1) {
+
+                            dat[temp1]++;
+                            temp = 0;
+                            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepcount").setValue(dat[temp1]);
+                        }
+                        previous_step=val;
+                        //textView.setText(dat[temp1].toString());
+
+                        temp2=0;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+        sensorManager.registerListener(stepCounter,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+
+
         //stepCount.setText(currentUser.getStepcount());
         button.setOnClickListener(new View.OnClickListener() {
             @Override
