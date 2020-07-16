@@ -44,8 +44,6 @@ public class HomeActivity extends AppCompatActivity {
     public String sdate;
     public Integer dat[]=new Integer[100];
 
-
-    //Saver saver=new Saver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,14 +56,9 @@ public class HomeActivity extends AppCompatActivity {
         tstart=time.getTime();
         sf=new SimpleDateFormat("dd");
         sdate=sf.format(tstart);
-        //dates=findViewById(R.id.textView4);
-       // dates.setText(sdate);
         textView = findViewById(R.id.textViewStepsCount);
         distanceCount=findViewById(R.id.textViewDistanceCount);
         calorieCount=findViewById(R.id.textViewCalorieCount);
-        //textView0=findViewById(R.id.textView);
-        //textView1=findViewById(R.id.textView2);
-        //textView2=findViewById(R.id.textView3);
         temp1=0;
         temp1+=sdate.toCharArray()[1]-48;
         temp1+=10*(sdate.toCharArray()[0]-48);
@@ -158,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
         sensorManager.registerListener(stepCounter,sensor,SensorManager.SENSOR_DELAY_NORMAL);
 
 
-        //stepCount.setText(currentUser.getStepcount());
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
