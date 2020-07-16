@@ -105,13 +105,22 @@
 
     <Button
         android:id="@+id/LoginButton"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginTop="48dp"
+        android:elevation="20dp"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/textViewLoginSignUpMessage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="textViewLoginSignUpMessage"
+        tools:layout_editor_absoluteY="658dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
