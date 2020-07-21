@@ -30,7 +30,7 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageButton button;
+    private ImageButton button,searchButton;
     public TextView stepCount,distanceCount,calorieCount;
     public DatabaseReference databaseReference;
     public User currentUser;
@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         button = findViewById(R.id.imageButton9);
         stepCount=findViewById(R.id.textViewStepsCount);
+        searchButton=findViewById(R.id.imageButton12);
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         time=Calendar.getInstance();
         tstart=time.getTime();
@@ -63,6 +64,13 @@ public class HomeActivity extends AppCompatActivity {
         temp1+=sdate.toCharArray()[1]-48;
         temp1+=10*(sdate.toCharArray()[0]-48);
         dat[temp1]=0;
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, ParentSearchActivity.class);
+                startActivity(i);
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

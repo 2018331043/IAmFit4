@@ -7,6 +7,26 @@ public class User {
     private int stepcount;
     //fuad
 
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public void setStepcount(int stepcount) {
+        this.stepcount = stepcount;
+    }
+
     //fuad
 
     public User() {
