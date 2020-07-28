@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class User {
     private String Name,Email,height,weight;
     private int stepcount;
-    //fuad
+
 
     public void setName(String name) {
         Name = name;

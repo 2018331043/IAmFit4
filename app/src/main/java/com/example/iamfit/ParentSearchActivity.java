@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ParentSearchActivity extends AppCompatActivity {
+public class ParentSearchActivity extends AppCompatActivity implements SearchAdapter.OnResultListener{
     private EditText searcText;
     private Button searchButton;
     private RecyclerView recyclerView;
@@ -93,15 +93,16 @@ public class ParentSearchActivity extends AppCompatActivity {
                     String uid= snapshot.getKey();
                     String name=snapshot.child("name").getValue().toString();
                     if(name.toLowerCase().contains(string.toLowerCase())){
-                        Toast.makeText(ParentSearchActivity.this, "found", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(ParentSearchActivity.this, "found", Toast.LENGTH_SHORT).show();
                         names.add(name);
                         Uids.add(uid);
                         cnt++;
                     }
-                    if(cnt>=3)break;
+                    if(cnt>=7)break;
                 }
-                searchAdapter =  new SearchAdapter(ParentSearchActivity.this,names,Uids);
+                searchAdapter =  new SearchAdapter(ParentSearchActivity.this,names,Uids,ParentSearchActivity.this);
                 recyclerView.setAdapter(searchAdapter);
+
             }
 
             @Override
@@ -110,7 +111,11 @@ public class ParentSearchActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onResultClick(int positon){
+        Integer s=positon;
+        Toast.makeText(ParentSearchActivity.this, "Clicked "+s.toString(), Toast.LENGTH_SHORT).show();
+    }
    /* private void firebaseUsersSearch(String searchText) {
         Query query=databaseReference.orderByChild("name")
                 .startAt(searchText)
