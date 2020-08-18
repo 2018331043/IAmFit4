@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ParentSearchActivity extends AppCompatActivity implements SearchAdapter.OnResultListener{
+    public static final String EXTRA_USERID="com.example.iamfit.EXTRA_USRID";
     private EditText searcText;
     private Button searchButton;
     private RecyclerView recyclerView;
@@ -115,33 +117,9 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
     public void onResultClick(int positon){
         Integer s=positon;
         Toast.makeText(ParentSearchActivity.this, "Clicked "+s.toString(), Toast.LENGTH_SHORT).show();
-    }
-   /* private void firebaseUsersSearch(String searchText) {
-        Query query=databaseReference.orderByChild("name")
-                .startAt(searchText)
-                .endAt(searchText+"\uf8ff");
-        FirebaseRecyclerOptions<User> options=new FirebaseRecyclerOptions.Builder<User>()
-                .setQuery(query,User.class)
-                .build();
-        FirebaseRecyclerAdapter<User,UsersViewHolder>firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<User, UsersViewHolder>(User.class,R.layout.list_layout) {
-            @Override
-            protected void onBindViewHolder(@NonNull UsersViewHolder holder, int position, @NonNull User model) {
-
-            }
-
-            @NonNull
-            @Override
-            public UsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
-            }
-        };
+        Intent intent=new Intent(this,UserProfileActivity.class);
+        intent.putExtra(EXTRA_USERID,Uids.get(s));
+        startActivity(intent);
     }
 
-    public class UsersViewHolder extends RecyclerView.ViewHolder{
-        View mView;
-        public UsersViewHolder(View itemView){
-            super(itemView);
-                    mView=itemView;
-        }
-    }*/
 }

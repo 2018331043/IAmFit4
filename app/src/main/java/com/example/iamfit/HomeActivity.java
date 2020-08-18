@@ -122,9 +122,6 @@ public class HomeActivity extends AppCompatActivity {
                     Integer x1=(int)linear_acceleration[0];
                     Integer y1=(int)linear_acceleration[1];
                     Integer z1=(int)linear_acceleration[2];
-                    //textView0.setText(x1.toString());
-                    //textView1.setText(y1.toString());
-                    //textView2.setText(z1.toString());
                     float x= linear_acceleration[0];
                     float y= linear_acceleration[1];
                     float z= linear_acceleration[2];
@@ -174,4 +171,8 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 }
