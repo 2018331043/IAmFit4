@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        medicinebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, MedicineSetActivity.class);
