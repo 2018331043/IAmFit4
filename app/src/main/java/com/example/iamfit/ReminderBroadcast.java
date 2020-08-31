@@ -13,14 +13,16 @@ import java.util.ArrayList;
 
 public class ReminderBroadcast extends BroadcastReceiver {
     private NotificationManagerCompat notificationManagerCompat;
-    public static ArrayList<String> MedicineNames=new ArrayList<>();
+    //public static ArrayList<String> MedicineNames=new ArrayList<>();
+    public static ArrayList<Medicine> Medicines=new ArrayList<Medicine>();
     public static Integer medicineNumber=0,alarmManagerNumbers=0;
     @Override
     public void onReceive(Context context, Intent intent) {
 
         notificationManagerCompat=NotificationManagerCompat.from(context);
         //final String MedicineName=intent.getStringExtra(MedicineSetActivity.MedicineNames.get(MedicineSetActivity.medicineNumber));
-        String MedicineName=MedicineNames.get(medicineNumber);
+        String MedicineName=Medicines.get(medicineNumber).getName();
+
         Toast.makeText(context,"Hello : ", Toast.LENGTH_SHORT).show();
         Notification notification=new NotificationCompat.Builder(context,App.MEDICINE_TAKE)
                 .setSmallIcon(R.drawable.heart)
