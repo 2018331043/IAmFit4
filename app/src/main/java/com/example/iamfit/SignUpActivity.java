@@ -3,13 +3,18 @@ package com.example.iamfit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +25,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 public class SignUpActivity extends AppCompatActivity {
     EditText emailid,pass,name,dateOfbirth,height,weight,gender;
     TextView text;
     Button button;
+    private ImageButton c1;
+    private TextView c2;
+    DatePickerDialog.OnDateSetListener setListener;
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
     @Override
@@ -39,6 +49,35 @@ public class SignUpActivity extends AppCompatActivity {
         gender=findViewById(R.id.gender);
         mAuth= FirebaseAuth.getInstance();
         text=findViewById(R.id.textView3);
+
+        c2=(TextView) findViewById(R.id.signUpTextBirthday);
+        c1=(ImageButton)findViewById(R.id.signUpPageCalender);
+
+        Calendar calender =Calendar.getInstance();
+
+        final int year=calender.get(Calendar.YEAR);
+        final int month=calender.get(Calendar.MONTH);
+        final int day=calender.get(Calendar.DAY_OF_MONTH);
+
+        c1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog =new DatePickerDialog(MainActivity.this,android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth,setListener,year,month,day);
+
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+
+        setListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                i1=i1+1;
+                String date=i2+"."+i1+"."+i;
+                c2.setText(date);
+            }
+        };
+
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         button.setOnClickListener(new View.OnClickListener() {
 
