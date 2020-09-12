@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -18,12 +20,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class MedicineSetActivity extends AppCompatActivity {
     public EditText medicineName,timeH,timeM,daysToLast;
@@ -31,15 +30,43 @@ public class MedicineSetActivity extends AppCompatActivity {
     private ArrayList<Medicine> mediciness=new ArrayList<Medicine>();
     public Button setReminder;
     public SimpleDateFormat sfH,sfM,sfS;
+    private Button time1;
+    private EditText time1Set;
+    int timeHour,timeMinute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_set);
+        //implementing time picker dialogue
+
+        time1=(Button) findViewById(R.id.MedicinePageTimeButton);
+        time1Set=(EditText)findViewById(R.id.MedicinePageTime);
+
+        time1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final TimePickerDialog timePickerDialog=new TimePickerDialog(MedicineSetActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        timeHour=i;
+                        timeMinute=i1;
+                        Calendar calendar=Calendar.getInstance();
+                        calendar.set(0,0,0,timeHour,timeMinute);
+                        time1Set.setText(DateFormat.format("hh:mm aa",calendar));
+                        }
+                    },12,0,false
+                );
+                timePickerDialog.updateTime(timeHour,timeMinute);
+                timePickerDialog.show();
+            }
+        });
+        //implementation done
+
         medicineName=findViewById(R.id.medicinName);
         timeH=findViewById(R.id.dosetime);
         timeM=findViewById(R.id.dosetime2);
         daysToLast=findViewById(R.id.dosetime3);
-        setReminder=findViewById(R.id.button3);
+        setReminder=findViewById(R.id.MedicinePageTimeButton);
         SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         Gson gson=new Gson();
