@@ -49,18 +49,18 @@ public class HomeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        button = findViewById(R.id.imageButton9);
-        stepCount=findViewById(R.id.textViewStepsCount);
-        searchButton=findViewById(R.id.imageButton12);
-        medicinebutton=findViewById(R.id.imageButton11);
+        button = findViewById(R.id.imageButtonHomeSettings);
+        stepCount=findViewById(R.id.textViewSteps);
+        searchButton=findViewById(R.id.imageButtonHomeSearch);
+        medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         time=Calendar.getInstance();
         tstart=time.getTime();
         sf=new SimpleDateFormat("dd");
         sdate=sf.format(tstart);
-        textView = findViewById(R.id.textViewStepsCount);
-        distanceCount=findViewById(R.id.textViewDistanceCount);
-        calorieCount=findViewById(R.id.textViewCalorieCount);
+        //textView = findViewById(R.id.textViewStepsCount);
+        distanceCount=findViewById(R.id.textViewDistance);
+        calorieCount=findViewById(R.id.textViewcalorie);
         temp1=0;
         temp1+=sdate.toCharArray()[1]-48;
         temp1+=10*(sdate.toCharArray()[0]-48);
@@ -107,8 +107,6 @@ public class HomeActivity extends AppCompatActivity {
                 tstart=time.getTime();
                 sf=new SimpleDateFormat("dd");
                 sdate=sf.format(tstart);
-                //dates=findViewById(R.id.textView4);
-                //dates.setText(sdate);
                 temp1=0;
                 temp1+=sdate.toCharArray()[1]-48;
                 temp1+=10*(sdate.toCharArray()[0]-48);
@@ -148,8 +146,6 @@ public class HomeActivity extends AppCompatActivity {
                             databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepcount").setValue(dat[temp1]);
                         }
                         previous_step=val;
-                        //textView.setText(dat[temp1].toString());
-
                         temp2=0;
                     }
 
@@ -173,7 +169,6 @@ public class HomeActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putString("In","0");
                 editor.commit();
-               // saver.saveintopf("LoggedInChecker","In","0");
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
             }
         });

@@ -3,7 +3,8 @@ package com.example.iamfit;
 import java.util.ArrayList;
 
 public class User {
-    private String Name,Email,height,weight;
+    private String Name,Email,height,weight,Gender;
+    private  Integer month,day,year;
     private int stepcount;
 
 
@@ -27,18 +28,21 @@ public class User {
         this.stepcount = stepcount;
     }
 
-    //fuad
 
     public User() {
 
     }
 
-    public User(String name, String email, String height, String weight, int stepcount) {
+    public User(String name, String email, String height, String weight, int stepcount,Integer month,Integer day,Integer year,String gender) {
         Name = name;
         Email = email;
         this.height = height;
         this.weight = weight;
         this.stepcount=stepcount;
+        this.month=month;
+        this.day=day;
+        this.year=year;
+        this.Gender=gender;
     }
 
     public String getName() {

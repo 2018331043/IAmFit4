@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText emailid,pass,name,dateOfbirth,height,weight,gender;
+    EditText emailid,pass,name,height,weight;
     TextView text;
     Button button;
     private ImageButton c1;
@@ -36,33 +37,35 @@ public class SignUpActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener setListener;
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
+    private Integer Month,Day,Year;
+    private CheckBox gender1,gender2,gender3;
+    private String Gender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
-        emailid =findViewById(R.id.email);
-        pass =findViewById(R.id.password);
-        button=findViewById(R.id.buttonSignup);
-        name=findViewById(R.id.name);
-        height=findViewById(R.id.height);
-        weight=findViewById(R.id.weight);
-        gender=findViewById(R.id.gender);
-        mAuth= FirebaseAuth.getInstance();
-        text=findViewById(R.id.textView3);
-
+        emailid =findViewById(R.id.signUpPageEmail);
+        pass =findViewById(R.id.signUpPagePassword);
+        button=findViewById(R.id.signUpButton);
+        name=findViewById(R.id.signUpPageName);
+        height=findViewById(R.id.signUpPageHeight);
+        weight=findViewById(R.id.signUpPageWeight);
+        text=findViewById(R.id.signUpPageTextLogin);
+        gender1=findViewById(R.id.signUpPageCheckBoxMale);
+        gender2=findViewById(R.id.signUpCheckBoxFemale);
+        gender3=findViewById(R.id.signUpPageCheckBoxOthers);
         c2=(TextView) findViewById(R.id.signUpTextBirthday);
         c1=(ImageButton)findViewById(R.id.signUpPageCalender);
-
+        mAuth= FirebaseAuth.getInstance();
         Calendar calender =Calendar.getInstance();
-
         final int year=calender.get(Calendar.YEAR);
         final int month=calender.get(Calendar.MONTH);
         final int day=calender.get(Calendar.DAY_OF_MONTH);
 
-        c1.setOnClickListener(new View.OnClickListener() {
+       c1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog =new DatePickerDialog(MainActivity.this,android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth,setListener,year,month,day);
+                DatePickerDialog datePickerDialog =new DatePickerDialog(SignUpActivity.this,android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth,setListener,year,month,day);
 
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
@@ -74,6 +77,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 i1=i1+1;
                 String date=i2+"."+i1+"."+i;
+                Month=i;
+                Day=i1;
+                Year=i2;
                 c2.setText(date);
             }
         };
@@ -85,6 +91,8 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email= emailid.getText().toString();
                 String pwd=pass.getText().toString();
+                String weightss=weight.getText().toString();
+                String heightss=height.getText().toString();
                 if(email.isEmpty()){
                     emailid.setError("Please Enter A valid email Id");
                     emailid.requestFocus();
@@ -92,6 +100,17 @@ public class SignUpActivity extends AppCompatActivity {
                 else if(pwd.isEmpty()){
                     pass.setError("Please Enter a password");
                     pass.requestFocus();
+                }
+                else if(!gender1.isChecked()&&!gender2.isChecked()&&!gender3.isChecked()){
+                    Toast.makeText(SignUpActivity.this,"You have to specify your Gender",Toast.LENGTH_LONG).show();
+                }
+                else if(weightss.isEmpty()){
+                    weight.setError("Please Enter A valid email Id");
+                    weight.requestFocus();
+                }
+                else if(heightss.isEmpty()){
+                    height.setError("Please Enter A valid email Id");
+                    height.requestFocus();
                 }
                 else if(!pwd.isEmpty()&&!email.isEmpty()){
                     mAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
@@ -102,13 +121,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putString("In","1");
                                 editor.commit();
-                               // databaseReference=FirebaseDatabase.getInstance().getReference();
                                 String email= emailid.getText().toString();
-                                String gender1=gender.getText().toString();
                                 String weight1= weight.getText().toString();
                                 String height1=height.getText().toString();
                                 String name1=name.getText().toString();
-                                User info =new User(name1,email,height1,weight1,0);
+                                if(gender1.isChecked())Gender="Male";
+                                else if(gender2.isChecked())Gender="Female";
+                                else if(gender3.isChecked())Gender="Others";
+                                User info =new User(name1,email,height1,weight1,0,Month,Day,Year,Gender);
                                 FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -139,6 +159,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

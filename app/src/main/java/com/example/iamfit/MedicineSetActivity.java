@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MedicineSetActivity extends AppCompatActivity {
-    public EditText medicineName,timeH,timeM,daysToLast;
+    public EditText medicineName,daysToLast;
     public static String MEDICINE_NAME="com.example.iamfit.MedicineName";
     private ArrayList<Medicine> mediciness=new ArrayList<Medicine>();
     public Button setReminder;
@@ -62,11 +62,11 @@ public class MedicineSetActivity extends AppCompatActivity {
         });
         //implementation done
 
-        medicineName=findViewById(R.id.medicinName);
-        timeH=findViewById(R.id.dosetime);
-        timeM=findViewById(R.id.dosetime2);
-        daysToLast=findViewById(R.id.dosetime3);
-        setReminder=findViewById(R.id.MedicinePageTimeButton);
+        medicineName=findViewById(R.id.editTextTextPersonName2);
+       // timeH=findViewById(R.id.dosetime);
+        //timeM=findViewById(R.id.dosetime2);
+        daysToLast=findViewById(R.id.MedinePageDays);
+        setReminder=findViewById(R.id.medicinePageReminderButton);
         SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         Gson gson=new Gson();
@@ -77,8 +77,9 @@ public class MedicineSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String medName = medicineName.getText().toString();
-                String hour = timeH.getText().toString();
-                String minute = timeM.getText().toString();
+               // String hour = timeH.getText().toString();
+               // String minute = timeM.getText().toString();
+               // Toast.makeText(MedicineSetActivity.this, timeHour, Toast.LENGTH_LONG).show();
                 String days = daysToLast.getText().toString();
                 SharedPreferences sharedPreferences =getSharedPreferences("MedicineIterator",MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -112,19 +113,19 @@ public class MedicineSetActivity extends AppCompatActivity {
                 cM += (curM.toCharArray()[0] - 48) * 10;
                 cS = curS.toCharArray()[1] - 48;
                 cS += (curS.toCharArray()[0] - 48) * 10;
-                reqH = (hour.toCharArray()[1] - 48);
-                reqH += 10 * (hour.toCharArray()[0] - 48);
-                reqM = minute.toCharArray()[1] - 48;
-                reqM += 10 * (minute.toCharArray()[0] - 48);
-                if (reqH - cH < 0) {
-                    reqH += 24;
-                    dif += (reqH - cH) * 60;
+               // reqH = (hour.toCharArray()[1] - 48);
+                //reqH += 10 * (hour.toCharArray()[0] - 48);
+               // reqM = minute.toCharArray()[1] - 48;
+               // reqM += 10 * (minute.toCharArray()[0] - 48);
+                if (timeHour - cH < 0) {
+                    timeHour += 24;
+                    dif += (timeHour - cH) * 60;
                 } else {
-                    dif += (reqH - cH) * 60;
+                    dif += (timeHour - cH) * 60;
                 }
-                dif += (reqM - cM);
+                dif += (timeMinute - cM);
                 loadMedicineData();
-                Medicine medicine = new Medicine(dif, reqH, reqM, daysrem, medName);
+                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName);
                 mediciness.add(medicine);
                 temp = 1;
                 while (temp == 1) {
