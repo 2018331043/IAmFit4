@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     public TextView stepCount,distanceCount,calorieCount;
     public DatabaseReference databaseReference;
     public User currentUser;
-    private Integer stepcount =0,temp=0,temp2=0,temp1=0;
+    private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
     double previous_step=0;
     public TextView textView;
     public TextView textView0,textView1,textView2,dates;
@@ -42,8 +43,8 @@ public class HomeActivity extends AppCompatActivity {
     public Date tstart;
     public SimpleDateFormat sf;
     public String sdate;
-    public Integer dat[]=new Integer[100];
-
+    public Integer vals;
+    String curDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,7 +65,9 @@ public class HomeActivity extends AppCompatActivity {
         temp1=0;
         temp1+=sdate.toCharArray()[1]-48;
         temp1+=10*(sdate.toCharArray()[0]-48);
-        dat[temp1]=0;
+        vals=0;
+        SharedPreferences sharedPreferences2=getSharedPreferences("DateSaver", Context.MODE_PRIVATE);
+        curDate=sharedPreferences2.getString("curDate",null);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,14 +85,36 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User currentUser2=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+                User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+                ArrayList<StepCount> stpc = currentUser2.getStepCounts();
+                SimpleDateFormat datef;
+                Date calendar = Calendar.getInstance().getTime();
+                datef = new SimpleDateFormat("YYYY.MM.DD");
+                String curD;
+                curD = datef.format(calendar);
+                iter=stpc.size()-1;
+                if (!stpc.get(stpc.size() - 1).getDate().toString().equals(curD)) {
+                    StepCount temp=new StepCount(curD,0);
+                    stpc.add(temp);
+                    databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepCounts").setValue(stpc);
+                    stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString());
+                    SharedPreferences sharedPreferences2=getSharedPreferences("DateSaver", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor2=sharedPreferences2.edit();
+                    editor2.putString("curDate",curD);
+                    editor2.commit();
 
-                dat[temp1]=currentUser2.getStepcount();
-                stepCount.setText(dat[temp1].toString());
-                Float dis=dat[temp1]*.76f;
-                distanceCount.setText(dis.toString()+"m");
-                Float cal=dat[temp1]*.05f;
-                calorieCount.setText(cal.toString()+"cal");
+                } else {
+                    //databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepCounts").setValue(stpc);
+                    vals=currentUser2.getStepCounts().get(stpc.size() - 1).getSteps();
+                    stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString());
+                }
+                //stepCount.setText(currentUser2.getStepCounts().get);
+
+                //Integer val=currentUser2.getStepCounts().get(stpc.size() - 1).getSteps();
+                Float dis = currentUser2.getStepCounts().get(stpc.size() - 1).getSteps() * .76f;
+                distanceCount.setText(dis.toString() + "m");
+                Float cal =currentUser2.getStepCounts().get(stpc.size() - 1).getSteps()* .05f;
+                calorieCount.setText(cal.toString() + "cal");
                 //Toast.makeText(HomeActivity.this,"Data Faillure",Toast.LENGTH_SHORT).show();
             }
 
@@ -135,15 +160,15 @@ public class HomeActivity extends AppCompatActivity {
                     temp2++;
                     if(temp2>=10) {
                         double stepdif=val-previous_step;
-                        if (stepdif > 6) {
+                        if (stepdif > 8) {
                             temp++;
 
                         }
-                        if (temp >= 1) {
+                        if (temp >= 3) {
 
-                            dat[temp1]++;
+                           vals++;
                             temp = 0;
-                            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepcount").setValue(dat[temp1]);
+                            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepCounts").child(iter.toString()).child("steps").setValue(vals);
                         }
                         previous_step=val;
                         temp2=0;

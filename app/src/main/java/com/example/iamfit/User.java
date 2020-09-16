@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class User {
     private String Name,Email,height,weight,Gender;
     private  Integer month,day,year;
-    private int stepcount;
+    private ArrayList<StepCount> stepCounts;
 
 
     public void setName(String name) {
@@ -24,21 +24,56 @@ public class User {
         this.weight = weight;
     }
 
-    public void setStepcount(int stepcount) {
-        this.stepcount = stepcount;
+    public String getGender() {
+        return Gender;
     }
 
+    public void setGender(String gender) {
+        Gender = gender;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getDay() {
+        return day;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public ArrayList<StepCount> getStepCounts() {
+        return stepCounts;
+    }
+
+    public void setStepCounts(ArrayList<StepCount> stepCounts) {
+        this.stepCounts = stepCounts;
+    }
 
     public User() {
 
     }
 
-    public User(String name, String email, String height, String weight, int stepcount,Integer month,Integer day,Integer year,String gender) {
+    public User(String name, String email, String height, String weight, ArrayList<StepCount> stepCounts,Integer month,Integer day,Integer year,String gender) {
         Name = name;
         Email = email;
         this.height = height;
         this.weight = weight;
-        this.stepcount=stepcount;
+        this.stepCounts=stepCounts;
         this.month=month;
         this.day=day;
         this.year=year;
@@ -49,9 +84,7 @@ public class User {
         return Name;
     }
 
-    public int getStepcount() {
-        return stepcount;
-    }
+
 
     public String getEmail() {
         return Email;

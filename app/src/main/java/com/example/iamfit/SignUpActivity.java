@@ -26,7 +26,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText emailid,pass,name,height,weight;
@@ -77,9 +80,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 i1=i1+1;
                 String date=i2+"."+i1+"."+i;
-                Month=i;
+                Month=i2;
                 Day=i1;
-                Year=i2;
+                Year=i;
                 c2.setText(date);
             }
         };
@@ -128,7 +131,19 @@ public class SignUpActivity extends AppCompatActivity {
                                 if(gender1.isChecked())Gender="Male";
                                 else if(gender2.isChecked())Gender="Female";
                                 else if(gender3.isChecked())Gender="Others";
-                                User info =new User(name1,email,height1,weight1,0,Month,Day,Year,Gender);
+                                SimpleDateFormat datef;
+                                Date calendar = Calendar.getInstance().getTime();
+                                datef = new SimpleDateFormat("YYYY.MM.dd");
+                                String curD;
+                                curD = datef.format(calendar);
+                                SharedPreferences sharedPreferences2=getSharedPreferences("DateSaver", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor2=sharedPreferences2.edit();
+                                editor2.putString("curDate",curD);
+                                editor2.commit();
+                                ArrayList<StepCount> stepCounts=new ArrayList<>();
+                                StepCount stpc=new StepCount(curD,0);
+                                stepCounts.add(stpc);
+                                User info =new User(name1,email,height1,weight1,stepCounts,Month,Day,Year,Gender);
                                 FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
