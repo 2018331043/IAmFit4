@@ -31,7 +31,7 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageButton button,medicinebutton,searchButton;
+    private ImageButton button,medicinebutton,searchButton,profileButton;
     public TextView stepCount,distanceCount,calorieCount;
     public DatabaseReference databaseReference;
     public User currentUser;
@@ -54,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         stepCount=findViewById(R.id.textViewSteps);
         searchButton=findViewById(R.id.imageButtonHomeSearch);
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
+        profileButton=findViewById(R.id.imageButtonProfile);
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         time=Calendar.getInstance();
         tstart=time.getTime();
@@ -82,6 +83,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, TestActivity.class);
+                startActivity(i);
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
                 ArrayList<StepCount> stpc = currentUser2.getStepCounts();
                 SimpleDateFormat datef;
                 Date calendar = Calendar.getInstance().getTime();
-                datef = new SimpleDateFormat("YYYY.MM.DD");
+                datef = new SimpleDateFormat("YYYY.MM.dd");
                 String curD;
                 curD = datef.format(calendar);
                 iter=stpc.size()-1;
