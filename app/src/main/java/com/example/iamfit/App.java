@@ -20,6 +20,7 @@ public class App extends Application {
                     NotificationManager.IMPORTANCE_HIGH
             );
             notificationChannel.setDescription("This channel notifies you about taking your drugs timely");
+           // notificationChannel.setLightColor();
             NotificationManager manager=getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificationChannel);
         }

@@ -31,14 +31,11 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageButton button,medicinebutton,searchButton,profileButton;
+    private ImageButton button,medicinebutton,searchButton,profileButton,friendsButton;
     public TextView stepCount,distanceCount,calorieCount;
     public DatabaseReference databaseReference;
-    public User currentUser;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
     double previous_step=0;
-    public TextView textView;
-    public TextView textView0,textView1,textView2,dates;
     public Calendar time;
     public Date tstart;
     public SimpleDateFormat sf;
@@ -55,12 +52,12 @@ public class HomeActivity extends AppCompatActivity {
         searchButton=findViewById(R.id.imageButtonHomeSearch);
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
         profileButton=findViewById(R.id.imageButtonProfile);
+        friendsButton=findViewById(R.id.imageButtonConnection);
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         time=Calendar.getInstance();
         tstart=time.getTime();
         sf=new SimpleDateFormat("dd");
         sdate=sf.format(tstart);
-        //textView = findViewById(R.id.textViewStepsCount);
         distanceCount=findViewById(R.id.textViewDistance);
         calorieCount=findViewById(R.id.textViewcalorie);
         temp1=0;
@@ -90,6 +87,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        friendsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, FindDoctorTestActivity.class);
+                startActivity(i);
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -112,18 +116,13 @@ public class HomeActivity extends AppCompatActivity {
                     editor2.commit();
 
                 } else {
-                    //databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepCounts").setValue(stpc);
                     vals=currentUser2.getStepCounts().get(stpc.size() - 1).getSteps();
                     stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString());
                 }
-                //stepCount.setText(currentUser2.getStepCounts().get);
-
-                //Integer val=currentUser2.getStepCounts().get(stpc.size() - 1).getSteps();
                 Float dis = currentUser2.getStepCounts().get(stpc.size() - 1).getSteps() * .76f;
                 distanceCount.setText(dis.toString() + "m");
                 Float cal =currentUser2.getStepCounts().get(stpc.size() - 1).getSteps()* .05f;
                 calorieCount.setText(cal.toString() + "cal");
-                //Toast.makeText(HomeActivity.this,"Data Faillure",Toast.LENGTH_SHORT).show();
             }
 
             @Override
