@@ -167,11 +167,11 @@ public class HomeActivity extends AppCompatActivity {
                     temp2++;
                     if(temp2>=10) {
                         double stepdif=val-previous_step;
-                        if (stepdif > 8) {
+                        if (stepdif > 5) {
                             temp++;
 
                         }
-                        if (temp >= 3) {
+                        if (temp >= 1) {
 
                            vals++;
                             temp = 0;
