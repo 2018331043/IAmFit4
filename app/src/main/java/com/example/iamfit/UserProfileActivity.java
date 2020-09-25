@@ -25,9 +25,9 @@ public class UserProfileActivity extends AppCompatActivity {
         final String user=intent.getStringExtra(ParentSearchActivity.EXTRA_USERID);
         Toast.makeText(UserProfileActivity.this, user, Toast.LENGTH_SHORT).show();
         databaseReference= FirebaseDatabase.getInstance().getReference();
-        height=findViewById(R.id.HeigthValue);
-        weight=findViewById(R.id.WeightValue);
-        steps=findViewById(R.id.StepsValue);
+        height=findViewById(R.id.textView5);
+        weight=findViewById(R.id.textView6);
+        steps=findViewById(R.id.textView11);
         name=findViewById(R.id.textView7);
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
