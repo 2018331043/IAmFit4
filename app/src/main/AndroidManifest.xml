@@ -24,7 +24,10 @@
         <activity android:name=".SearchBox" />
         <activity android:name=".TestActivity" />
         <activity android:name=".MedicineSetActivity" />
-        <activity android:name=".ParentSearchActivity" />
+        <activity
+            android:name=".ParentSearchActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />

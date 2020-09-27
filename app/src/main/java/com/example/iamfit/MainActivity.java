@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
                                     startActivity(i);
                                 }
-                            }, 2000);
+                            }, 1000);
                         }
                         else{
                             new Handler().postDelayed(new Runnable() {
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent i = new Intent(MainActivity.this, SignUpActivity.class);
                                     startActivity(i);
                                 }
-                            }, 2000);
+                            }, 1000);
                         }
                     }
                 });
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(i);
                     }
-                }, 2000);
+                }, 1000);
             }
         }
         else{
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(MainActivity.this, SignUpActivity.class);
                     startActivity(i);
                 }
-            }, 2000);
+            }, 1000);
         }
     }
 

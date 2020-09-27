@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,8 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ParentSearchActivity extends AppCompatActivity implements SearchAdapter.OnResultListener{
-    public static final String EXTRA_USERID="com.example.iamfit.EXTRA_USRID";
+public class ParentSearchActivity extends AppCompatActivity implements SearchAdapter.OnResultListener {
+    public static final String EXTRA_USERID = "com.example.iamfit.EXTRA_USRID";
     private EditText searcText;
     private Button searchButton;
     private RecyclerView recyclerView;
@@ -39,13 +40,14 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
     ArrayList<String> names;
     ArrayList<String> Uids;
     SearchAdapter searchAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parent_search);
+        setContentView(R.layout.activity_search_box);
         databaseReference= FirebaseDatabase.getInstance().getReference();
-        searcText=findViewById(R.id.searchField);
-        searchButton=findViewById(R.id.searchButton);
+        searcText=findViewById(R.id.editTextTextPersonName3);
+        //searchButton=findViewById(R.id.searchButton);
         recyclerView=findViewById(R.id.searchResult);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         //Toast.makeText(ParentSearchActivity.this, "entered", Toast.LENGTH_SHORT).show();
@@ -74,13 +76,7 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
                 }
             }
         });
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text=searcText.getText().toString();
-                //firebaseUsersSearch(text);
-            }
-        });
+
     }
 
     private void setAdapter(final String string) {
@@ -113,13 +109,12 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
             }
         });
     }
-    @Override
-    public void onResultClick(int positon){
-        Integer s=positon;
-        Toast.makeText(ParentSearchActivity.this, "Clicked "+s.toString(), Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(this,UserProfileActivity.class);
-        intent.putExtra(EXTRA_USERID,Uids.get(s));
-        startActivity(intent);
+        @Override
+        public void onResultClick ( int positon){
+            Integer s = positon;
+            Toast.makeText(ParentSearchActivity.this, "Clicked " + s.toString(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ParentSearchResultProfileActivity.class);
+            intent.putExtra(EXTRA_USERID, Uids.get(s));
+            startActivity(intent);
+        }
     }
-
-}
