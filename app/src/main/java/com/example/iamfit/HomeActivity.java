@@ -97,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, TestActivity.class);
+                Intent i = new Intent(HomeActivity.this, UserProfileActivity.class);
                 startActivity(i);
             }
         });
@@ -134,9 +134,9 @@ public class HomeActivity extends AppCompatActivity {
                     stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString());
                 }
                 Float dis = currentUser2.getStepCounts().get(stpc.size() - 1).getSteps() * .76f;
-                distanceCount.setText(dis.toString() + "m");
+                distanceCount.setText(String.format("%.2f",dis).toString() + " m");
                 Float cal =currentUser2.getStepCounts().get(stpc.size() - 1).getSteps()* .05f;
-                calorieCount.setText(cal.toString() + "cal");
+                calorieCount.setText(String.format("%.2f",cal).toString() + " cal");
             }
 
             @Override
