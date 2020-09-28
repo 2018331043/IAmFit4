@@ -24,10 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class UserProfileActivity extends AppCompatActivity {
-    public TextView height,weight,steps,name,calorieValue,disValue;
+    public TextView height,weight,steps,name,calorieValue,disValue,ageView;
     public DatabaseReference databaseReference;
     private BarChart barchart;
     private ArrayList<StepCount> stpc;
@@ -47,6 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
         name=findViewById(R.id.textView);
         calorieValue=findViewById(R.id.textView12);
         disValue=findViewById(R.id.textView10);
+        ageView=findViewById(R.id.textView13);
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -70,6 +72,10 @@ public class UserProfileActivity extends AppCompatActivity {
                         total_dis=total_steps*.76;
                         disValue.setText(String.format("%.2f",total_dis)+" m");
                         calorieValue.setText(String.format("%.2f",total_cal1)+" cal");
+                        Calendar calender =Calendar.getInstance();
+                        final int year=calender.get(Calendar.YEAR);
+                        Integer age=year-currentUser2.getYear();
+                        ageView.setText("Age : "+age.toString());
                 ValueFormatter formatter = new ValueFormatter() {
                     @Override
                     public String getAxisLabel(float value, AxisBase axis) {

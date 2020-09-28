@@ -25,7 +25,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
-
+import java.util.Random;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -33,10 +33,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Random;
 
 public class FindDoctorTestActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -51,7 +59,36 @@ public class FindDoctorTestActivity extends FragmentActivity implements OnMapRea
         setContentView(R.layout.activity_find_doctor_test);
         //currentLocation=new Location()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        /*double temp=.008f;
+        float lat=23.732257f,lang= 90.382186f;
+
+        for(Integer i=1;i<=300;i++){
+            Doctor temp2=new Doctor("01654994"+i,"Dummy Doctor"+i,"Dummy Speciality",lat,lang);
+            Random rand=new Random();
+
+            if(i%4==0){
+                lat+=temp;
+                lang-=temp;
+            }
+            else if(i%4==1){
+                lang+=temp;
+                lat-=temp;
+            }
+            else if(i%4==2){
+                lang+=temp;
+                lat+=temp;
+            }
+            else if(i%4==3){
+                lang-=temp;
+                lat-=temp;
+            }
+            FirebaseDatabase.getInstance().getReference("Doctors").child("Doctor"+i)
+                    .setValue(temp2);
+            temp= rand.nextDouble();
+        }*/
+
         fetchLastLocation();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
        // SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
         //        .findFragmentById(R.id.map);
@@ -79,7 +116,7 @@ public class FindDoctorTestActivity extends FragmentActivity implements OnMapRea
             public void onSuccess(Location location) {
                 if(location!=null){
                     currentLocation=location;
-                    Toast.makeText(FindDoctorTestActivity.this, "Hi" , Toast.LENGTH_LONG).show();
+                    //Toast.makeText(FindDoctorTestActivity.this, "Hi "+currentLocation.getLatitude()+" "+currentLocation.getLongitude() , Toast.LENGTH_LONG).show();
                     SupportMapFragment supportMapFragment=(SupportMapFragment)getSupportFragmentManager().findFragmentById((R.id.map));
                     supportMapFragment.getMapAsync(FindDoctorTestActivity.this);
                 }
@@ -98,7 +135,7 @@ public class FindDoctorTestActivity extends FragmentActivity implements OnMapRea
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        ///mMap = googleMap;
+        mMap = googleMap;
        LatLng latLng=new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
         // Add a marker in Sydney and move the camera
         //LatLng latLng = new LatLng(23.777176, 90.399452);
@@ -109,7 +146,31 @@ public class FindDoctorTestActivity extends FragmentActivity implements OnMapRea
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
         googleMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .title("User"));
+                .title("User")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        FirebaseDatabase.getInstance().getReference("Doctors").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    double lat= (double) snapshot.child("lat").getValue();
+                    double longi=(double)snapshot.child("longi").getValue();
+                    String name2=snapshot.child("name").getValue().toString();
+                    LatLng latLng2=new LatLng(lat, longi);
+                    //Toast.makeText(FindDoctorTestActivity.this, "Hi "+lat+" "+longi+" "+name2 , Toast.LENGTH_LONG).show();
+                    //Toast.makeText(FindDoctorTestActivity.this, "Hi "+name2 , Toast.LENGTH_LONG).show();
+                    mMap.addMarker(new MarkerOptions()
+                            .position(latLng2)
+                            .title(snapshot.child("name").getValue().toString())
+                            .snippet(snapshot.child("speciality").getValue().toString()));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
