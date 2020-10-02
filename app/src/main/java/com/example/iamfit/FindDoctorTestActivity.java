@@ -154,14 +154,18 @@ public class FindDoctorTestActivity extends FragmentActivity implements OnMapRea
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     double lat= (double) snapshot.child("lat").getValue();
                     double longi=(double)snapshot.child("longi").getValue();
-                    String name2=snapshot.child("name").getValue().toString();
-                    LatLng latLng2=new LatLng(lat, longi);
-                    //Toast.makeText(FindDoctorTestActivity.this, "Hi "+lat+" "+longi+" "+name2 , Toast.LENGTH_LONG).show();
-                    //Toast.makeText(FindDoctorTestActivity.this, "Hi "+name2 , Toast.LENGTH_LONG).show();
-                    mMap.addMarker(new MarkerOptions()
-                            .position(latLng2)
-                            .title(snapshot.child("name").getValue().toString())
-                            .snippet(snapshot.child("speciality").getValue().toString()));
+                   // String name2=snapshot.child("name").getValue().toString();
+                    if(Math.sqrt(((lat-currentLocation.getLatitude())*(lat-currentLocation.getLatitude()))+((longi-currentLocation.getLongitude())*(longi-currentLocation.getLongitude())))<=.15){
+                        LatLng latLng2=new LatLng(lat, longi);
+                        //Toast.makeText(FindDoctorTestActivity.this, "Hi "+lat+" "+longi+" "+name2 , Toast.LENGTH_LONG).show();
+                        //Toast.makeText(FindDoctorTestActivity.this, "Hi "+name2 , Toast.LENGTH_LONG).show();
+                        String doc_info=snapshot.child("speciality").getValue().toString();//"\n Coontact Number"+snapshot.child("appointmentNumber").getValue().toString();
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLng2)
+                                .title(snapshot.child("name").getValue().toString())
+                                .snippet(doc_info));
+                    }
+
 
                 }
             }

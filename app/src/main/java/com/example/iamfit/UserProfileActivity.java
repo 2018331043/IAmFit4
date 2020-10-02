@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class UserProfileActivity extends AppCompatActivity {
-    public TextView height,weight,steps,name,calorieValue,disValue,ageView;
+    public TextView height,weight,steps,name,calorieValue,disValue,ageView,bmi;
     public DatabaseReference databaseReference;
     private BarChart barchart;
     private ArrayList<StepCount> stpc;
@@ -49,6 +49,8 @@ public class UserProfileActivity extends AppCompatActivity {
         calorieValue=findViewById(R.id.textView12);
         disValue=findViewById(R.id.textView10);
         ageView=findViewById(R.id.textView13);
+        bmi=findViewById(R.id.textView7);
+        bmi.setText("N/A");
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

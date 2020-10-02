@@ -40,7 +40,7 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity {
 
     private ImageButton button,medicinebutton,searchButton,profileButton,friendsButton;
-    public TextView stepCount,distanceCount,calorieCount;
+    public TextView stepCount,distanceCount,calorieCount,bmiView;
     public DatabaseReference databaseReference;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
     double previous_step=0;
@@ -65,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
         profileButton=findViewById(R.id.imageButtonProfile);
         friendsButton=findViewById(R.id.imageButtonConnection);
+        bmiView=findViewById(R.id.textViewBMI);
+        bmiView.setText("N/A");
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         time=Calendar.getInstance();
         tstart=time.getTime();
