@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -33,6 +35,8 @@ public class MedicineSetActivity extends AppCompatActivity {
     private Button time1;
     private EditText time1Set;
     int timeHour,timeMinute;
+    CheckBox stomach;
+    ImageButton backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,8 @@ public class MedicineSetActivity extends AppCompatActivity {
 
         time1=(Button) findViewById(R.id.MedicinePageTimeButton);
         time1Set=(EditText)findViewById(R.id.MedicinePageTime);
-
+        backButton=findViewById(R.id.MedicineButtonBack);
+        stomach=findViewById(R.id.MedicinepageCheckBox);
         time1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,18 +66,25 @@ public class MedicineSetActivity extends AppCompatActivity {
             }
         });
         //implementation done
-
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                /*Intent i = new Intent(MedicineSetActivity.this, Medicine_List_Activity.class);
+                startActivity(i);*/
+            }
+        });
         medicineName=findViewById(R.id.editTextTextPersonName2);
        // timeH=findViewById(R.id.dosetime);
         //timeM=findViewById(R.id.dosetime2);
         daysToLast=findViewById(R.id.MedinePageDays);
         setReminder=findViewById(R.id.medicinePageReminderButton);
-        SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
+       /* SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         Gson gson=new Gson();
         String json=gson.toJson(mediciness);
         editor.putString("ListOfTheMedicines",json);
-        editor.apply();
+        editor.apply();*/
         setReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +137,14 @@ public class MedicineSetActivity extends AppCompatActivity {
                 }
                 dif += (timeMinute - cM);
                 loadMedicineData();
-                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName);
+                Integer checkBoxInt;
+                if(stomach.isChecked()){
+                    checkBoxInt=1;
+                }
+                else{
+                    checkBoxInt=0;
+                }
+                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName,checkBoxInt);
                 mediciness.add(medicine);
                 temp = 1;
                 while (temp == 1) {

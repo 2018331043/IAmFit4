@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
         medicinebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, MedicineSetActivity.class);
+                Intent i = new Intent(HomeActivity.this, Medicine_List_Activity.class);
                 startActivity(i);
             }
         });
