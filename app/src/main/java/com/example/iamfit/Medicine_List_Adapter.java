@@ -1,5 +1,6 @@
 package com.example.iamfit;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +16,21 @@ import java.util.List;
 public class Medicine_List_Adapter extends RecyclerView.Adapter<Medicine_List_Adapter.ViewHolder> {
 
     private List<medicinePageModelClass>medicinePageModelClassList;
+    private ResultListener monResultListener;
+    Context context;
 
-    public Medicine_List_Adapter(List<medicinePageModelClass> medicinePageModelClassList) {
+    public Medicine_List_Adapter(Context context,List<medicinePageModelClass> medicinePageModelClassList,ResultListener onResultListener1) {
         this.medicinePageModelClassList = medicinePageModelClassList;
+        this.context = context;
+        this.monResultListener=onResultListener1;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.medicine_item_layout,parent,false);
-        return new ViewHolder(view);
+        View view= LayoutInflater.from(context).inflate(R.layout.medicine_item_layout,parent,false);
+        //return new ViewHolder(view);
+       return new Medicine_List_Adapter.ViewHolder(view,monResultListener);
     }
 
     @Override
@@ -41,15 +47,18 @@ public class Medicine_List_Adapter extends RecyclerView.Adapter<Medicine_List_Ad
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private CheckBox checkBox;
         private TextView medicine,time;
+        ResultListener onResultListener1;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, ResultListener onResultListener1) {
             super(itemView);
             checkBox=itemView.findViewById(R.id.checkBoxMedicine);
             medicine = itemView.findViewById(R.id.medicineItemLayoutMedicine);
             time=  itemView.findViewById(R.id.medicineItemLayoutTime);
+            itemView.setOnClickListener(this);
+            this.onResultListener1=onResultListener1;
         }
 
         public void setData(String a,String b,int c){
@@ -58,5 +67,13 @@ public class Medicine_List_Adapter extends RecyclerView.Adapter<Medicine_List_Ad
             medicine.setText(a);
             time.setText(b);
         }
+
+        @Override
+        public void onClick(View v) {
+            onResultListener1.onResultClick(getAdapterPosition());
+        }
+    }
+    public  interface ResultListener{
+        void onResultClick(int position);
     }
 }

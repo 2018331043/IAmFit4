@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,7 +22,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Medicine_List_Activity extends AppCompatActivity {
+public class Medicine_List_Activity extends AppCompatActivity implements Medicine_List_Adapter.ResultListener {
 
     private RecyclerView recyclerView;
     ImageButton newMedicineButton,backButton;
@@ -69,7 +70,7 @@ public class Medicine_List_Activity extends AppCompatActivity {
         //medicineList.add(new medicinePageModelClass(1,"Napa","At 10.00 PM"));
         //medicineList.add(new medicinePageModelClass(0,"Fexo","At 9.00 PM"));
 
-        Medicine_List_Adapter adapter=new Medicine_List_Adapter(medicineList);
+        Medicine_List_Adapter adapter=new Medicine_List_Adapter(Medicine_List_Activity.this,medicineList,Medicine_List_Activity.this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -84,4 +85,12 @@ public class Medicine_List_Activity extends AppCompatActivity {
             mediciness=new ArrayList<>();
         }
     }
+    @Override
+    public void onResultClick ( int positon){
+        Integer s = positon;
+        Toast.makeText(Medicine_List_Activity.this, "Clicked " + s.toString(), Toast.LENGTH_SHORT).show();
+        //Intent intent = new Intent(this, ParentSearchResultProfileActivity.class);
+       // startActivity(intent);
+    }
+
 }
