@@ -144,7 +144,7 @@ public class MedicineSetActivity extends AppCompatActivity {
                 else{
                     checkBoxInt=0;
                 }
-                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName,checkBoxInt);
+                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName,checkBoxInt,true);
                 mediciness.add(medicine);
                 temp = 1;
                 while (temp == 1) {
@@ -169,21 +169,41 @@ public class MedicineSetActivity extends AppCompatActivity {
                     //Toast.makeText(MedicineSetActivity.this, "Hi" + i+1, Toast.LENGTH_LONG).show();
                     if ( mediciness.get(i).getHour() - cH < 0) {
                         //reqH += 24;
+                        Toast.makeText(MedicineSetActivity.this, "Debuging "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
                        mediciness.get(i).setDif((mediciness.get(i).getHour()+24 - cH) * 60);
-                    } else {
+                    }
+                    else if(mediciness.get(i).getHour() - cH==0 && mediciness.get(i).getMinute()-cM<=0){
+                        mediciness.get(i).setDif((mediciness.get(i).getHour()+24 - cH) * 60);
+                       // mediciness.get(i).setDif(mediciness.get(i).getDif()+(mediciness.get(i).getMinute() - cM));
+                    }
+                    else {
                         mediciness.get(i).setDif((mediciness.get(i).getHour() - cH) * 60);
                     }
+
                     mediciness.get(i).setDif(mediciness.get(i).getDif()+(mediciness.get(i).getMinute() - cM));
 
                     PendingIntent pendingIntent = PendingIntent
                             .getBroadcast(MedicineSetActivity.this, i, intent, 0);
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    if(mediciness.get(i).getDif()<0)continue;
+                   // if(mediciness.get(i).getDif()<0)continue;
                     Toast.makeText(MedicineSetActivity.this, "Hi " +i+" "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
                     alarmManagers.add(alarmManager);
                     alarmManagers.get(i).set(AlarmManager.RTC_WAKEUP,now+mediciness.get(i).getDif()*60*1000
                             ,pendingIntent);
                 }
+                temp = 1;
+                while (temp == 1) {
+                    temp = 0;
+                    for (int i = 0; i < mediciness.size() - 1; i++) {
+                        if (mediciness.get(i).getDif() > mediciness.get(i + 1).getDif()) {
+                            temp = 1;
+                            Medicine te = mediciness.get(i);
+                            mediciness.set(i, mediciness.get(i + 1));
+                            mediciness.set(i + 1, te);
+                        }
+                    }
+                }
+                saveMedicineData();
             }
         });
     }

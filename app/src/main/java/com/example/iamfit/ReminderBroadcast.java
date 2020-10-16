@@ -36,6 +36,8 @@ public class ReminderBroadcast extends BroadcastReceiver {
        //int it=0;
         loadMedicineData(context);
         String MedicineName=mediciness.get(it).getName();
+        mediciness.get(it).setTaken(false);
+        saveMedicineData(context);
         //it++;
        // editor.putInt("Iterator",it);
        // editor.commit();
@@ -49,6 +51,14 @@ public class ReminderBroadcast extends BroadcastReceiver {
                 .build();
         notificationManagerCompat.notify(it+1,notification);
        // medicineNumber++;
+    }
+    private void saveMedicineData(Context context){
+        SharedPreferences sharedPreferences =context.getSharedPreferences("MedicineList",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        Gson gson=new Gson();
+        String json=gson.toJson(mediciness);
+        editor.putString("ListOfTheMedicines",json);
+        editor.apply();
     }
     public void loadMedicineData(Context context){
         mediciness.clear();

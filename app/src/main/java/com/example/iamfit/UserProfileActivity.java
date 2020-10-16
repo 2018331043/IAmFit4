@@ -88,16 +88,9 @@ public class UserProfileActivity extends AppCompatActivity {
                         String temp=stpc.get(s).getDate().toString();
                         String temp2="7890";
                         int j=0;
-                        //temp2.toCharArray()[j]=temp.toCharArray()[6];
-                        /*for(int i=6;i<temp.length();i++){
-                            //temp2.toCharArray()[j]=temp.toCharArray()[i];
-                            //Toast.makeText(UserProfileActivity.this, "Hello "+temp2, Toast.LENGTH_SHORT).show();
-                            //temp2=temp.toCharArray()[i];
-                            j++;
-                        }*/
+
                         return stpc.get(s).getDate().toString();
-                        //return temp2.toString();
-                        //return "Val";
+
                     }
                 };
                 XAxis xAxis = barchart.getXAxis();

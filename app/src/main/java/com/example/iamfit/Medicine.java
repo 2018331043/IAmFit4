@@ -2,18 +2,27 @@ package com.example.iamfit;
 
 public class Medicine {
    private int dif,hour,minute,remainingDays,checkBoxInt;
-
+    private Boolean taken;
     private String Name;
     public Medicine(){
 
     }
-    public Medicine(int dif, int hour, int minute, int remainingDays, String name,int CheckBoxInt) {
+    public Medicine(int dif, int hour, int minute, int remainingDays, String name,int CheckBoxInt,Boolean taken2) {
         this.dif = dif;
         this.hour = hour;
         this.minute = minute;
         this.remainingDays = remainingDays;
         this.checkBoxInt=CheckBoxInt;
+        this.taken=taken2;
         Name = name;
+    }
+
+    public Boolean getTaken() {
+        return taken;
+    }
+
+    public void setTaken(Boolean taken) {
+        this.taken = taken;
     }
 
     public int getCheckBoxInt() {
