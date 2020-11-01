@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,6 +31,8 @@ import java.util.Date;
 public class MedicineSetActivity extends AppCompatActivity {
     public EditText medicineName,daysToLast;
     public static String MEDICINE_NAME="com.example.iamfit.MedicineName";
+    public static String ITERATOR="com.example.iamfit.MedicineName";
+    //public static String INTER="1";
     private ArrayList<Medicine> mediciness=new ArrayList<Medicine>();
     public Button setReminder;
     public SimpleDateFormat sfH,sfM,sfS;
@@ -85,6 +89,11 @@ public class MedicineSetActivity extends AppCompatActivity {
         String json=gson.toJson(mediciness);
         editor.putString("ListOfTheMedicines",json);
         editor.apply();*/
+
+      /* SharedPreferences sharedPreferences =getSharedPreferences("MedicineIndex",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putInt("Index",1);
+        editor.apply();*/
         setReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,10 +102,10 @@ public class MedicineSetActivity extends AppCompatActivity {
                // String minute = timeM.getText().toString();
                // Toast.makeText(MedicineSetActivity.this, timeHour, Toast.LENGTH_LONG).show();
                 String days = daysToLast.getText().toString();
-                SharedPreferences sharedPreferences =getSharedPreferences("MedicineIterator",MODE_PRIVATE);
+               /* SharedPreferences sharedPreferences =getSharedPreferences("MedicineIterator",MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putInt("Iterator",0);
-                editor.apply();
+                editor.apply();*/
                 int length = days.length();
                 int daysrem = 0;
                 int temp = 0;
@@ -105,10 +114,14 @@ public class MedicineSetActivity extends AppCompatActivity {
                     temp++;
                 }
                 temp = 0;
-                Intent intent = new Intent(MedicineSetActivity.this, ReminderBroadcast.class);
 
-                ArrayList<AlarmManager> alarmManagers = new ArrayList<>();
-                //AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+
+
+
+
+                //ArrayList<AlarmManager> alarmManagers = new ArrayList<>();
+
                 Date calendar = Calendar.getInstance().getTime();
 
                 sfH = new SimpleDateFormat("HH");
@@ -144,9 +157,10 @@ public class MedicineSetActivity extends AppCompatActivity {
                 else{
                     checkBoxInt=0;
                 }
-                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName,checkBoxInt,true);
+                Integer ts=loadAndRetrieveIndex();
+                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName,checkBoxInt,true,ts);
                 mediciness.add(medicine);
-                temp = 1;
+                /*temp = 1;
                 while (temp == 1) {
                     temp = 0;
                     for (int i = 0; i < mediciness.size() - 1; i++) {
@@ -157,19 +171,28 @@ public class MedicineSetActivity extends AppCompatActivity {
                             mediciness.set(i + 1, te);
                         }
                     }
-                }
+                }*/
                 saveMedicineData();
-                for (int i = 0; i < mediciness.size(); i++) {
+                /*for (int i = 0; i < mediciness.size(); i++) {
                     Toast.makeText(MedicineSetActivity.this, "found "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
-                }
+                }*/
                 long now = System.currentTimeMillis() - cS * 1000;
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                Intent intent = new Intent(MedicineSetActivity.this, ReminderBroadcast.class);
+                intent.putExtra("medicine name",medName);
+                intent.putExtra("Iterator",ts.toString());
+                PendingIntent pendingIntent = PendingIntent
+                        .getBroadcast(MedicineSetActivity.this, medicine.getIndex(), intent, 0);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,now+medicine.getDif()*60*1000
+                        ,pendingIntent);
+                Toast.makeText(MedicineSetActivity.this, "Medicine Reminder Set Index No" +medicine.getIndex(), Toast.LENGTH_LONG).show();
                // Toast.makeText(MedicineSetActivity.this, "Hi" + dif, Toast.LENGTH_LONG).show();
-                alarmManagers.clear();
-                for (int i = 0; i < mediciness.size(); i++) {
+
+                /*for (int i = 0; i < mediciness.size(); i++) {
                     //Toast.makeText(MedicineSetActivity.this, "Hi" + i+1, Toast.LENGTH_LONG).show();
                     if ( mediciness.get(i).getHour() - cH < 0) {
                         //reqH += 24;
-                        Toast.makeText(MedicineSetActivity.this, "Debuging "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
+                       // Toast.makeText(MedicineSetActivity.this, "Debuging "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
                        mediciness.get(i).setDif((mediciness.get(i).getHour()+24 - cH) * 60);
                     }
                     else if(mediciness.get(i).getHour() - cH==0 && mediciness.get(i).getMinute()-cM<=0){
@@ -182,16 +205,9 @@ public class MedicineSetActivity extends AppCompatActivity {
 
                     mediciness.get(i).setDif(mediciness.get(i).getDif()+(mediciness.get(i).getMinute() - cM));
 
-                    PendingIntent pendingIntent = PendingIntent
-                            .getBroadcast(MedicineSetActivity.this, i, intent, 0);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                   // if(mediciness.get(i).getDif()<0)continue;
-                    Toast.makeText(MedicineSetActivity.this, "Hi " +i+" "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
-                    alarmManagers.add(alarmManager);
-                    alarmManagers.get(i).set(AlarmManager.RTC_WAKEUP,now+mediciness.get(i).getDif()*60*1000
-                            ,pendingIntent);
-                }
-                temp = 1;
+                }*/
+
+                /*temp = 1;
                 while (temp == 1) {
                     temp = 0;
                     for (int i = 0; i < mediciness.size() - 1; i++) {
@@ -202,8 +218,21 @@ public class MedicineSetActivity extends AppCompatActivity {
                             mediciness.set(i + 1, te);
                         }
                     }
-                }
+                }*/
                 saveMedicineData();
+               /* for (int i = 0; i < mediciness.size(); i++) {
+                    //Toast.makeText(MedicineSetActivity.this, "Hi" + i+1, Toast.LENGTH_LONG).show();
+
+                    PendingIntent pendingIntent = PendingIntent
+                            .getBroadcast(MedicineSetActivity.this, mediciness.get(i).getIndex(), intent, 0);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    // if(mediciness.get(i).getDif()<0)continue;
+                    Toast.makeText(MedicineSetActivity.this, "Hi " +i+" "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
+                    alarmManagers.add(alarmManager);
+                    alarmManagers.get(i).set(AlarmManager.RTC_WAKEUP,now+mediciness.get(i).getDif()*60*1000
+                            ,pendingIntent);
+                }
+                saveMedicineData();*/
             }
         });
     }
@@ -225,6 +254,15 @@ public class MedicineSetActivity extends AppCompatActivity {
         String json=gson.toJson(mediciness);
         editor.putString("ListOfTheMedicines",json);
         editor.apply();
+    }
+    private Integer loadAndRetrieveIndex(){
+        SharedPreferences sharedPreferences =getSharedPreferences("MedicineIndex",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        Integer te=sharedPreferences.getInt("Index",1);
+        te++;
+        editor.putInt("Index",te);
+        editor.apply();
+        return (te-1);
     }
 
 }

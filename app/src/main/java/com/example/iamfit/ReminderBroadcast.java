@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
@@ -30,18 +31,29 @@ public class ReminderBroadcast extends BroadcastReceiver {
         notificationManagerCompat=NotificationManagerCompat.from(context);
         //final String MedicineName=intent.getStringExtra(MedicineSetActivity.MedicineNames.get(MedicineSetActivity.medicineNumber));
        // String MedicineName=Medicines.get(medicineNumber).getName();
-        int it=loadAndRetrieveIterator(context);
+        //int it=loadAndRetrieveIterator(context);
 
+        String nameTemp=intent.getStringExtra("medicine name");
+        String value=intent.getStringExtra("Iterator");
+
+        int length = value.length();
+        int index = 0;
+        int temp = 0;
+        for (int i = length - 1; i >= 0; i--) {
+            index += (value.toCharArray()[i] - 48) * Math.pow(10, temp);
+            temp++;
+        }
        // =sharedPreferences.getInt("Iterator",0);
        //int it=0;
         loadMedicineData(context);
-        String MedicineName=mediciness.get(it).getName();
-        mediciness.get(it).setTaken(false);
+        String MedicineName=mediciness.get(index-1).getName();
+        mediciness.get(index-1).setTaken(false);
         saveMedicineData(context);
         //it++;
        // editor.putInt("Iterator",it);
        // editor.commit();
-        Toast.makeText(context,"Hello : "+it, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Hello : "+index, Toast.LENGTH_SHORT).show();
+        Log.v("Debuging.........", "index=" + index);
         Notification notification=new NotificationCompat.Builder(context,App.MEDICINE_TAKE)
                 .setSmallIcon(R.drawable.heart)
                 .setContentTitle(MedicineName)
@@ -49,7 +61,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManagerCompat.notify(it+1,notification);
+        notificationManagerCompat.notify(index+1,notification);
        // medicineNumber++;
     }
     private void saveMedicineData(Context context){
@@ -71,7 +83,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
             mediciness=new ArrayList<>();
         }
     }
-    private int loadAndRetrieveIterator(Context context){
+   /* private int loadAndRetrieveIterator(Context context){
         SharedPreferences sharedPreferences =context.getSharedPreferences("MedicineIterator",MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         int te=sharedPreferences.getInt("Iterator",0);
@@ -79,5 +91,5 @@ public class ReminderBroadcast extends BroadcastReceiver {
         editor.putInt("Iterator",te);
         editor.apply();
         return (te-1);
-    }
+    }*/
 }

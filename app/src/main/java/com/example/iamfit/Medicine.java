@@ -1,13 +1,13 @@
 package com.example.iamfit;
 
 public class Medicine {
-   private int dif,hour,minute,remainingDays,checkBoxInt;
+   private int dif,hour,minute,remainingDays,checkBoxInt,Index;
     private Boolean taken;
     private String Name;
     public Medicine(){
 
     }
-    public Medicine(int dif, int hour, int minute, int remainingDays, String name,int CheckBoxInt,Boolean taken2) {
+    public Medicine(int dif, int hour, int minute, int remainingDays, String name,int CheckBoxInt,Boolean taken2,int Index) {
         this.dif = dif;
         this.hour = hour;
         this.minute = minute;
@@ -15,6 +15,15 @@ public class Medicine {
         this.checkBoxInt=CheckBoxInt;
         this.taken=taken2;
         Name = name;
+        this.Index=Index;
+    }
+
+    public int getIndex() {
+        return Index;
+    }
+
+    public void setIndex(int index) {
+        Index = index;
     }
 
     public Boolean getTaken() {

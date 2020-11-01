@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -33,6 +34,7 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
     private RecyclerView recyclerView;
     ImageButton newMedicineButton,backButton;
     private ArrayList<Medicine> mediciness=new ArrayList<Medicine>();
+    private ArrayList<Medicine> helpermedicinlist=new ArrayList<Medicine>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,7 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
 
 
 
-       /* SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
+        /*SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         Gson gson=new Gson();
         String json=gson.toJson(mediciness);
@@ -71,7 +73,7 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
 
 
         loadMedicineData();
-        Toast.makeText(Medicine_List_Activity.this, "Hi " +mediciness.size(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(Medicine_List_Activity.this, "Hi " +mediciness.size(), Toast.LENGTH_LONG).show();
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -83,14 +85,16 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
         //first one is a int.pass 1 if user have to take the medicine with empty stomach.Otherwise,pass 0 or any other number.
         //second one is a string which contains the medicine name.
         //third one is a string again.To show the time when he or she should take the medicine.recommended: ( "at "+time+" "+pm/am)
+        helpermedicinlist.clear();
         for(Medicine med:mediciness){
-            medicinePageModelClass temp;
+            //medicinePageModelClass temp;
             String time=new String();
             String AMPM=new String();
             Integer hour,minute;
             if(med.getTaken()){
                 continue;
             }
+            helpermedicinlist.add(med);
             if(med.getMinute()<10){
                 time=":0"+med.getMinute();
             }
@@ -105,8 +109,15 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
                 hour=med.getHour();
                 AMPM=" AM";
             }
-            temp=new medicinePageModelClass(med.getCheckBoxInt(),med.getName(),"At "+hour+time+AMPM);
-            medicineList.add(temp);
+            if(hour==0){
+                medicinePageModelClass temp=new medicinePageModelClass(med.getCheckBoxInt(),med.getName(),"At "+12+time+AMPM);
+                medicineList.add(temp);
+            }else{
+                medicinePageModelClass temp=new medicinePageModelClass(med.getCheckBoxInt(),med.getName(),"At "+hour+time+AMPM);
+                medicineList.add(temp);
+            }
+
+
         }
         Medicine_List_Adapter adapter=new Medicine_List_Adapter(Medicine_List_Activity.this,medicineList,Medicine_List_Activity.this);
         recyclerView.setAdapter(adapter);
@@ -142,30 +153,54 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        //loadAndRetrieveIterator();
                         Intent intent = new Intent(Medicine_List_Activity.this, ReminderBroadcast.class);
-                        int it=loadAndRetrieveIterator(Medicine_List_Activity.this);
+                        //int it=loadAndRetrieveIterator(Medicine_List_Activity.this);
+
                         PendingIntent pendingIntent = PendingIntent
-                                .getBroadcast(Medicine_List_Activity.this, positon+it, intent, 0);
+                                .getBroadcast(Medicine_List_Activity.this, helpermedicinlist.get(positon).getIndex(), intent, 0);
                         Calendar calender =Calendar.getInstance();
+                        int cnt1=0;
+                        for(int i=0;i<mediciness.size();i++){
+                            if(mediciness.get(i).getIndex()== helpermedicinlist.get(positon).getIndex()){
+                                cnt1=i;
+                                break;
+                            }
+                        }
+                        intent.putExtra("medicine name",mediciness.get(cnt1).getName());
+                        Integer te=mediciness.get(cnt1).getIndex();
+                        intent.putExtra("Iterator",te.toString());
                         int hour=calender.get(Calendar.HOUR_OF_DAY);
                         int minute=calender.get(Calendar.MINUTE);
                         int cS=calender.get(Calendar.SECOND);
-                        if(mediciness.get(positon).getHour()<hour){
-                            hour=(mediciness.get(positon).getHour()+24)-hour;
-                        }else{
-                            hour=mediciness.get(positon).getHour()-hour;
+                        if(mediciness.get(cnt1).getHour()<hour){
+                            hour=(mediciness.get( cnt1).getHour()+24)-hour;
+                        }else if(mediciness.get(cnt1).getHour()==hour){
+                            //hour=mediciness.get( cnt1).getHour()-hour;
+                            hour=24;
                         }
-                        minute=mediciness.get(positon).getMinute()-minute;
+                        else{
+                            hour=mediciness.get( cnt1).getHour()-hour;
+                        }
+                        minute=mediciness.get( cnt1).getMinute()-minute;
                         hour=hour*60+minute;
-                        if(mediciness.get(positon).getRemainingDays()>0){
-                            mediciness.get(positon).setRemainingDays(mediciness.get(positon).getRemainingDays()-1);
-                            mediciness.get(positon).setDif(hour);
-                            mediciness.get(positon).setTaken(true);
+                        Log.v("Debuging.........", "Baire");
+                        if(mediciness.get(cnt1).getRemainingDays()>1){
+                            mediciness.get(cnt1).setRemainingDays(mediciness.get( cnt1).getRemainingDays()-1);
+                            mediciness.get(cnt1).setDif(hour);
+                            mediciness.get(cnt1).setTaken(true);
+                            Log.v("Debuging.........", "Vitore");
                             long now = System.currentTimeMillis() - cS * 1000;
-                            alarmManager.set(AlarmManager.RTC_WAKEUP,now+mediciness.get(positon).getDif()*60*1000
+                            //Toast.makeText(Medicine_List_Activity.this, "Time " +mediciness.get(cnt1).getDif(), Toast.LENGTH_SHORT).show();
+                            alarmManager.set(AlarmManager.RTC_WAKEUP,now+mediciness.get(cnt1).getDif()*60*1000
                                     ,pendingIntent);
+                            //Toast.makeText(Medicine_List_Activity.this, "Time " +(mediciness.get(cnt1).getDif()-1435), Toast.LENGTH_SHORT).show();
                         }
-                        Integer temp;
+                        else{
+                            //mediciness.get(cnt1).setRemainingDays(mediciness.get( cnt1).getRemainingDays()-1);
+                            mediciness.get(cnt1).setTaken(true);
+                        }
+                        /*Integer temp;
                         temp = 1;
                         while (temp == 1) {
                             temp = 0;
@@ -177,11 +212,12 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
                                     mediciness.set(i + 1, te);
                                 }
                             }
-                        }
+                        }*/
                         saveMedicineData();
                         /*Intent i = new Intent(Medicine_List_Activity.this, Medicine_List_Activity.class);
                         startActivity(i);*/
                         List<medicinePageModelClass> medicineList=new ArrayList<>();
+                        helpermedicinlist.clear();
                         for(Medicine med:mediciness){
                             medicinePageModelClass temps;
                             String time=new String();
@@ -190,12 +226,14 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
                             if(med.getTaken()){
                                continue;
                             }
+                            helpermedicinlist.add(med);
                             if(med.getMinute()<10){
                                 time=":0"+med.getMinute();
                             }
                             else{
                                 time= ":"+med.getMinute();
                             }
+                            //if(med.getHour()>12)
                             if(med.getHour()>12){
                                 hours=(med.getHour()-12);
                                 AMPM=" PM";
@@ -218,14 +256,14 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
         //Intent intent = new Intent(this, ParentSearchResultProfileActivity.class);
        // startActivity(intent);
     }
-    private int loadAndRetrieveIterator(Context context){
-        SharedPreferences sharedPreferences =context.getSharedPreferences("MedicineIterator",MODE_PRIVATE);
+   /* private void loadAndRetrieveIterator(){
+        SharedPreferences sharedPreferences =getSharedPreferences("MedicineIterator",MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         int te=sharedPreferences.getInt("Iterator",0);
-        te++;
+        te--;
         editor.putInt("Iterator",te);
         editor.apply();
-        return (te-1);
-    }
+        //return (te);
+    }*/
 
 }
