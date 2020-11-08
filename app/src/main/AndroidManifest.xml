@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/iamfitlauncher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".About_US_Activity"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".About_US_Activity" />
         <activity android:name=".Medicine_List_Activity" />
         <activity android:name=".ParentSearchResultProfileActivity" />
 
