@@ -14,12 +14,16 @@
         android:roundIcon="@mipmap/iamfitlauncher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Medicine_List_Activity"></activity>
+        <activity android:name=".About_US_Activity"></activity>
+        <activity android:name=".Medicine_List_Activity" />
         <activity android:name=".ParentSearchResultProfileActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".FindDoctorTestActivity" />
         <activity android:name=".SearchBox" />
@@ -28,7 +32,7 @@
         <activity
             android:name=".ParentSearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
