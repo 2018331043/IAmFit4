@@ -5,7 +5,7 @@
     android:id="@+id/page1TextName"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homepage1"
+    android:background="@drawable/gradienr_profile"
     tools:context=".MainActivity">
 
 
@@ -101,32 +101,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/signUpPageEmail" />
 
             <EditText
-                android:id="@+id/signUpPageHeight"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_baseline_height_24"
-                android:drawablePadding="10dp"
-                android:ems="10"
-                android:hint="Height(ft/inches)"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signUpPagePassword" />
-
-            <EditText
                 android:id="@+id/signUpPageWeight"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:drawableStart="@drawable/ic_baseline_line_weight_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
                 android:hint="Weight"
                 android:inputType="number"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signUpPageHeight" />
+                app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -138,7 +124,7 @@
                 android:textSize="15sp"
                 android:textStyle="normal|bold|italic"
                 app:layout_constraintStart_toEndOf="@+id/signUpPageWeight"
-                app:layout_constraintTop_toBottomOf="@+id/signUpPageHeight" />
+                app:layout_constraintTop_toTopOf="@+id/signUpPageWeight" />
 
             <CheckBox
                 android:id="@+id/signUpPageCheckBoxMale"
@@ -201,6 +187,64 @@
                 app:layout_constraintStart_toStartOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/textView13"
                 tools:text="12.03.2019" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_baseline_height_24"
+                android:drawablePadding="5dp"
+                android:text="Height :"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signUpPagePassword" />
+
+            <EditText
+                android:id="@+id/editTextNumberHeightFt"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="@+id/textView21"
+                app:layout_constraintStart_toEndOf="@+id/textView21"
+                app:layout_constraintTop_toTopOf="@+id/textView21" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="feet"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextNumberHeightFt"
+                app:layout_constraintStart_toEndOf="@+id/editTextNumberHeightFt"
+                app:layout_constraintTop_toTopOf="@+id/editTextNumberHeightFt" />
+
+            <EditText
+                android:id="@+id/editTextNumberInches"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="@+id/textView23"
+                app:layout_constraintStart_toEndOf="@+id/textView23"
+                app:layout_constraintTop_toTopOf="@+id/textView23" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="inches"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextNumberInches"
+                app:layout_constraintStart_toEndOf="@+id/editTextNumberInches"
+                app:layout_constraintTop_toTopOf="@+id/editTextNumberInches" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
