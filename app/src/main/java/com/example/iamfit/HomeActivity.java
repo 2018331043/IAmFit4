@@ -39,7 +39,7 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageButton button,medicinebutton,searchButton,profileButton,friendsButton;
+    private ImageButton settingsButton,medicinebutton,searchButton,profileButton,friendsButton;
     public TextView stepCount,distanceCount,calorieCount,bmiView;
     public DatabaseReference databaseReference;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        button = findViewById(R.id.imageButtonHomeSettings);
+        settingsButton = findViewById(R.id.imageButtonHomeSettings);
         stepCount=findViewById(R.id.textViewSteps);
         searchButton=findViewById(R.id.imageButtonHomeSearch);
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
@@ -209,15 +209,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor=sharedPreferences.edit();
-                editor.putString("In","0");
-                editor.commit();
-                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+
+                startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
             }
         });
     }

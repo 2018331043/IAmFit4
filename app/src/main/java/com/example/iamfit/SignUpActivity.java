@@ -32,7 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText emailid,pass,name,height,weight;
+    EditText emailid,pass,name,height1,weight,height2;
     TextView text;
     Button button;
     private ImageButton c1;
@@ -51,7 +51,8 @@ public class SignUpActivity extends AppCompatActivity {
         pass =findViewById(R.id.signUpPagePassword);
         button=findViewById(R.id.signUpButton);
         name=findViewById(R.id.signUpPageName);
-        height=findViewById(R.id.signUpPageHeight);
+        height1=findViewById(R.id.editTextNumberHeightFt);
+        height2=findViewById(R.id.editTextNumberInches);
         weight=findViewById(R.id.signUpPageWeight);
         text=findViewById(R.id.signUpPageTextLogin);
         gender1=findViewById(R.id.signUpPageCheckBoxMale);
@@ -95,7 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String email= emailid.getText().toString();
                 String pwd=pass.getText().toString();
                 String weightss=weight.getText().toString();
-                String heightss=height.getText().toString();
+                String heightss=height1.getText().toString()+"."+height1.getText().toString();
                 if(email.isEmpty()){
                     emailid.setError("Please Enter A valid email Id");
                     emailid.requestFocus();
@@ -112,8 +113,8 @@ public class SignUpActivity extends AppCompatActivity {
                     weight.requestFocus();
                 }
                 else if(heightss.isEmpty()){
-                    height.setError("Please Enter A valid email Id");
-                    height.requestFocus();
+                    height1.setError("Please Enter A valid height");
+                    height1.requestFocus();
                 }
                 else if(!pwd.isEmpty()&&!email.isEmpty()){
                     mAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
@@ -126,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 editor.commit();
                                 String email= emailid.getText().toString();
                                 String weight1= weight.getText().toString();
-                                String height1=height.getText().toString();
+                                String heightsed=height1.getText().toString()+"."+height1.getText().toString();
                                 String name1=name.getText().toString();
                                 if(gender1.isChecked())Gender="Male";
                                 else if(gender2.isChecked())Gender="Female";
@@ -143,7 +144,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 ArrayList<StepCount> stepCounts=new ArrayList<>();
                                 StepCount stpc=new StepCount(curD,0);
                                 stepCounts.add(stpc);
-                                User info =new User(name1,email,height1,weight1,stepCounts,Month,Day,Year,Gender);
+                                User info =new User(name1,email,heightsed,weight1,stepCounts,Month,Day,Year,Gender);
                                 FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
