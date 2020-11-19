@@ -35,7 +35,7 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
     private EditText searcText;
     private Button searchButton;
     private RecyclerView recyclerView;
-    public DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
     ArrayList<String> names;
     ArrayList<String> Uids;
@@ -45,7 +45,7 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_box);
-        databaseReference= FirebaseDatabase.getInstance().getReference();
+        databaseReference= FirebaseDatabase.getInstance().getReference("Users");
         searcText=findViewById(R.id.editTextTextPersonName3);
         //searchButton=findViewById(R.id.searchButton);
         recyclerView=findViewById(R.id.searchResult);
@@ -80,8 +80,7 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
     }
 
     private void setAdapter(final String string) {
-
-        databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 names.clear();
@@ -89,8 +88,45 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
                 int cnt=0;
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     String uid= snapshot.getKey();
-                    String name=snapshot.child("name").getValue().toString();
+                    String name=snapshot.child("name").getValue(String.class);
+                    //String mail=snapshot.child("email").getValue(String.class);
+                   // Toast.makeText(ParentSearchActivity.this, "found "+name, Toast.LENGTH_SHORT).show();
+                    //User temp=snapshot.getValue(User.class);
+
+                    //String name=temp.getName();
                     if(name.toLowerCase().contains(string.toLowerCase())){
+                       // Toast.makeText(ParentSearchActivity.this, "found", Toast.LENGTH_SHORT).show();
+                        names.add(name);
+                        Uids.add(uid);
+                        cnt++;
+                    }
+                    if(cnt>=7)break;
+                }
+                searchAdapter =  new SearchAdapter(ParentSearchActivity.this,names,Uids,ParentSearchActivity.this);
+                recyclerView.setAdapter(searchAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        /*databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                names.clear();
+                Uids.clear();
+                int cnt=0;
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String uid= snapshot.getKey();
+                    String name=snapshot.child("name").getValue(String.class);
+                    String mail=snapshot.child("email").getValue(String.class);
+                    //Toast.makeText(ParentSearchActivity.this, "found", Toast.LENGTH_SHORT).show();
+                    //User temp=snapshot.getValue(User.class);
+
+                    //String name=temp.getName();
+                    /*if(name.toLowerCase().contains(string.toLowerCase())){
                        // Toast.makeText(ParentSearchActivity.this, "found", Toast.LENGTH_SHORT).show();
                         names.add(name);
                         Uids.add(uid);
@@ -107,12 +143,12 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
         @Override
         public void onResultClick ( int positon){
             Integer s = positon;
-            Toast.makeText(ParentSearchActivity.this, "Clicked " + s.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ParentSearchActivity.this, "Clicked " + s.toString(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, ParentSearchResultProfileActivity.class);
             intent.putExtra(EXTRA_USERID, Uids.get(s));
             startActivity(intent);
