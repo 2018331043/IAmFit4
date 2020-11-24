@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class User {
     private String Name,Email,height,weight,Gender;
-    private  Integer month,day,year;
+    private  Integer month,day,year,currentStepGoal;
     private ArrayList<StepCount> stepCounts;
 
 
@@ -64,11 +64,19 @@ public class User {
         this.stepCounts = stepCounts;
     }
 
+    public Integer getCurrentStepGoal() {
+        return currentStepGoal;
+    }
+
+    public void setCurrentStepGoal(Integer currentStepGoal) {
+        this.currentStepGoal = currentStepGoal;
+    }
+
     public User() {
 
     }
 
-    public User(String name, String email, String height, String weight, ArrayList<StepCount> stepCounts,Integer month,Integer day,Integer year,String gender) {
+    public User(String name, String email, String height, String weight, ArrayList<StepCount> stepCounts,Integer month,Integer day,Integer year,String gender,Integer goal) {
         Name = name;
         Email = email;
         this.height = height;
@@ -78,6 +86,7 @@ public class User {
         this.day=day;
         this.year=year;
         this.Gender=gender;
+        this.currentStepGoal=goal;
     }
 
     public String getName() {

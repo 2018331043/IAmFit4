@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/iamfitlauncher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileViewActivity"></activity>
+        <activity android:name=".CalorieCounter"></activity>
+        <activity android:name=".ProfileViewActivity" />
         <activity android:name=".ChangeSettingsActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".About_US_Activity" />

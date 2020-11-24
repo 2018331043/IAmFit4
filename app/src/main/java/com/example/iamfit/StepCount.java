@@ -2,7 +2,7 @@ package com.example.iamfit;
 
 public class StepCount {
     private String Date;
-    private Integer Steps;
+    private Integer Steps,goal=8000;
 
     public String getDate() {
         return Date;
@@ -23,8 +23,17 @@ public class StepCount {
     public StepCount() {
     }
 
-    public StepCount(String date, Integer steps) {
+    public Integer getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Integer goal) {
+        this.goal = goal;
+    }
+
+    public StepCount(String date, Integer steps,Integer goal) {
         Date = date;
         Steps = steps;
+        this.goal=goal;
     }
 }

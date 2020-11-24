@@ -142,9 +142,9 @@ public class SignUpActivity extends AppCompatActivity {
                                 editor2.putString("curDate",curD);
                                 editor2.commit();
                                 ArrayList<StepCount> stepCounts=new ArrayList<>();
-                                StepCount stpc=new StepCount(curD,0);
+                                StepCount stpc=new StepCount(curD,0,8000);
                                 stepCounts.add(stpc);
-                                User info =new User(name1,email,heightsed,weight1,stepCounts,Month,Day,Year,Gender);
+                                User info =new User(name1,email,heightsed,weight1,stepCounts,Month,Day,Year,Gender,8000);
                                 FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -183,5 +183,9 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
+}
 

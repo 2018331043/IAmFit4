@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
     private User searchedUser;
     public DatabaseReference databaseReference;
     private BarChart barchart;
+    private ImageView addParent;
     List<BarEntry> entries;
     private ArrayList<StepCount> stpc;
     @Override
@@ -50,6 +54,7 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
         calorieValue=findViewById(R.id.textView12);
         ageView=findViewById(R.id.textView13);
         bmi=findViewById(R.id.textView7);
+        addParent=findViewById(R.id.imageView9);
         bmi.setText("N/A");
         name=findViewById(R.id.textView);
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -141,7 +146,12 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
 
             }
         });
-
+        addParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ParentSearchResultProfileActivity.this, "Add as your parent??", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

@@ -54,6 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putString("In","0");
                 editor.commit();
+                Intent i = new Intent(SettingsActivity.this, LoginActivity.class);
+                startActivity(i);
             }
         });
         editDetailsButton.setOnClickListener(new View.OnClickListener() {

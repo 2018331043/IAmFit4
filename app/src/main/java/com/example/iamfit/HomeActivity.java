@@ -39,7 +39,7 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageButton settingsButton,medicinebutton,searchButton,profileButton,friendsButton;
+    private ImageButton settingsButton,medicinebutton,searchButton,profileButton,friendsButton,calorieCounter;
     public TextView stepCount,distanceCount,calorieCount,bmiView;
     public DatabaseReference databaseReference;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
@@ -74,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         sdate=sf.format(tstart);
         distanceCount=findViewById(R.id.textViewDistance);
         calorieCount=findViewById(R.id.textViewcalorie);
+        calorieCounter=findViewById(R.id.imageButtonGraph);
         temp1=0;
         temp1+=sdate.toCharArray()[1]-48;
         temp1+=10*(sdate.toCharArray()[0]-48);
@@ -110,6 +111,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        calorieCounter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, CalorieCounter.class);
+                startActivity(i);
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -122,10 +130,10 @@ public class HomeActivity extends AppCompatActivity {
                 curD = datef.format(calendar);
                 iter=stpc.size()-1;
                 if (!stpc.get(stpc.size() - 1).getDate().toString().equals(curD)) {
-                    StepCount temp=new StepCount(curD,0);
+                    StepCount temp=new StepCount(curD,0,currentUser2.getCurrentStepGoal());
                     stpc.add(temp);
                     databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("stepCounts").setValue(stpc);
-                    stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString());
+                    stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString()+"/"+currentUser2.getStepCounts().get(stpc.size() - 1).getGoal());
                     SharedPreferences sharedPreferences2=getSharedPreferences("DateSaver", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor2=sharedPreferences2.edit();
                     editor2.putString("curDate",curD);
@@ -133,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 } else {
                     vals=currentUser2.getStepCounts().get(stpc.size() - 1).getSteps();
-                    stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString());
+                    stepCount.setText(currentUser2.getStepCounts().get(stpc.size() - 1).getSteps().toString()+"/"+currentUser2.getStepCounts().get(stpc.size() - 1).getGoal());
                 }
                 Float dis = currentUser2.getStepCounts().get(stpc.size() - 1).getSteps() * .76f;
                 distanceCount.setText(String.format("%.2f",dis).toString() + " m");
