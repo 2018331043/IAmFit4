@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
+        android:id="@+id/profile_image_recyclerview_child"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="62dp"
@@ -36,9 +36,9 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="normal|bold"
-        app:layout_constraintEnd_toEndOf="@+id/profile_image"
-        app:layout_constraintStart_toStartOf="@+id/profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+        app:layout_constraintEnd_toEndOf="@+id/profile_image_recyclerview_child"
+        app:layout_constraintStart_toStartOf="@+id/profile_image_recyclerview_child"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_recyclerview_child" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView8"
