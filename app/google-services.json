@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "892053329112-ueofag4ggqnmvp34fevd12e7f2v6kd9h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.iamfit",
+            "certificate_hash": "fc863bd3be5c932fb98d50a6509b275bf4f301b9"
+          }
+        },
+        {
           "client_id": "892053329112-eg77foak8j5v5iveq0ea8icpth9dgulh.apps.googleusercontent.com",
           "client_type": 3
         }
