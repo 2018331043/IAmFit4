@@ -144,7 +144,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 ArrayList<StepCount> stepCounts=new ArrayList<>();
                                 StepCount stpc=new StepCount(curD,0,8000);
                                 stepCounts.add(stpc);
-                                User info =new User(name1,email,heightsed,weight1,stepCounts,Month,Day,Year,Gender,8000);
+                                User info =new User(name1,email,heightsed,weight1,stepCounts,Month,Day,Year,Gender,8000,"0");
                                 FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(info).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

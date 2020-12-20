@@ -21,8 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.net.URI;
 import java.util.UUID;
@@ -49,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Uri imageUri;
     private ImageView profilePic;
     private FirebaseStorage firebaseStorage;
+    private String downLoadUrl=new String();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +78,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User currentUser =dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                 displayName.setText(currentUser.getName());
+                if(!currentUser.getImageurl().toString().equals("0")){
+                    Picasso.get().load(currentUser.getImageurl()).into(profilePic);
+                }
             }
 
             @Override
@@ -80,7 +88,6 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
-
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,17 +144,41 @@ public class SettingsActivity extends AppCompatActivity {
 
         final String UID=FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         //final String UID= UUID.randomUUID().toString();
-        StorageReference riversRef = storageReference.child("images/"+UID+".jpg");
+        final StorageReference riversRef = storageReference.child("images/"+UID+".jpg");
         profilePic.setImageURI(imageUri);
         //Toast.makeText(SettingsActivity.this, "Upload Unsuccessful", Toast.LENGTH_LONG).show();
         //if(riversRef==null){
             //Toast.makeText(SettingsActivity.this, "Upload Unsuccessful"+riversRef, Toast.LENGTH_LONG).show();
         //}
-        riversRef.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        final UploadTask uploadTask = riversRef.putFile(imageUri);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         pd.dismiss();
+                        //String image= UploadTask.getDownloadUrl();
+                        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+
+                                }
+                                // Continue with the task to get the download URL
+                                return riversRef.getDownloadUrl();
+
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
+                                    downLoadUrl = task.getResult().toString();
+                                    databaseReference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("imageurl").setValue(downLoadUrl);
+                                    Toast.makeText(SettingsActivity.this, "Hi "+downLoadUrl, Toast.LENGTH_LONG).show();
+
+                                }
+                            }
+                        });
+                        //Uri dwUri=taskSnapshot.getUploadSessionUri();
                         // Get a URL to the uploaded content
                         //Uri downloadUrl = taskSnapshot.getDownloadUrl();
                         //Snackbar.make(findViewById(R.id.content),"Image Uploaded",Snackbar.LENGTH_LONG).show();
@@ -168,5 +199,6 @@ public class SettingsActivity extends AppCompatActivity {
                         pd.setMessage("Progress: "+(int)progressPercent+"%");
                     }
                 });
+
     }
 }

@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity {
         calorieCounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, CalorieCounter.class);
+                Intent i = new Intent(HomeActivity.this,ParentChildListActivity.class);
                 startActivity(i);
             }
         });
