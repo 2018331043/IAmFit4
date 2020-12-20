@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +58,7 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
         addParent=findViewById(R.id.imageView9);
         bmi.setText("N/A");
         name=findViewById(R.id.textView);
+
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -72,7 +74,11 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
                         break;
                     }
 
+
                 }
+                /*if(searchedUser..equals("0")){
+                    Toast.makeText(ParentSearchResultProfileActivity.this, "Hello ", Toast.LENGTH_SHORT).show();
+                }*/
                 name.setText(searchedUser.getName());
                 height.setText(searchedUser.getHeight());
                 weight.setText(searchedUser.getWeight());
@@ -149,7 +155,49 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
         addParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ParentSearchResultProfileActivity.this, "Add as your parent??", Toast.LENGTH_SHORT).show();
+
+                databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //if( !databaseReference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).equals("0")){
+
+
+                        //}
+                        //User searchUser=dataSnapshot.child()
+                        User currentUser=new User();
+                        String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            String uidk= snapshot.getKey();
+                            if(uidk.equals(user)){
+                                searchedUser=snapshot.getValue(User.class);
+                                break;
+                            }
+
+                        }
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            String uids= snapshot.getKey();
+                            if(uids.equals(uid)){
+                                currentUser=snapshot.getValue(User.class);
+                                break;
+                            }
+
+                        }
+                        if(currentUser.getParent().equals("0")){
+                            Toast.makeText(ParentSearchResultProfileActivity.this, "Hello ", Toast.LENGTH_SHORT).show();
+                            ArrayList<String> children=searchedUser.getChilds();
+                            if(children.size()==1&&children.get(0).equals("0")){
+                                children.clear();
+                            }
+                            children.add(uid);
+                            databaseReference.child("Users").child(user).child("childs").setValue(children);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 

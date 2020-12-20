@@ -3,9 +3,10 @@ package com.example.iamfit;
 import java.util.ArrayList;
 
 public class User {
-    private String Name,Email,height,weight,Gender,imageurl;
+    private String Name,Email,height,weight,Gender,imageurl,parent;
     private  Integer month,day,year,currentStepGoal;
     private ArrayList<StepCount> stepCounts;
+    private ArrayList<String> childs;
 
     public String getImageurl() {
         return imageurl;
@@ -83,7 +84,7 @@ public class User {
 
     }
 
-    public User(String name, String email, String height, String weight, ArrayList<StepCount> stepCounts,Integer month,Integer day,Integer year,String gender,Integer goal,String imageurl) {
+    public User(String name, String email, String height, String weight, ArrayList<StepCount> stepCounts,Integer month,Integer day,Integer year,String gender,Integer goal,String imageurl,String parent,ArrayList<String> childs) {
         Name = name;
         Email = email;
         this.height = height;
@@ -95,6 +96,24 @@ public class User {
         this.Gender=gender;
         this.currentStepGoal=goal;
         this.imageurl=imageurl;
+        this.childs=childs;
+        this.parent=parent;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public ArrayList<String> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(ArrayList<String> childs) {
+        this.childs = childs;
     }
 
     public String getName() {
