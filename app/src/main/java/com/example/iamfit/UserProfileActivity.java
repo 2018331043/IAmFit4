@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +34,7 @@ public class UserProfileActivity extends AppCompatActivity {
     public DatabaseReference databaseReference;
     private BarChart barchart;
     private ArrayList<StepCount> stpc;
+    private ImageView profilepic;
     List<BarEntry> entries;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class UserProfileActivity extends AppCompatActivity {
         disValue=findViewById(R.id.textView10);
         ageView=findViewById(R.id.textView13);
         bmi=findViewById(R.id.textView7);
+        profilepic=findViewById(R.id.profile_image_recyclerview_child);
         bmi.setText("N/A");
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -60,6 +64,9 @@ public class UserProfileActivity extends AppCompatActivity {
                         //String name=snapshot.child("name").getValue().toString();
                          User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                          stpc = currentUser2.getStepCounts();
+                        if(!currentUser2.getImageurl().toString().equals("0")){
+                            Picasso.get().load(currentUser2.getImageurl()).into(profilepic);
+                        }
                         name.setText(currentUser2.getName().toString());
                         height.setText(currentUser2.getHeight().toString());
                         weight.setText(currentUser2.getWeight().toString());

@@ -89,6 +89,8 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     String uid= snapshot.getKey();
                     String name=snapshot.child("name").getValue(String.class);
+
+                    //snapshot.gechild("imageurl")
                     //String mail=snapshot.child("email").getValue(String.class);
                    // Toast.makeText(ParentSearchActivity.this, "found "+name, Toast.LENGTH_SHORT).show();
                     //User temp=snapshot.getValue(User.class);
@@ -103,6 +105,7 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
                     if(cnt>=7)break;
                 }
                 searchAdapter =  new SearchAdapter(ParentSearchActivity.this,names,Uids,ParentSearchActivity.this);
+                //defaultUSER(Uids);
                 recyclerView.setAdapter(searchAdapter);
             }
 
@@ -152,5 +155,12 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
             Intent intent = new Intent(this, ParentSearchResultProfileActivity.class);
             intent.putExtra(EXTRA_USERID, Uids.get(s));
             startActivity(intent);
+        }
+        private void defaultUSER (ArrayList<String> UID){
+            if(UID.size()!=0){
+                for(String user :UID){
+                    databaseReference.child(user).child("imageurl").setValue("0");
+                }
+            }
         }
     }
