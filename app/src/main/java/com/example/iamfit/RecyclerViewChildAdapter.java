@@ -1,5 +1,6 @@
 package com.example.iamfit;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,14 @@ import java.util.List;
 
 public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewChildAdapter.ViewHolder1> {
 
-    public RecyclerViewChildAdapter(List<RecyclerViewChildModelClass> modelClassList) {
+    private List<RecyclerViewChildModelClass>modelClassList;
+    private Context context;
+    public RecyclerViewChildAdapter(Context context,List<RecyclerViewChildModelClass> modelClassList) {
+        this.context=context;
         this.modelClassList = modelClassList;
     }
 
-    private List<RecyclerViewChildModelClass>modelClassList;
+
 
     @NonNull
     @Override
@@ -28,7 +32,7 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder1 holder, int position) {
-        int resource=modelClassList.get(position).getImageResource();
+        String resource=modelClassList.get(position).getImageResource();
         String name=modelClassList.get(position).getName();
         String age=modelClassList.get(position).getAge();
         holder.setData1(resource,name,age);
@@ -50,8 +54,9 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
             textView2=itemView.findViewById(R.id.textView38);
             imageView=itemView.findViewById(R.id.profile_image_recyclerview_child);
         }
-        public void setData1(int resource,String a,String b){
-            imageView.setImageResource(resource);
+        public void setData1(String resource,String a,String b){
+            //imageView.setImageResource(resource);
+
             textView1.setText(a);
             textView2.setText(b);
         }
