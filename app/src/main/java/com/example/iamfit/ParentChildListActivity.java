@@ -1,12 +1,18 @@
 package com.example.iamfit;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class ParentChildListActivity extends AppCompatActivity {
+public class ParentChildListActivity extends AppCompatActivity implements RecyclerViewChildAdapter.ResultListener {
 
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference;
@@ -83,7 +89,7 @@ public class ParentChildListActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    RecyclerViewChildAdapter adapter=new RecyclerViewChildAdapter(ParentChildListActivity.this,childList);
+                    RecyclerViewChildAdapter adapter=new RecyclerViewChildAdapter(ParentChildListActivity.this,childList,ParentChildListActivity.this);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -95,5 +101,10 @@ public class ParentChildListActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onResultClick (final int positon){
+        Integer s = positon;
+        Toast.makeText(ParentChildListActivity.this, "Clicked "+s, Toast.LENGTH_LONG).show();
     }
 }

@@ -16,9 +16,11 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
 
     private List<RecyclerViewChildModelClass>modelClassList;
     private Context context;
-    public RecyclerViewChildAdapter(Context context,List<RecyclerViewChildModelClass> modelClassList) {
+    private RecyclerViewChildAdapter.ResultListener monResultListener;
+    public RecyclerViewChildAdapter(Context context,List<RecyclerViewChildModelClass> modelClassList,RecyclerViewChildAdapter.ResultListener monResultListener) {
         this.context=context;
         this.modelClassList = modelClassList;
+        this.monResultListener=monResultListener;
     }
 
 
@@ -27,7 +29,7 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
     @Override
     public ViewHolder1 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_child,parent,false);
-        return new ViewHolder1(view);
+        return new RecyclerViewChildAdapter.ViewHolder1(view,monResultListener);
     }
 
     @Override
@@ -44,15 +46,18 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
         return modelClassList.size();
     }
 
-    class ViewHolder1 extends RecyclerView.ViewHolder{
+    class ViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener{
         de.hdodenhof.circleimageview.CircleImageView imageView;
         TextView textView1,textView2;
+        RecyclerViewChildAdapter.ResultListener onResultListener1;
 
-        public ViewHolder1(@NonNull View itemView) {
+        public ViewHolder1(@NonNull View itemView,RecyclerViewChildAdapter.ResultListener  onResultListener1) {
             super(itemView);
             textView1=itemView.findViewById(R.id.textView37);
             textView2=itemView.findViewById(R.id.textView38);
             imageView=itemView.findViewById(R.id.profile_image_recyclerview_child);
+            itemView.setOnClickListener(this);
+            this.onResultListener1=onResultListener1;
         }
         public void setData1(String resource,String a,String b){
             //imageView.setImageResource(resource);
@@ -60,5 +65,12 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
             textView1.setText(a);
             textView2.setText(b);
         }
+        @Override
+        public void onClick(View v) {
+            onResultListener1.onResultClick(getAdapterPosition());
+        }
+    }
+    public  interface ResultListener{
+        void onResultClick(int position);
     }
 }
