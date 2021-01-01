@@ -1,6 +1,8 @@
 package com.example.iamfit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -27,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MedicineSetActivity extends AppCompatActivity {
     public EditText medicineName,daysToLast;
@@ -37,7 +40,9 @@ public class MedicineSetActivity extends AppCompatActivity {
     public Button setReminder;
     public SimpleDateFormat sfH,sfM,sfS;
     private Button time1;
-    private EditText time1Set;
+    //private EditText time1Set;
+
+    private RecyclerView recyclerViewTimeShow;
     int timeHour,timeMinute;
     CheckBox stomach;
     ImageButton backButton;
@@ -48,9 +53,31 @@ public class MedicineSetActivity extends AppCompatActivity {
         //implementing time picker dialogue
 
         time1=(Button) findViewById(R.id.MedicinePageTimeButton);
-        time1Set=(EditText)findViewById(R.id.MedicinePageTime);
+        //time1Set=(EditText)findViewById(R.id.MedicinePageTime);
         backButton=findViewById(R.id.MedicineButtonBack);
         stomach=findViewById(R.id.MedicinepageCheckBox);
+
+
+
+        //time set recycler view implementation
+
+        recyclerViewTimeShow=(RecyclerView)findViewById(R.id.recyclerViewTimeDisplay);
+        LinearLayoutManager linearLayoutManagerTimeShow=new LinearLayoutManager(this);
+        linearLayoutManagerTimeShow.setOrientation(RecyclerView.VERTICAL);
+        recyclerViewTimeShow.setLayoutManager(linearLayoutManagerTimeShow);
+        List<TimeShowModelClass> modelClassListTimeShow=new ArrayList<>();
+        modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));
+        modelClassListTimeShow.add(new TimeShowModelClass("02:10 PM"));
+        modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));
+        modelClassListTimeShow.add(new TimeShowModelClass("02:10 PM"));
+        modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));
+        modelClassListTimeShow.add(new TimeShowModelClass("02:10 PM"));
+        TimeShowAdaptar timeShowAdaptar=new TimeShowAdaptar(modelClassListTimeShow);
+        recyclerViewTimeShow.setAdapter(timeShowAdaptar);
+        timeShowAdaptar.notifyDataSetChanged();
+
+
+
         time1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +88,7 @@ public class MedicineSetActivity extends AppCompatActivity {
                         timeMinute=i1;
                         Calendar calendar=Calendar.getInstance();
                         calendar.set(0,0,0,timeHour,timeMinute);
-                        time1Set.setText(DateFormat.format("hh:mm aa",calendar));
+                        //time1Set.setText(DateFormat.format("hh:mm aa",calendar));
                         }
                     },12,0,false
                 );
