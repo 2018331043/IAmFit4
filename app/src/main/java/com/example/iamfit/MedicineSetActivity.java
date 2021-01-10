@@ -76,6 +76,8 @@ public class MedicineSetActivity extends AppCompatActivity {
         recyclerViewTimeShow.setAdapter(timeShowAdaptar);
         timeShowAdaptar.notifyDataSetChanged();
 
+        //..........//
+
 
 
         time1.setOnClickListener(new View.OnClickListener() {

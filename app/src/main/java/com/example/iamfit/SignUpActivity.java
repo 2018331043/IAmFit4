@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText emailid,pass,name,height1,weight,height2;
     TextView text;
     Button button;
+    private ProgressBar progressBarSignUp;
     private ImageButton c1;
     private TextView c2;
     DatePickerDialog.OnDateSetListener setListener;
@@ -47,6 +49,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
+        progressBarSignUp=(ProgressBar)findViewById(R.id.progressBarSignUp);
+        progressBarSignUp.setVisibility(View.INVISIBLE);
         emailid =findViewById(R.id.signUpPageEmail);
         pass =findViewById(R.id.signUpPagePassword);
         button=findViewById(R.id.signUpButton);
@@ -117,10 +121,12 @@ public class SignUpActivity extends AppCompatActivity {
                     height1.requestFocus();
                 }
                 else if(!pwd.isEmpty()&&!email.isEmpty()){
+                    progressBarSignUp.setVisibility(View.VISIBLE);
                     mAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                progressBarSignUp.setVisibility(View.INVISIBLE);
                                 SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putString("In","1");
@@ -167,6 +173,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                             }
                             else{
+                                progressBarSignUp.setVisibility(View.INVISIBLE);
                                 Toast.makeText(SignUpActivity.this,"SignUp Unsuccesful",Toast.LENGTH_SHORT).show();
                             }
                         }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +23,15 @@ public class LoginActivity extends AppCompatActivity {
     public EditText emailid2,pass2;
     public TextView text2;
     public Button button2;
+    private ProgressBar progressBarLogin;
     FirebaseAuth mAuth2;
     //Saver saver=new Saver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        progressBarLogin=(ProgressBar)findViewById(R.id.progressBarLogin);
+        progressBarLogin.setVisibility(View.INVISIBLE);
         emailid2 =findViewById(R.id.Email);
         pass2 =findViewById(R.id.Password);
         button2=findViewById(R.id.LoginButton);
@@ -49,15 +53,18 @@ public class LoginActivity extends AppCompatActivity {
                     pass2.requestFocus();
                 }
                 else if(!pwd.isEmpty()&&!email.isEmpty()){
+                    progressBarLogin.setVisibility(View.VISIBLE);
                     mAuth2.signInWithEmailAndPassword(email,pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             String email2=emailid2.getText().toString();
                             String pwd2=pass2.getText().toString();
                             if(!task.isSuccessful()){
+                                progressBarLogin.setVisibility(View.VISIBLE);
                                 Toast.makeText(LoginActivity.this,"SignIn Unsuccesful",Toast.LENGTH_SHORT).show();
                             }
                             else{
+                                progressBarLogin.setVisibility(View.VISIBLE);
                                 SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putString("In","1");
