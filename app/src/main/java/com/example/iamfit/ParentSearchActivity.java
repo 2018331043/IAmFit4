@@ -47,6 +47,7 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
         setContentView(R.layout.activity_search_box);
         databaseReference= FirebaseDatabase.getInstance().getReference("Users");
         searcText=findViewById(R.id.editTextTextPersonName3);
+        searcText.requestFocus();
         //searchButton=findViewById(R.id.searchButton);
         recyclerView=findViewById(R.id.searchResult);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();

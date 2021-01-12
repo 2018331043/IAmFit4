@@ -60,11 +60,11 @@ public class LoginActivity extends AppCompatActivity {
                             String email2=emailid2.getText().toString();
                             String pwd2=pass2.getText().toString();
                             if(!task.isSuccessful()){
-                                progressBarLogin.setVisibility(View.VISIBLE);
+                                progressBarLogin.setVisibility(View.INVISIBLE);
                                 Toast.makeText(LoginActivity.this,"SignIn Unsuccesful",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                progressBarLogin.setVisibility(View.VISIBLE);
+                                progressBarLogin.setVisibility(View.INVISIBLE);
                                 SharedPreferences sharedPreferences=getSharedPreferences("LoggedInChecker", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putString("In","1");
