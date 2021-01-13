@@ -35,12 +35,11 @@ public class MedicineSetActivity extends AppCompatActivity {
     public EditText medicineName,daysToLast;
     public static String MEDICINE_NAME="com.example.iamfit.MedicineName";
     public static String ITERATOR="com.example.iamfit.MedicineName";
-    //public static String INTER="1";
     private ArrayList<Medicine> mediciness=new ArrayList<Medicine>();
+    List<TimeShowModelClass> modelClassListTimeShow=new ArrayList<>();
     public Button setReminder;
     public SimpleDateFormat sfH,sfM,sfS;
     private Button time1;
-    //private EditText time1Set;
 
     private RecyclerView recyclerViewTimeShow;
     int timeHour,timeMinute;
@@ -53,7 +52,6 @@ public class MedicineSetActivity extends AppCompatActivity {
         //implementing time picker dialogue
 
         time1=(Button) findViewById(R.id.MedicinePageTimeButton);
-        //time1Set=(EditText)findViewById(R.id.MedicinePageTime);
         backButton=findViewById(R.id.MedicineButtonBack);
         stomach=findViewById(R.id.MedicinepageCheckBox);
 
@@ -65,16 +63,13 @@ public class MedicineSetActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManagerTimeShow=new LinearLayoutManager(this);
         linearLayoutManagerTimeShow.setOrientation(RecyclerView.VERTICAL);
         recyclerViewTimeShow.setLayoutManager(linearLayoutManagerTimeShow);
-        List<TimeShowModelClass> modelClassListTimeShow=new ArrayList<>();
-        modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));
-        modelClassListTimeShow.add(new TimeShowModelClass("02:10 PM"));
-        modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));
-        modelClassListTimeShow.add(new TimeShowModelClass("02:10 PM"));
-        modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));
-        modelClassListTimeShow.add(new TimeShowModelClass("02:10 PM"));
-        TimeShowAdaptar timeShowAdaptar=new TimeShowAdaptar(modelClassListTimeShow);
-        recyclerViewTimeShow.setAdapter(timeShowAdaptar);
-        timeShowAdaptar.notifyDataSetChanged();
+
+        /*modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));
+        modelClassListTimeShow.add(new TimeShowModelClass("11:10 PM"));*/
+       // modelClassListTimeShow.add(new TimeShowModelClass("02:10 PM"));
+
+        /*recyclerViewTimeShow.setAdapter(timeShowAdaptar);
+        timeShowAdaptar.notifyDataSetChanged();*/
 
 
 
@@ -87,27 +82,54 @@ public class MedicineSetActivity extends AppCompatActivity {
                         timeHour=i;
                         timeMinute=i1;
                         Calendar calendar=Calendar.getInstance();
+                        String time,AMPM;
+                        Integer hours;
+                        if(timeMinute<10){
+                            time=":0"+timeMinute;
+                        }
+                        else{
+                            time= ":"+timeMinute;
+                        }
+                        if(timeHour>12){
+                            hours=(timeHour-12);
+                            AMPM=" PM";
+                        }
+                        else if(timeHour==0){
+                            hours=12;
+                            AMPM=" AM";
+                        }
+                        else if(timeHour==12){
+                            hours=12;
+                            AMPM=" PM";
+                        }
+                        else{
+                            hours=timeHour;
+                            AMPM=" AM";
+                        }
+                        modelClassListTimeShow.add(new TimeShowModelClass(hours+time+AMPM));
+                        TimeShowAdaptar timeShowAdaptar=new TimeShowAdaptar(modelClassListTimeShow);
+                        recyclerViewTimeShow.setAdapter(timeShowAdaptar);
+                        timeShowAdaptar.notifyDataSetChanged();
                         calendar.set(0,0,0,timeHour,timeMinute);
                         //time1Set.setText(DateFormat.format("hh:mm aa",calendar));
                         }
                     },12,0,false
                 );
                 timePickerDialog.updateTime(timeHour,timeMinute);
+
                 timePickerDialog.show();
             }
         });
+
         //implementation done
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-                /*Intent i = new Intent(MedicineSetActivity.this, Medicine_List_Activity.class);
-                startActivity(i);*/
+
             }
         });
         medicineName=findViewById(R.id.editTextTextPersonName2);
-       // timeH=findViewById(R.id.dosetime);
-        //timeM=findViewById(R.id.dosetime2);
         daysToLast=findViewById(R.id.MedinePageDays);
         setReminder=findViewById(R.id.medicinePageReminderButton);
        /* SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
