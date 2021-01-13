@@ -44,7 +44,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
 
 
         //here you should add data to child view Recycler
-       // recyclerViewChildModelClassList.add(new RecyclerViewChildModelClass(R.drawable.profile),"Ahmed Iftekher","Age : 21");
+         //recyclerViewChildModelClassList.add(new RecyclerViewChildModelClass(R.drawable.profile),"Ahmed Iftekher","Age : 21");
         // RecyclerViewChildAdapter adapter=new RecyclerViewChildAdapter(ParentChildListActivity.this,medicineList,Medicine_List_Activity.this);
         databaseReference= FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
