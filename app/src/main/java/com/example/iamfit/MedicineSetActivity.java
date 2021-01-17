@@ -40,7 +40,8 @@ public class MedicineSetActivity extends AppCompatActivity {
     public Button setReminder;
     public SimpleDateFormat sfH,sfM,sfS;
     private Button time1;
-
+    public ArrayList<Integer> listOfTimesH=new ArrayList<>();
+    public ArrayList<Integer> listOfTimesM=new ArrayList<>();
     private RecyclerView recyclerViewTimeShow;
     int timeHour,timeMinute;
     CheckBox stomach;
@@ -83,6 +84,8 @@ public class MedicineSetActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         timeHour=i;
                         timeMinute=i1;
+                        listOfTimesH.add(timeHour);
+                        listOfTimesM.add(timeMinute);
                         Calendar calendar=Calendar.getInstance();
                         String time,AMPM;
                         Integer hours;
@@ -193,24 +196,42 @@ public class MedicineSetActivity extends AppCompatActivity {
                 //reqH += 10 * (hour.toCharArray()[0] - 48);
                // reqM = minute.toCharArray()[1] - 48;
                // reqM += 10 * (minute.toCharArray()[0] - 48);
-                if (timeHour - cH < 0) {
-                    timeHour += 24;
-                    dif += (timeHour - cH) * 60;
-                } else {
-                    dif += (timeHour - cH) * 60;
+                for(int i=0;i<listOfTimesH.size();i++){
+                    dif=0;
+                    if (listOfTimesH.get(i) - cH < 0) {
+                        listOfTimesH.set(i,listOfTimesH.get(i)+24) ;
+                        dif += (listOfTimesH.get(i) - cH) * 60;
+                    } else {
+                        dif += (listOfTimesH.get(i) - cH) * 60;
+                    }
+                    dif += (listOfTimesM.get(i) - cM);
+                    loadMedicineData();
+                    Integer checkBoxInt;
+                    if(stomach.isChecked()){
+                        checkBoxInt=1;
+                    }
+                    else{
+                        checkBoxInt=0;
+                    }
+                    Integer ts=loadAndRetrieveIndex();
+                    Medicine medicine = new Medicine(dif, listOfTimesH.get(i), listOfTimesM.get(i), daysrem, medName,checkBoxInt,true,ts);
+                    mediciness.add(medicine);
+                    saveMedicineData();
+                    //for (int j = 0; j < mediciness.size(); i++) {
+                        //Toast.makeText(MedicineSetActivity.this, "found "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
+                    //}
+                    long now = System.currentTimeMillis() - cS * 1000;
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        Intent intent = new Intent(MedicineSetActivity.this, ReminderBroadcast.class);
+                        intent.putExtra("medicine name",medName);
+                        intent.putExtra("Iterator",ts.toString());
+                        PendingIntent pendingIntent = PendingIntent
+                            .getBroadcast(MedicineSetActivity.this, medicine.getIndex(), intent, 0);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP,now+medicine.getDif()*60*1000
+                            ,pendingIntent);
+                        Toast.makeText(MedicineSetActivity.this, "Medicine Reminder Set Index No" +medicine.getIndex(), Toast.LENGTH_LONG).show();
                 }
-                dif += (timeMinute - cM);
-                loadMedicineData();
-                Integer checkBoxInt;
-                if(stomach.isChecked()){
-                    checkBoxInt=1;
-                }
-                else{
-                    checkBoxInt=0;
-                }
-                Integer ts=loadAndRetrieveIndex();
-                Medicine medicine = new Medicine(dif, timeHour, timeMinute, daysrem, medName,checkBoxInt,true,ts);
-                mediciness.add(medicine);
+
                 /*temp = 1;
                 while (temp == 1) {
                     temp = 0;
@@ -223,10 +244,10 @@ public class MedicineSetActivity extends AppCompatActivity {
                         }
                     }
                 }*/
-                saveMedicineData();
+                /*saveMedicineData();
                 /*for (int i = 0; i < mediciness.size(); i++) {
                     Toast.makeText(MedicineSetActivity.this, "found "+mediciness.get(i).getDif(), Toast.LENGTH_LONG).show();
-                }*/
+                }
                 long now = System.currentTimeMillis() - cS * 1000;
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                 Intent intent = new Intent(MedicineSetActivity.this, ReminderBroadcast.class);
@@ -236,7 +257,7 @@ public class MedicineSetActivity extends AppCompatActivity {
                         .getBroadcast(MedicineSetActivity.this, medicine.getIndex(), intent, 0);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,now+medicine.getDif()*60*1000
                         ,pendingIntent);
-                Toast.makeText(MedicineSetActivity.this, "Medicine Reminder Set Index No" +medicine.getIndex(), Toast.LENGTH_LONG).show();
+                Toast.makeText(MedicineSetActivity.this, "Medicine Reminder Set Index No" +medicine.getIndex(), Toast.LENGTH_LONG).show();*/
                // Toast.makeText(MedicineSetActivity.this, "Hi" + dif, Toast.LENGTH_LONG).show();
 
                 /*for (int i = 0; i < mediciness.size(); i++) {

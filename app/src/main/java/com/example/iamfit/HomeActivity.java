@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -136,10 +137,15 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //Username.setText(FirebaseAuth.getInstance().getCurrentUser().get);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+                Username.setText(currentUser2.getName());
+                if(!currentUser2.getImageurl().equals("0")){
+                    Picasso.get().load(currentUser2.getImageurl()).into(UserImage);
+                }
                 ArrayList<StepCount> stpc = currentUser2.getStepCounts();
                 SimpleDateFormat datef;
                 Date calendar = Calendar.getInstance().getTime();
