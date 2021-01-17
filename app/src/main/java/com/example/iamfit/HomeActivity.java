@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +40,8 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageButton settingsButton,medicinebutton,searchButton,profileButton,friendsButton,calorieCounter;
-    public TextView stepCount,distanceCount,calorieCount,bmiView;
+    private ImageButton settingsButton,medicinebutton,searchButton,calorieCounterButton,friendsButton,calorieCounter;
+    public TextView stepCount,distanceCount,calorieCount,bmiView,Username;
     public DatabaseReference databaseReference;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
     double previous_step=0;
@@ -49,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
     public SimpleDateFormat sf;
     public String sdate;
     public Integer vals;
+    public ImageView UserImage;
     String curDate;
     private static final int REQUEST_CODE2 = 102;
     private static final int REQUEST_CODE3 = 103;
@@ -63,9 +65,11 @@ public class HomeActivity extends AppCompatActivity {
         stepCount=findViewById(R.id.textViewSteps);
         searchButton=findViewById(R.id.imageButtonHomeSearch);
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
-        profileButton=findViewById(R.id.imageButtonProfile);
+        calorieCounterButton=findViewById(R.id.imageButtonProfile);
         friendsButton=findViewById(R.id.imageButtonConnection);
         bmiView=findViewById(R.id.textViewBMI);
+        Username=findViewById(R.id.textView43);
+        UserImage=findViewById(R.id.profile_image_recyclerview_child);
         bmiView.setText("N/A");
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         time=Calendar.getInstance();
@@ -97,10 +101,24 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        profileButton.setOnClickListener(new View.OnClickListener() {
+        UserImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, UserProfileActivity.class);
+                startActivity(i);
+            }
+        });
+        Username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, UserProfileActivity.class);
+                startActivity(i);
+            }
+        });
+        calorieCounterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, CalorieCounter.class);
                 startActivity(i);
             }
         });
