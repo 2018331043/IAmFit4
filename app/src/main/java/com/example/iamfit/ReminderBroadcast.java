@@ -1,6 +1,7 @@
 package com.example.iamfit;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -54,12 +55,17 @@ public class ReminderBroadcast extends BroadcastReceiver {
        // editor.commit();
         Toast.makeText(context,"Hello : "+index, Toast.LENGTH_SHORT).show();
         Log.v("Debuging.........", "index=" + index);
+        Intent resultIntent=new Intent(context,Medicine_List_Activity.class);
+        PendingIntent pendingIntent= PendingIntent.getActivity(context,1,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification notification=new NotificationCompat.Builder(context,App.MEDICINE_TAKE)
                 .setSmallIcon(R.drawable.heart)
                 .setContentTitle(MedicineName)
                 .setContentText("It is time for you to take a pill of your medicine "+MedicineName)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
                 .build();
         notificationManagerCompat.notify(index+1,notification);
        // medicineNumber++;

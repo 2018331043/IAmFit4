@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,6 +36,7 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
     private User searchedUser;
     public DatabaseReference databaseReference;
     private BarChart barchart;
+    private ImageView profilepic;
     private ImageView addParent;
     List<BarEntry> entries;
     private ArrayList<StepCount> stpc;
@@ -58,6 +60,7 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
         addParent=findViewById(R.id.imageView9);
         bmi.setText("N/A");
         name=findViewById(R.id.textView);
+        profilepic=findViewById(R.id.profile_image_recyclerview_child);
 
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -83,6 +86,10 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
                 height.setText(searchedUser.getHeight());
                 weight.setText(searchedUser.getWeight());
                 stpc=searchedUser.getStepCounts();
+                if(!searchedUser.getImageurl().equals("0")){
+                    Picasso.get().load(searchedUser.getImageurl()).into(profilepic);
+                }
+
                 double total_dis;
                 double total_cal1;
                 Integer total_steps=0,total_cal2;

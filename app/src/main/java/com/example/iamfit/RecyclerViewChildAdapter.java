@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewChildAdapter.ViewHolder1> {
@@ -56,12 +58,15 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
             textView1=itemView.findViewById(R.id.textView37);
             textView2=itemView.findViewById(R.id.textView38);
             imageView=itemView.findViewById(R.id.profile_image_recyclerview_child);
+
             itemView.setOnClickListener(this);
             this.onResultListener1=onResultListener1;
         }
         public void setData1(String resource,String a,String b){
             //imageView.setImageResource(resource);
-
+            if(!resource.equals("0")){
+                Picasso.get().load(resource).into(imageView);
+            }
             textView1.setText(a);
             textView2.setText(b);
         }

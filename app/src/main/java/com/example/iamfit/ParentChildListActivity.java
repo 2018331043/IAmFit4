@@ -62,6 +62,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                         for(int i=0;i<uids.size();i++){
                             if(user.equals(uids.get(i))){
                                 //Toast.makeText(ParentChildListActivity.this, "Clicked ", Toast.LENGTH_SHORT).show();
+                                User tempUser=snapshot.getValue(User.class);
                                 String tempName=snapshot.child("name").getValue().toString();
                                 String birthDay=snapshot.child("year").getValue().toString();
                                 Calendar calendar= Calendar.getInstance();
@@ -77,7 +78,13 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                                 }
                                 //Toast.makeText(ParentChildListActivity.this, "Clicked "+birthyear+" "+year, Toast.LENGTH_SHORT).show();
                                 Integer age=year-birthyear;
-                                RecyclerViewChildModelClass temprorary=new RecyclerViewChildModelClass("0",tempName,"Age: "+age.toString());
+                                String imageuri;
+                                if(!tempUser.getImageurl().equals("0")){
+                                    imageuri=tempUser.getImageurl();
+                                }else{
+                                    imageuri="0";
+                                }
+                                RecyclerViewChildModelClass temprorary=new RecyclerViewChildModelClass(imageuri,tempName,"Age: "+age.toString());
                                 childList.add(temprorary);
                             }
                         }
