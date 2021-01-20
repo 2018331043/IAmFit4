@@ -2,6 +2,7 @@ package com.example.iamfit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -77,7 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor3=sharedPreferences3.edit();
                                 editor3.putString("Pass",pwd2);
                                 editor3.commit();
-                                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                                startActivity(new Intent(LoginActivity.this,HomeActivity.class),bundle);
                             }
                         }
                     });
@@ -90,7 +92,8 @@ public class LoginActivity extends AppCompatActivity {
         text2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(new Intent(LoginActivity.this,SignUpActivity.class),bundle);
             }
         });
     }

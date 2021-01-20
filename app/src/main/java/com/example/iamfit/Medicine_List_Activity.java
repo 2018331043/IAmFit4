@@ -2,6 +2,7 @@ package com.example.iamfit;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,8 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Medicine_List_Activity.this, MedicineSetActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {

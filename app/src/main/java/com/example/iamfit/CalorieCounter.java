@@ -31,7 +31,7 @@ public class CalorieCounter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calorie_counter);
-        weightResult=findViewById(R.id.weightResult);
+       /* weightResult=findViewById(R.id.weightResult);
         graphResult=findViewById(R.id.graphResult);
         weightInput=findViewById(R.id.weightInput);
         calculate=findViewById(R.id.button6);
@@ -121,11 +121,11 @@ public class CalorieCounter extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
         //Toast.makeText(CalorieCounter.this, "Clicked " + temp.getName(), Toast.LENGTH_SHORT).show();
     }
-    public Integer stringToInteger(String value){
+    /*public Integer stringToInteger(String value){
         int weight=0,temp;
         temp=0;
         for(int i=value.length()-1;i>=0;i--){
@@ -133,5 +133,5 @@ public class CalorieCounter extends AppCompatActivity {
             temp++;
         }
         return  weight;
-    }
+    }*/
 }

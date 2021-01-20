@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -97,14 +98,16 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.putString("In","0");
                 editor.commit();
                 Intent i = new Intent(SettingsActivity.this, LoginActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         editDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(SettingsActivity.this, ChangeSettingsActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
 

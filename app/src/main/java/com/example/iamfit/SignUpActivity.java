@@ -2,6 +2,7 @@ package com.example.iamfit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -167,7 +168,8 @@ public class SignUpActivity extends AppCompatActivity {
                                         SharedPreferences.Editor editor3=sharedPreferences3.edit();
                                         editor3.putString("Pass",pwd2);
                                         editor3.commit();
-                                        startActivity(new Intent(SignUpActivity.this,HomeActivity.class));
+                                        Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                                        startActivity(new Intent(SignUpActivity.this,HomeActivity.class),bundle);
                                     }
                                 });
 
