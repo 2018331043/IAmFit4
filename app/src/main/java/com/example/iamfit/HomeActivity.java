@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity {
 
     private ImageButton settingsButton,medicinebutton,searchButton,calorieCounterButton,friendsButton,calorieCounter;
+    private ProgressBar progressBarImage;
     public TextView stepCount,distanceCount,calorieCount,bmiView,Username;
     public DatabaseReference databaseReference;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
@@ -64,6 +66,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         settingsButton = findViewById(R.id.imageButtonHomeSettings);
+        progressBarImage=(ProgressBar)findViewById(R.id.progressBarHomeImage);
+        progressBarImage.setVisibility(View.VISIBLE);
         stepCount=findViewById(R.id.textViewSteps);
         searchButton=findViewById(R.id.imageButtonHomeSearch);
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
@@ -153,6 +157,7 @@ public class HomeActivity extends AppCompatActivity {
                 Username.setText(currentUser2.getName());
                 if(!currentUser2.getImageurl().equals("0")){
                     Picasso.get().load(currentUser2.getImageurl()).into(UserImage);
+                    progressBarImage.setVisibility(View.INVISIBLE);
                 }
                 ArrayList<StepCount> stpc = currentUser2.getStepCounts();
                 SimpleDateFormat datef;
