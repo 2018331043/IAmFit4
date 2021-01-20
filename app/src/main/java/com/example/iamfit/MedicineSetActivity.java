@@ -142,12 +142,12 @@ public class MedicineSetActivity extends AppCompatActivity {
         Gson gson=new Gson();
         String json=gson.toJson(mediciness);
         editor.putString("ListOfTheMedicines",json);
-        editor.apply();*/
+        editor.apply();
 
-      /* SharedPreferences sharedPreferences =getSharedPreferences("MedicineIndex",MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putInt("Index",1);
-        editor.apply();*/
+        SharedPreferences sharedPreferences2 =getSharedPreferences("MedicineIndex",MODE_PRIVATE);
+        SharedPreferences.Editor editor2=sharedPreferences2.edit();
+        editor2.putInt("Index",1);
+        editor2.apply();*/
         setReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

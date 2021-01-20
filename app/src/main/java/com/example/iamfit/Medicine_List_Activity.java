@@ -61,7 +61,7 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
 
 
 
-        /*SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
+       /* SharedPreferences sharedPreferences =getSharedPreferences("MedicineList",MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         Gson gson=new Gson();
         String json=gson.toJson(mediciness);
@@ -185,13 +185,14 @@ public class Medicine_List_Activity extends AppCompatActivity implements Medicin
                         minute=mediciness.get( cnt1).getMinute()-minute;
                         hour=hour*60+minute;
                         Log.v("Debuging.........", "Baire");
+                        Toast.makeText(Medicine_List_Activity.this, "Time Baire " +mediciness.get(cnt1).getDif(), Toast.LENGTH_SHORT).show();
                         if(mediciness.get(cnt1).getRemainingDays()>1){
                             mediciness.get(cnt1).setRemainingDays(mediciness.get( cnt1).getRemainingDays()-1);
                             mediciness.get(cnt1).setDif(hour);
                             mediciness.get(cnt1).setTaken(true);
                             Log.v("Debuging.........", "Vitore");
                             long now = System.currentTimeMillis() - cS * 1000;
-                            //Toast.makeText(Medicine_List_Activity.this, "Time " +mediciness.get(cnt1).getDif(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Medicine_List_Activity.this, "Time Vitore " +mediciness.get(cnt1).getDif(), Toast.LENGTH_SHORT).show();
                             alarmManager.set(AlarmManager.RTC_WAKEUP,now+mediciness.get(cnt1).getDif()*60*1000
                                     ,pendingIntent);
                             //Toast.makeText(Medicine_List_Activity.this, "Time " +(mediciness.get(cnt1).getDif()-1435), Toast.LENGTH_SHORT).show();

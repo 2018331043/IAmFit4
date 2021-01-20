@@ -34,9 +34,9 @@ public class ReminderBroadcast extends BroadcastReceiver {
        // String MedicineName=Medicines.get(medicineNumber).getName();
         //int it=loadAndRetrieveIterator(context);
 
+
         String nameTemp=intent.getStringExtra("medicine name");
         String value=intent.getStringExtra("Iterator");
-
         int length = value.length();
         int index = 0;
         int temp = 0;
@@ -53,10 +53,13 @@ public class ReminderBroadcast extends BroadcastReceiver {
         //it++;
        // editor.putInt("Iterator",it);
        // editor.commit();
-        Toast.makeText(context,"Hello : "+index, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Hello : "+index+"Size : "+mediciness.size(), Toast.LENGTH_LONG).show();
         Log.v("Debuging.........", "index=" + index);
+
+
         Intent resultIntent=new Intent(context,Medicine_List_Activity.class);
         PendingIntent pendingIntent= PendingIntent.getActivity(context,1,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        //String MedicineName="Rter";
 
         Notification notification=new NotificationCompat.Builder(context,App.MEDICINE_TAKE)
                 .setSmallIcon(R.drawable.heart)
@@ -68,6 +71,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
                 .setContentIntent(pendingIntent)
                 .build();
         notificationManagerCompat.notify(index+1,notification);
+        //notificationManagerCompat.notify(100,notification);
        // medicineNumber++;
     }
     private void saveMedicineData(Context context){
