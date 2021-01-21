@@ -66,8 +66,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         settingsButton = findViewById(R.id.imageButtonHomeSettings);
+        //progressbar
         progressBarImage=(ProgressBar)findViewById(R.id.progressBarHomeImage);
         progressBarImage.setVisibility(View.VISIBLE);
+        //.....
         stepCount=findViewById(R.id.textViewSteps);
         searchButton=findViewById(R.id.imageButtonHomeSearch);
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);

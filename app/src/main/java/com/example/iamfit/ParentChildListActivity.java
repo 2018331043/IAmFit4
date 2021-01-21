@@ -37,7 +37,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
     private DatabaseReference databaseReference;
     private List<RecyclerViewChildModelClass> childList=new ArrayList<>();
 
-    private Dialog dialogChild;
+    private Dialog dialogChild,dialogStepGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +51,24 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
         dialogChild.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background_1));
         dialogChild.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialogChild.getWindow().getAttributes().windowAnimations=R.style.animation1;
+
+        dialogStepGoal=new Dialog(ParentChildListActivity.this);
+        dialogStepGoal.setContentView(R.layout.custom_dialog_2);
+        dialogStepGoal.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background_1));
+        dialogStepGoal.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogStepGoal.getWindow().getAttributes().windowAnimations=R.style.animation1;
         /*textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogChild.show();
             }
         });*/
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogStepGoal.show();
+            }
+        });
         //dialogChild.show();
         //to display the dialog
 
