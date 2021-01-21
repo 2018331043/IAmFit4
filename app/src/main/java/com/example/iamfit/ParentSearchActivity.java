@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
     private Button searchButton;
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference;
+    private ImageButton imageButton;
     FirebaseUser firebaseUser;
     ArrayList<String> names;
     ArrayList<String> Uids;
@@ -48,10 +50,19 @@ public class ParentSearchActivity extends AppCompatActivity implements SearchAda
         databaseReference= FirebaseDatabase.getInstance().getReference("Users");
         searcText=findViewById(R.id.editTextTextPersonName3);
         searcText.requestFocus();
+
         //searchButton=findViewById(R.id.searchButton);
         recyclerView=findViewById(R.id.searchResult);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         //Toast.makeText(ParentSearchActivity.this, "entered", Toast.LENGTH_SHORT).show();
+
+        imageButton=(ImageButton)findViewById(R.id.imageButtonBack);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         names=new ArrayList<>();
         Uids=new ArrayList<>();

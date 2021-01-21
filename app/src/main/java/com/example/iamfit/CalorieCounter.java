@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 public class CalorieCounter extends AppCompatActivity {
+    private ImageButton imageButton;
     private TextView weightResult,graphResult;
     private EditText weightInput,calorieInput;
     private DatabaseReference databaseReference;
@@ -31,6 +33,13 @@ public class CalorieCounter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calorie_counter);
+        imageButton=(ImageButton)findViewById(R.id.imageButton4);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
        /* weightResult=findViewById(R.id.weightResult);
         graphResult=findViewById(R.id.graphResult);
         weightInput=findViewById(R.id.weightInput);

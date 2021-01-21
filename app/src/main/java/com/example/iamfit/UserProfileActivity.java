@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private BarChart barchart;
     private ArrayList<StepCount> stpc;
     private ImageView profilepic;
+    private ImageButton imageButton;
     List<BarEntry> entries;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,14 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
         barchart = (BarChart) findViewById(R.id.barChart);
         entries = new ArrayList<BarEntry>();
+
+        imageButton=(ImageButton)findViewById(R.id.imageButton6);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         //Toast.makeText(UserProfileActivity.this, user, Toast.LENGTH_SHORT).show();
         databaseReference= FirebaseDatabase.getInstance().getReference();

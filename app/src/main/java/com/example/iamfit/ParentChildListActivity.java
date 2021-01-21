@@ -16,6 +16,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import java.util.List;
 public class ParentChildListActivity extends AppCompatActivity implements RecyclerViewChildAdapter.ResultListener {
 
     private RecyclerView recyclerView;
+    private ImageButton imageButton;
     private TextView textView;
     private DatabaseReference databaseReference;
     private List<RecyclerViewChildModelClass> childList=new ArrayList<>();
@@ -44,6 +46,8 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_child_list);
         textView=(TextView)findViewById(R.id.textView31);
+        imageButton=(ImageButton)findViewById(R.id.imageButton3);
+
 
 
         dialogChild=new Dialog(ParentChildListActivity.this);
@@ -63,14 +67,21 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                 dialogChild.show();
             }
         });*/
-        textView.setOnClickListener(new View.OnClickListener() {
+        /*textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogStepGoal.show();
             }
-        });
+        });*/
         //dialogChild.show();
         //to display the dialog
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclerViewChild);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
