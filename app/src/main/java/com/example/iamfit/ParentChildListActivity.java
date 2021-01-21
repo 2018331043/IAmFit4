@@ -7,12 +7,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,13 +34,54 @@ import java.util.List;
 public class ParentChildListActivity extends AppCompatActivity implements RecyclerViewChildAdapter.ResultListener {
 
     private RecyclerView recyclerView;
+    private ImageButton imageButton;
+    private TextView textView;
     private DatabaseReference databaseReference;
     private List<RecyclerViewChildModelClass> childList=new ArrayList<>();
+
+    private Dialog dialogChild,dialogStepGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_child_list);
+        textView=(TextView)findViewById(R.id.textView31);
+        imageButton=(ImageButton)findViewById(R.id.imageButton3);
+
+
+
+        dialogChild=new Dialog(ParentChildListActivity.this);
+        dialogChild.setContentView(R.layout.custom_dialog_1);
+        dialogChild.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background_1));
+        dialogChild.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogChild.getWindow().getAttributes().windowAnimations=R.style.animation1;
+
+        dialogStepGoal=new Dialog(ParentChildListActivity.this);
+        dialogStepGoal.setContentView(R.layout.custom_dialog_2);
+        dialogStepGoal.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background_1));
+        dialogStepGoal.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogStepGoal.getWindow().getAttributes().windowAnimations=R.style.animation1;
+        /*textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogChild.show();
+            }
+        });*/
+        /*textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogStepGoal.show();
+            }
+        });*/
+        //dialogChild.show();
+        //to display the dialog
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclerViewChild);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);

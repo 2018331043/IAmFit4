@@ -2,6 +2,7 @@ package com.example.iamfit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
 
                                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                                    startActivity(i);
+                                    Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                                    startActivity(i,bundle);
                                 }
                             }, 1000);
                         }
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
 
                                     Intent i = new Intent(MainActivity.this, SignUpActivity.class);
-                                    startActivity(i);
+                                    Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                                    startActivity(i,bundle);
                                 }
                             }, 1000);
                         }
@@ -71,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
 
                         Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(i);
+                        Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                        startActivity(i,bundle);
                     }
                 }, 1000);
             }
@@ -82,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
 
                     Intent i = new Intent(MainActivity.this, SignUpActivity.class);
-                    startActivity(i);
+                    Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                    startActivity(i,bundle);
                 }
             }, 1000);
         }

@@ -39,12 +39,20 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
     private ImageView profilepic;
     private ImageView addParent;
     List<BarEntry> entries;
+    private ImageButton imageButton;
     private ArrayList<StepCount> stpc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
         Intent intent=getIntent();
+        imageButton=(ImageButton)findViewById(R.id.imageButton5);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         final String user=intent.getStringExtra(ParentSearchActivity.EXTRA_USERID);
         //Toast.makeText(ParentSearchResultProfileActivity.this, user, Toast.LENGTH_SHORT).show();
         barchart = (BarChart) findViewById(R.id.barChart);

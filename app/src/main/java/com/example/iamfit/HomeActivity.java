@@ -3,6 +3,7 @@ package com.example.iamfit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity {
 
     private ImageButton settingsButton,medicinebutton,searchButton,calorieCounterButton,friendsButton,calorieCounter;
+    private ProgressBar progressBarImage;
     public TextView stepCount,distanceCount,calorieCount,bmiView,Username;
     public DatabaseReference databaseReference;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
@@ -63,6 +66,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         settingsButton = findViewById(R.id.imageButtonHomeSettings);
+        //progressbar
+        progressBarImage=(ProgressBar)findViewById(R.id.progressBarHomeImage);
+        progressBarImage.setVisibility(View.VISIBLE);
+        //.....
         stepCount=findViewById(R.id.textViewSteps);
         searchButton=findViewById(R.id.imageButtonHomeSearch);
         medicinebutton=findViewById(R.id.imageButtonMedicineReminder);
@@ -92,49 +99,56 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, ParentSearchActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         medicinebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, Medicine_List_Activity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         UserImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, UserProfileActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         Username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, UserProfileActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         calorieCounterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, CalorieCounter.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         friendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, FindDoctorTestActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         calorieCounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this,ParentChildListActivity.class);
-                startActivity(i);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
+                startActivity(i,bundle);
             }
         });
         //Username.setText(FirebaseAuth.getInstance().getCurrentUser().get);
@@ -145,6 +159,7 @@ public class HomeActivity extends AppCompatActivity {
                 Username.setText(currentUser2.getName());
                 if(!currentUser2.getImageurl().equals("0")){
                     Picasso.get().load(currentUser2.getImageurl()).into(UserImage);
+                    progressBarImage.setVisibility(View.INVISIBLE);
                 }
                 ArrayList<StepCount> stpc = currentUser2.getStepCounts();
                 SimpleDateFormat datef;
