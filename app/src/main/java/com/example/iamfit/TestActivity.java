@@ -37,6 +37,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.graph_view_test);
         barchart = (BarChart) findViewById(R.id.chart);
         entries= new ArrayList<BarEntry>();
+        ///
         databaseReference= FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
