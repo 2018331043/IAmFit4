@@ -30,12 +30,14 @@ public class TestActivity extends AppCompatActivity {
     public BarChart barchart;
     public ArrayList<StepCount> stpc;
     List<BarEntry> entries;
+    public int skj=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_view_test);
         barchart = (BarChart) findViewById(R.id.chart);
         entries= new ArrayList<BarEntry>();
+        ///
         databaseReference= FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

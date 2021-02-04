@@ -3,6 +3,7 @@ package com.example.iamfit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +16,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +80,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
         //dialogChild.show();
         //to display the dialog
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        imageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
@@ -152,5 +156,55 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
     public void onResultClick (final int positon){
         Integer s = positon;
         Toast.makeText(ParentChildListActivity.this, "Clicked "+s, Toast.LENGTH_LONG).show();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Toast.makeText(ParentChildListActivity.this, "Clicked in"+positon, Toast.LENGTH_LONG).show();
+                User currentUser=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+                final String chilUid=currentUser.getChilds().get(positon);
+                final User childUser= dataSnapshot.child(chilUid).getValue(User.class);
+                AlertDialog.Builder dialogBuilder=new AlertDialog.Builder(ParentChildListActivity.this);
+                View dialogView= getLayoutInflater().inflate(R.layout.custom_dialog_1,null);
+                Button setStepGoal= (Button)dialogView.findViewById(R.id.button7);
+                Button profileView= (Button)dialogView.findViewById(R.id.button8);
+                dialogBuilder.setView(dialogView);
+                AlertDialog alertDialog=dialogBuilder.create();
+                alertDialog.show();
+                setStepGoal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(ParentChildListActivity.this, "Clicked on Layout "+positon, Toast.LENGTH_LONG).show();
+                        View setgoalDialogView= getLayoutInflater().inflate(R.layout.custom_dialog_2,null);
+                        final EditText goal=(EditText) setgoalDialogView.findViewById(R.id.editTextNumber3);
+
+                        Button confirmation=(Button) setgoalDialogView.findViewById(R.id.button9);
+                        AlertDialog.Builder setGoalBuilder=new AlertDialog.Builder(ParentChildListActivity.this);
+                        setGoalBuilder.setView(setgoalDialogView);
+                        AlertDialog goalDialog = setGoalBuilder.create();
+                        goalDialog.show();
+                        confirmation.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v){
+                                final String strGoal=goal.getText().toString();
+                                Toast.makeText(ParentChildListActivity.this, "The new goal is "+strGoal, Toast.LENGTH_LONG).show();
+                                int goalin=0,temp=0;
+                                for(int i=strGoal.length()-1;i>=0;i--){
+                                    goalin+=(strGoal.toCharArray()[i]-48)*Math.pow(10,temp);
+                                    temp++;
+                                }
+                                childUser.setCurrentStepGoal(goalin);
+                                databaseReference.child(chilUid).setValue(childUser);
+                            }
+                        });
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
