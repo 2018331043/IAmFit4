@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import android.Manifest;
 import android.content.Context;
@@ -40,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -101,6 +105,13 @@ public class HomeActivity extends AppCompatActivity {
                 Intent i = new Intent(HomeActivity.this, ParentSearchActivity.class);
                 Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
                 startActivity(i,bundle);
+                /*WorkRequest myWorkRequest =
+                        new OneTimeWorkRequest.Builder(NewStepGoalNotificationChecker.class)
+                                .setInitialDelay(20, TimeUnit.SECONDS)
+                                .build();
+                WorkManager
+                        .getInstance(HomeActivity.this)
+                        .enqueue(myWorkRequest);*/
             }
         });
         medicinebutton.setOnClickListener(new View.OnClickListener() {

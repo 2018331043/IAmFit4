@@ -42,6 +42,8 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation "com.google.android.gms:play-services-location:15.0.1"
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //Work Manager api for scheduling tasks
+    implementation "androidx.work:work-runtime:2.5.0"
 }
 
 apply plugin: 'com.google.gms.google-services'
