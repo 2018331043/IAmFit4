@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
@@ -99,6 +100,18 @@ public class HomeActivity extends AppCompatActivity {
         fetchLastLocation();
         SharedPreferences sharedPreferences2=getSharedPreferences("DateSaver", Context.MODE_PRIVATE);
         curDate=sharedPreferences2.getString("curDate",null);
+
+
+        /*WorkRequest request = new OneTimeWorkRequest.Builder(FooWorker.class).build();
+ workManager.enqueue(request);
+ workManager.cancelWorkById(request.getId());*/
+        PeriodicWorkRequest saveRequest =
+                new PeriodicWorkRequest.Builder(NewStepGoalNotificationChecker.class, 15, TimeUnit.MINUTES)
+                        // Constraints
+                        .build();
+        WorkManager
+                .getInstance(HomeActivity.this)
+                .enqueue(saveRequest);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +201,7 @@ public class HomeActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor2=sharedPreferences2.edit();
                     editor2.putString("curDate",curD);
                     editor2.commit();
+
 
                 } else {
                     vals=currentUser2.getStepCounts().get(stpc.size() - 1).getSteps();
