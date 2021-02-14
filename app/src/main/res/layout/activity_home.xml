@@ -13,8 +13,9 @@
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:src="@drawable/mahin2"
+        android:src="@drawable/profile"
         app:civ_border_color="#BFFFFFFF"
+        android:transitionName="transition_profile"
         app:civ_border_width="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -371,10 +372,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Mahnur Rahman"
+        android:text="Display Name"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:transitionName="transition_name"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonHomeSearch"
         app:layout_constraintStart_toStartOf="@+id/profile_image_recyclerview_child"
         app:layout_constraintTop_toBottomOf="@+id/profile_image_recyclerview_child" />

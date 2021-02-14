@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/acme"
-                android:text="Zakir Ahmed"
+                android:text="Parent Name"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Age : 56"
+                android:text="Age : null"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView34"
                 app:layout_constraintTop_toBottomOf="@+id/textView34" />
