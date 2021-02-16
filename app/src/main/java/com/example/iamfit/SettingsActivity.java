@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView displayName;
     DatabaseReference databaseReference;
     Button editDetailsButton;
-    private Button upoladPic;
+    private Button upoladPic,aboutUs;
     private StorageReference storageReference;
     private Uri imageUri;
     private ImageView profilePic;
@@ -60,6 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         logoutButton=findViewById(R.id.imageButtonLogOut);
+        aboutUs=(Button)findViewById(R.id.button10);
         displayName=findViewById(R.id.textViewSettingsDisplayName);
         editDetailsButton=findViewById(R.id.button4);
         profilePic=findViewById(R.id.profile_image_recyclerview_child);
@@ -89,6 +90,8 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +111,13 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent i = new Intent(SettingsActivity.this, ChangeSettingsActivity.class);
                 Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
                 startActivity(i,bundle);
+            }
+        });
+        aboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SettingsActivity.this,About_US_Activity.class);
+                startActivity(intent);
             }
         });
 
