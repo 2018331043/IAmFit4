@@ -40,11 +40,11 @@ public class CalorieCounter extends AppCompatActivity {
                 onBackPressed();
             }
         });
-       /* weightResult=findViewById(R.id.weightResult);
-        graphResult=findViewById(R.id.graphResult);
+        weightResult=findViewById(R.id.textView47);
+        //graphResult=findViewById(R.id.graphResult);
         weightInput=findViewById(R.id.weightInput);
         calculate=findViewById(R.id.button6);
-        calorieInput=findViewById(R.id.calorieInput);
+        //calorieInput=findViewById(R.id.calorieInput);
        // User currentUser;
         databaseReference= FirebaseDatabase.getInstance().getReference("Users");
         //currentUser=databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -130,7 +130,7 @@ public class CalorieCounter extends AppCompatActivity {
                 }
 
             }
-        });*/
+        });
 
         //Toast.makeText(CalorieCounter.this, "Clicked " + temp.getName(), Toast.LENGTH_SHORT).show();
     }
