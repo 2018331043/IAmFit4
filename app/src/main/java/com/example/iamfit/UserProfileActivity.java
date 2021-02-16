@@ -75,6 +75,9 @@ public class UserProfileActivity extends AppCompatActivity {
                         //String name=snapshot.child("name").getValue().toString();
                          User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                          stpc = currentUser2.getStepCounts();
+                         if(stpc.size()>10){
+
+                         }
                         if(!currentUser2.getImageurl().toString().equals("0")){
                             Picasso.get().load(currentUser2.getImageurl()).into(profilepic);
                         }

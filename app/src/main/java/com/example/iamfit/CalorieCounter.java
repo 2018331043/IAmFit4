@@ -116,7 +116,7 @@ public class CalorieCounter extends AppCompatActivity {
                             else{
                                 float weightToLoseDaily=(predictedDecreamentOfWeight-weight)/30;
                                 float caloriesCanBeTakenEveryDay=weightToLoseDaily*7777.78f;
-                                weightResult.setText("If you complete you Current Step goal for the next 30 days and take around "+caloriesCanBeTakenEveryDay+"calories everyday.Then you can achieve your goal");
+                                weightResult.setText("If you complete you Current Step goal for the next 30 days and take around "+String.format("%.2f",caloriesCanBeTakenEveryDay)+"calories everyday.Then you can achieve your goal");
                             }
 
 

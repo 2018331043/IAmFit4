@@ -2,6 +2,7 @@ package com.example.iamfit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.work.OneTimeWorkRequest;
@@ -52,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ImageButton settingsButton,medicinebutton,searchButton,calorieCounterButton,friendsButton,calorieCounter;
     private ProgressBar progressBarImage;
+    private CardView bmicard;
     public TextView stepCount,distanceCount,calorieCount,bmiView,Username;
     public DatabaseReference databaseReference;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
@@ -84,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
         friendsButton=findViewById(R.id.imageButtonConnection);
         bmiView=findViewById(R.id.textViewBMI);
         Username=findViewById(R.id.textView43);
+        //bmicard=findViewById(R.id.bmicard);
         UserImage=findViewById(R.id.profile_image_recyclerview_child);
         bmiView.setText("N/A");
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
@@ -127,6 +130,49 @@ public class HomeActivity extends AppCompatActivity {
                 WorkManager
                         .getInstance(HomeActivity.this)
                         .enqueue(myWorkRequest);*/
+            }
+        });
+        bmiView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(HomeActivity.this, " ", Toast.LENGTH_LONG).show();
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+                        float h8,w8;
+                        String weightn;
+                        weightn=currentUser2.getWeight();
+
+                        w8=(float)Float.parseFloat(weightn);
+                        h8=(float)Float.parseFloat(currentUser2.getHeight());
+                        float bmival=w8/(h8*h8*0.3048f*0.3048f);
+                        if(bmival<18.5f){
+                            Toast.makeText(HomeActivity.this, "You are underweight", Toast.LENGTH_LONG).show();
+                        }
+                        else if(bmival>=18.5f&&bmival<=24.9f){
+                            Toast.makeText(HomeActivity.this, "You have normal weight", Toast.LENGTH_LONG).show();
+                        }
+                        else if(bmival>=25f&&bmival<=29.9f){
+                            Toast.makeText(HomeActivity.this, "You are in the stage of pre-obesity try to maintain you calorie take", Toast.LENGTH_LONG).show();
+                        }
+                        else if(bmival>=30f&&bmival<=34.9f){
+                            Toast.makeText(HomeActivity.this, "You are in the first stage of obesity try to maintain you calorie take and do regular excercise", Toast.LENGTH_LONG).show();
+                        }
+                        else if(bmival>=35f&&bmival<=39.9f){
+                            Toast.makeText(HomeActivity.this, "You are in the second stage of obesity try to maintain you calorie take and do regular excercise", Toast.LENGTH_LONG).show();
+                        }
+                        else if(bmival>=40){
+                            Toast.makeText(HomeActivity.this, "You are in the thirf stage of obesity you should get in touch with a physical consultant ase soon as you can", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
         medicinebutton.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +228,16 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+                float h8,w8;
+                String weightn;
+                weightn=currentUser2.getWeight();
+
+                w8=(float)Float.parseFloat(weightn);
+                h8=(float)Float.parseFloat(currentUser2.getHeight());
+                float bmival=w8/(h8*h8*0.3048f*0.3048f);
+                bmiView.setText(String.format("%.2f",bmival));
+
+                //bmiView.setText(currentUser2.getWeight());
                 Username.setText(currentUser2.getName());
                 if(!currentUser2.getImageurl().equals("0")){
                     Picasso.get().load(currentUser2.getImageurl()).into(UserImage);
