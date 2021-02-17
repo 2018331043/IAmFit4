@@ -56,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Total Steps"
+                android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView4" />
@@ -68,6 +69,7 @@
                 android:layout_marginBottom="16dp"
                 android:text="0"
                 android:textColor="#000000"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Distance Covered"
+                android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView5" />
@@ -121,6 +124,7 @@
                 android:layout_marginTop="6dp"
                 android:text="0 m"
                 android:textColor="#000000"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -164,6 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="BMI Index"
+                android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView7" />
@@ -175,6 +180,7 @@
                 android:layout_marginTop="6dp"
                 android:text="0"
                 android:textColor="#000000"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -218,6 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Calorie Burned"
+                android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
@@ -229,6 +236,7 @@
                 android:layout_marginTop="6dp"
                 android:text="0 cal"
                 android:textColor="#000000"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -302,33 +310,39 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Calorie Counter"
         android:textColor="@android:color/white"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonProfile"
         app:layout_constraintStart_toStartOf="@+id/imageButtonProfile"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonProfile" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Notifications"
+        android:gravity="center"
+        android:text="Family Members"
         android:textColor="@android:color/white"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonGraph"
         app:layout_constraintStart_toStartOf="@+id/imageButtonGraph"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonGraph" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Find A Doctor"
         android:textColor="@android:color/white"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonConnection"
         app:layout_constraintStart_toStartOf="@+id/imageButtonConnection"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonConnection" />
@@ -358,11 +372,13 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="63dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Medicine Reminder"
         android:textColor="@android:color/white"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonMedicineReminder"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageButtonMedicineReminder"

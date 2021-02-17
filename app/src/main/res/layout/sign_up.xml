@@ -18,6 +18,7 @@
         android:text="Welcome to"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#FFFFFF"
+        android:textSize="34dp"
         android:textStyle="normal|bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +31,7 @@
         android:text="I'mFit"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#CD2C2C"
+        android:textSize="45dp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/textView11"
         app:layout_constraintStart_toEndOf="@+id/textView11"
@@ -66,6 +68,7 @@
                 android:ems="10"
                 android:hint="Name"
                 android:inputType="textPersonName"
+                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -81,6 +84,7 @@
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
+                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signUpPageName" />
@@ -96,6 +100,7 @@
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword"
+                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signUpPageEmail" />
@@ -111,6 +116,7 @@
                 android:ems="10"
                 android:hint="Weight"
                 android:inputType="number"
+                android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
@@ -121,7 +127,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:text="Gender : "
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:textStyle="normal|bold|italic"
                 app:layout_constraintStart_toEndOf="@+id/signUpPageWeight"
                 app:layout_constraintTop_toTopOf="@+id/signUpPageWeight" />
@@ -132,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Male"
+                android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/textView14"
                 app:layout_constraintTop_toTopOf="@+id/textView14" />
 
@@ -140,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female"
+                android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="@+id/signUpPageCheckBoxMale"
                 app:layout_constraintTop_toBottomOf="@+id/signUpPageCheckBoxMale" />
 
@@ -149,6 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:text="Others"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/signUpCheckBoxFemale"
                 app:layout_constraintTop_toBottomOf="@+id/signUpCheckBoxFemale" />
@@ -160,7 +169,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:text="Date Of Birth"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:textStyle="normal|bold|italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signUpPageWeight" />
@@ -181,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#232121"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:textStyle="normal|bold"
                 app:layout_constraintEnd_toEndOf="@+id/textView13"
                 app:layout_constraintStart_toStartOf="@+id/textView13"
@@ -197,7 +206,7 @@
                 android:drawableStart="@drawable/ic_baseline_height_24"
                 android:drawablePadding="5dp"
                 android:text="Height :"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signUpPagePassword" />
@@ -209,6 +218,7 @@
                 android:layout_marginStart="8dp"
                 android:ems="10"
                 android:inputType="number"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView21"
                 app:layout_constraintStart_toEndOf="@+id/textView21"
                 app:layout_constraintTop_toTopOf="@+id/textView21" />
@@ -219,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="feet"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextNumberHeightFt"
                 app:layout_constraintStart_toEndOf="@+id/editTextNumberHeightFt"
                 app:layout_constraintTop_toTopOf="@+id/editTextNumberHeightFt" />
@@ -231,6 +241,7 @@
                 android:layout_marginStart="8dp"
                 android:ems="10"
                 android:inputType="number"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView23"
                 app:layout_constraintStart_toEndOf="@+id/textView23"
                 app:layout_constraintTop_toTopOf="@+id/textView23" />
@@ -241,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="inches"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextNumberInches"
                 app:layout_constraintStart_toEndOf="@+id/editTextNumberInches"
                 app:layout_constraintTop_toTopOf="@+id/editTextNumberInches" />
@@ -265,10 +276,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="SignUp"
-        android:elevation="20dp"
         android:drawableStart="@drawable/ic_baseline_lock_open_24"
         android:drawablePadding="5dp"
+        android:elevation="20dp"
+        android:text="SignUp"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2" />
@@ -280,6 +292,7 @@
         android:layout_marginBottom="16dp"
         android:text="Already have an account? Login here."
         android:textColor="#FFFFFF"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -33,6 +33,7 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView30"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView30"
@@ -47,7 +48,7 @@
                 android:drawableStart="@drawable/ic_baseline_height_24"
                 android:drawablePadding="5dp"
                 android:text="Height :"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView30" />
@@ -59,6 +60,7 @@
                 android:layout_marginStart="8dp"
                 android:ems="10"
                 android:inputType="number"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView25"
                 app:layout_constraintStart_toEndOf="@+id/textView25"
                 app:layout_constraintTop_toTopOf="@+id/textView25" />
@@ -69,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="feet"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName5"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName5"
                 app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName5" />
@@ -81,6 +83,7 @@
                 android:layout_marginStart="8dp"
                 android:ems="10"
                 android:inputType="number"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView26"
                 app:layout_constraintStart_toEndOf="@+id/textView26"
                 app:layout_constraintTop_toTopOf="@+id/textView26" />
@@ -91,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="inches"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextNumber"
                 app:layout_constraintStart_toEndOf="@+id/editTextNumber"
                 app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
@@ -106,7 +109,7 @@
                 android:drawableStart="@drawable/ic_baseline_line_weight_24"
                 android:drawablePadding="5dp"
                 android:text="Weight :"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +122,7 @@
                 android:layout_marginStart="8dp"
                 android:ems="10"
                 android:inputType="number"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView28"
                 app:layout_constraintStart_toEndOf="@+id/textView28"
                 app:layout_constraintTop_toTopOf="@+id/textView28" />
@@ -129,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="kg"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextNumber2"
                 app:layout_constraintStart_toEndOf="@+id/editTextNumber2"
                 app:layout_constraintTop_toTopOf="@+id/editTextNumber2" />
@@ -143,7 +147,7 @@
                 android:drawableStart="@drawable/ic_sharp_person_24"
                 android:drawablePadding="5dp"
                 android:text="Name :"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -155,12 +159,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Save Changes"
         android:background="@drawable/custom_button_profile"
         android:backgroundTint="#E42D2D"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:text="Save Changes"
         android:textColor="#FFFFFF"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView11" />
