@@ -235,6 +235,10 @@ public class HomeActivity extends AppCompatActivity {
                     progressBarImage.setVisibility(View.INVISIBLE);
                     Toast.makeText(HomeActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
                 }
+                else{
+                    progressBarImage.setVisibility(View.INVISIBLE);
+                }
+
             }
 
             @Override
