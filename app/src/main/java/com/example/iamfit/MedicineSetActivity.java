@@ -44,6 +44,9 @@ public class MedicineSetActivity extends AppCompatActivity {
     public ArrayList<Integer> listOfTimesM=new ArrayList<>();
     private RecyclerView recyclerViewTimeShow;
     int timeHour,timeMinute;
+    Calendar calender =Calendar.getInstance();
+    final int hour=calender.get(Calendar.HOUR_OF_DAY);
+    final int min=calender.get(Calendar.MINUTE);
     CheckBox stomach;
     ImageButton backButton;
     @Override
@@ -120,7 +123,8 @@ public class MedicineSetActivity extends AppCompatActivity {
                         }
                     },12,0,false
                 );
-                timePickerDialog.updateTime(timeHour,timeMinute);
+                timePickerDialog.updateTime(hour,min);
+               // timePickerDialog.updateTime(timeHour,timeMinute);
 
                 timePickerDialog.show();
             }

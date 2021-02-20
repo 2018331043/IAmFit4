@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     private ProgressBar progressBarImage;
     private CardView bmicard;
     public TextView stepCount,distanceCount,calorieCount,bmiView,Username;
-    public DatabaseReference databaseReference;
+    public DatabaseReference databaseReference,databaseReference2,databaseReference3;
     private Integer stepcount =0,temp=0,temp2=0,temp1=0,iter;
     double previous_step=0;
     public Calendar time;
@@ -90,6 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         UserImage=findViewById(R.id.profile_image_recyclerview_child);
         bmiView.setText("N/A");
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference2=FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference3=FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("imageurl");
         time=Calendar.getInstance();
         tstart=time.getTime();
         sf=new SimpleDateFormat("dd");
@@ -224,6 +226,26 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         //Username.setText(FirebaseAuth.getInstance().getCurrentUser().get);
+        databaseReference3.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String imageurlofUser=dataSnapshot.getValue(String.class);
+                if(!imageurlofUser.equals("0")){
+                    Picasso.get().load(imageurlofUser).into(UserImage);
+                    progressBarImage.setVisibility(View.INVISIBLE);
+                    Toast.makeText(HomeActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    progressBarImage.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -239,10 +261,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 //bmiView.setText(currentUser2.getWeight());
                 Username.setText(currentUser2.getName());
-                if(!currentUser2.getImageurl().equals("0")){
+                /*if(!currentUser2.getImageurl().equals("0")){
                     Picasso.get().load(currentUser2.getImageurl()).into(UserImage);
                     progressBarImage.setVisibility(View.INVISIBLE);
-                }
+                }*/
                 ArrayList<StepCount> stpc = currentUser2.getStepCounts();
                 SimpleDateFormat datef;
                 Date calendar = Calendar.getInstance().getTime();

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">I Am Fit</string>
+    <string name="app_info">This app was made as a part of the under grad course on Object oriented programming. \n\nIt is an app which is mainly targeted for the elderly people on our society suffering from different health issues.\n\n It has features like tracking step counts using mobile\'s accelerometer, reminder for medicine and keeping a track of all the medicines that one has taken and has yet to take, finding doctors around oneself based on theire geo location and finding the specialized doctor which is the closest.It has a moderator feature who can keep track of these features for one. Still some features like medical history, doctor visitation etc have to be added soon.</string>
 </resources>

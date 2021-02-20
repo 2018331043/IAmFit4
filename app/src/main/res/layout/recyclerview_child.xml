@@ -30,7 +30,7 @@
         android:fontFamily="@font/acme"
         android:text="Ahmed Iftekher"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/profile_image_recyclerview_child"
         app:layout_constraintTop_toTopOf="@+id/profile_image_recyclerview_child" />
@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Age : 22"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView37"
         app:layout_constraintTop_toBottomOf="@+id/textView37" />
