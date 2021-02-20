@@ -199,12 +199,14 @@ public class ParentSearchResultProfileActivity extends AppCompatActivity {
                         }
                         if(currentUser.getParent().equals("0")){
                             Toast.makeText(ParentSearchResultProfileActivity.this, "Hello ", Toast.LENGTH_SHORT).show();
+
                             ArrayList<String> children=searchedUser.getChilds();
                             if(children.size()==1&&children.get(0).equals("0")){
                                 children.clear();
                             }
                             children.add(uid);
                             databaseReference.child("Users").child(user).child("childs").setValue(children);
+                            databaseReference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").setValue(user);
                         }
                     }
 

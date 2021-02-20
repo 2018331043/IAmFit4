@@ -41,6 +41,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
     private ImageButton imageButton;
     private TextView textView;
     private DatabaseReference databaseReference;
+    private TextView parentName,parentAge;
     private List<RecyclerViewChildModelClass> childList=new ArrayList<>();
 
     private Dialog dialogChild,dialogStepGoal;
@@ -51,7 +52,8 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
         setContentView(R.layout.activity_parent_child_list);
         textView=(TextView)findViewById(R.id.textView31);
         imageButton=(ImageButton)findViewById(R.id.imageButton3);
-
+        parentName=findViewById(R.id.textView34);
+        parentAge=findViewById(R.id.textView35);
 
 
         dialogChild=new Dialog(ParentChildListActivity.this);
@@ -102,6 +104,11 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User currentUser=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                 ArrayList<String> uids=currentUser.getChilds();
+                if(!currentUser.getParent().equals("0")){
+                    User parent=dataSnapshot.child(currentUser.getParent()).getValue(User.class);
+                    parentName.setText(parent.getName());
+                   // parentAge.setText(Calendar.getInstance().YEAR-parent.getYear());
+                }
 
                 if(uids.size()!=1||!uids.get(0).equals("0")){
                     //childList.clear();
