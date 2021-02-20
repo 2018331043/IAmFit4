@@ -75,18 +75,19 @@ public class UserProfileActivity extends AppCompatActivity {
                         //String name=snapshot.child("name").getValue().toString();
                          User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                          stpc = currentUser2.getStepCounts();
-                         if(stpc.size()>10){
+                         /*if(stpc.size()>10){
                              ArrayList<StepCount> stpc2=new ArrayList<StepCount>();
                              int temp=0;
                              for(int i=stpc.size()-11;i<stpc.size();i++){
-                                 stpc2.set(temp,stpc.get(i));
+                                 stpc2.add(stpc.get(i));
+                                 //stpc2.set(temp,stpc.get(i));
                                  temp++;
                              }
                              for(int i=0;i<stpc2.size();i++){
                                  stpc.set(i,stpc2.get(i));
                                  //temp++;
                              }
-                         }
+                         }*/
                         if(!currentUser2.getImageurl().toString().equals("0")){
                             Picasso.get().load(currentUser2.getImageurl()).into(profilepic);
                         }
