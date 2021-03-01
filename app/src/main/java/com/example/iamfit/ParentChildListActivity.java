@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ import java.util.List;
 public class ParentChildListActivity extends AppCompatActivity implements RecyclerViewChildAdapter.ResultListener {
 
     private RecyclerView recyclerView;
+    private ProgressBar progressBarParent,progressBarChild,progressBarChildD;
     private ImageButton imageButton;
     private TextView textView;
     public static final String EXTRA_USERID = "com.example.iamfit.EXTRA_USRID";
@@ -59,7 +61,8 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
         parentName=findViewById(R.id.textView34);
         parentAge=findViewById(R.id.textView35);
         parentprofilepic=findViewById(R.id.profile_image_recyclerview_child);
-
+        progressBarParent=findViewById(R.id.progressBar2);
+        progressBarParent.setVisibility(View.VISIBLE);
 
         dialogChild=new Dialog(ParentChildListActivity.this);
         dialogChild.setContentView(R.layout.custom_dialog_1);
@@ -120,13 +123,17 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                 if(!currentUser.getParent().equals("0")) {
                     String imageurlofUser = dataSnapshot.child(currentUser.getParent()).child("imageurl").getValue(String.class);
                     //Toast.makeText(ParentChildListActivity.this,"Hello : "+imageurlofUser, Toast.LENGTH_LONG).show();
+
                     if (!imageurlofUser.equals("0")) {
                         Picasso.get().load(imageurlofUser).into(parentprofilepic);
-                        //progressBarImage.setVisibility(View.INVISIBLE);
+                        progressBarParent.setVisibility(View.INVISIBLE);
                         //Toast.makeText(ParentChildListActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
                     } else {
-                        //progressBarImage.setVisibility(View.INVISIBLE);
+                        progressBarParent.setVisibility(View.INVISIBLE);
                     }
+                }
+                else{
+                    progressBarParent.setVisibility(View.INVISIBLE);
                 }
                 if(uids.size()!=1||!uids.get(0).equals("0")){
                     //childList.clear();
@@ -181,7 +188,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
     @Override
     public void onResultClick (final int positon){
         Integer s = positon;
-        Toast.makeText(ParentChildListActivity.this, "Clicked "+s, Toast.LENGTH_LONG).show();
+        //Toast.makeText(ParentChildListActivity.this, "Clicked "+s, Toast.LENGTH_LONG).show();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -193,6 +200,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                 AlertDialog.Builder dialogBuilder=new AlertDialog.Builder(ParentChildListActivity.this);
                 View dialogView= getLayoutInflater().inflate(R.layout.custom_dialog_1,null);
                 ImageView childPic= dialogView.findViewById(R.id.profile_image_recyclerview_child);
+                progressBarChildD=dialogView.findViewById(R.id.progressBar3);
                 String imageurlofUser=dataSnapshot.child(chilUid).child("imageurl").getValue(String.class);
                 //Toast.makeText(ParentChildListActivity.this,"Hello : "+imageurlofUser, Toast.LENGTH_LONG).show();
 
@@ -203,13 +211,14 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog=dialogBuilder.create();
                 alertDialog.show();
+                progressBarChildD.setVisibility(View.VISIBLE);
                 if(!imageurlofUser.equals("0")){
                     Picasso.get().load(imageurlofUser).into(childPic);
-                    //progressBarImage.setVisibility(View.INVISIBLE);
+                    progressBarChildD.setVisibility(View.INVISIBLE);
                     //Toast.makeText(ParentChildListActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    //progressBarImage.setVisibility(View.INVISIBLE);
+                    progressBarChildD.setVisibility(View.INVISIBLE);
                 }
                 nameofChild.setText(childUser.getName());
                 Calendar calender =Calendar.getInstance();
