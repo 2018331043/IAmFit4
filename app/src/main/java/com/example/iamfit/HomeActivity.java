@@ -233,7 +233,7 @@ public class HomeActivity extends AppCompatActivity {
                 if(!imageurlofUser.equals("0")){
                     Picasso.get().load(imageurlofUser).into(UserImage);
                     progressBarImage.setVisibility(View.INVISIBLE);
-                    Toast.makeText(HomeActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(HomeActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
                 }
                 else{
                     progressBarImage.setVisibility(View.INVISIBLE);

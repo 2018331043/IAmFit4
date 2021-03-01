@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,9 +42,11 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
     private RecyclerView recyclerView;
     private ImageButton imageButton;
     private TextView textView;
+    public static final String EXTRA_USERID = "com.example.iamfit.EXTRA_USRID";
     private DatabaseReference databaseReference;
     private TextView parentName,parentAge;
     private List<RecyclerViewChildModelClass> childList=new ArrayList<>();
+    private ImageView parentprofilepic;
 
     private Dialog dialogChild,dialogStepGoal;
 
@@ -54,6 +58,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
         imageButton=(ImageButton)findViewById(R.id.imageButton3);
         parentName=findViewById(R.id.textView34);
         parentAge=findViewById(R.id.textView35);
+        parentprofilepic=findViewById(R.id.profile_image_recyclerview_child);
 
 
         dialogChild=new Dialog(ParentChildListActivity.this);
@@ -107,9 +112,22 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                 if(!currentUser.getParent().equals("0")){
                     User parent=dataSnapshot.child(currentUser.getParent()).getValue(User.class);
                     parentName.setText(parent.getName());
-                   // parentAge.setText(Calendar.getInstance().YEAR-parent.getYear());
+                    Calendar calender =Calendar.getInstance();
+                    int year=calender.get(Calendar.YEAR);
+                    int age =year-parent.getYear();
+                    parentAge.setText("Age: "+age);
                 }
-
+                if(!currentUser.getParent().equals("0")) {
+                    String imageurlofUser = dataSnapshot.child(currentUser.getParent()).child("imageurl").getValue(String.class);
+                    //Toast.makeText(ParentChildListActivity.this,"Hello : "+imageurlofUser, Toast.LENGTH_LONG).show();
+                    if (!imageurlofUser.equals("0")) {
+                        Picasso.get().load(imageurlofUser).into(parentprofilepic);
+                        //progressBarImage.setVisibility(View.INVISIBLE);
+                        //Toast.makeText(ParentChildListActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
+                    } else {
+                        //progressBarImage.setVisibility(View.INVISIBLE);
+                    }
+                }
                 if(uids.size()!=1||!uids.get(0).equals("0")){
                     //childList.clear();
 
@@ -123,6 +141,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                                 String tempName=snapshot.child("name").getValue().toString();
                                 String birthDay=snapshot.child("year").getValue().toString();
                                 Calendar calendar= Calendar.getInstance();
+
                                 Integer year=calendar.get(Calendar.YEAR);
 
                                 int temped=1;
@@ -170,24 +189,44 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                 User currentUser=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                 final String chilUid=currentUser.getChilds().get(positon);
                 final User childUser= dataSnapshot.child(chilUid).getValue(User.class);
+
                 AlertDialog.Builder dialogBuilder=new AlertDialog.Builder(ParentChildListActivity.this);
                 View dialogView= getLayoutInflater().inflate(R.layout.custom_dialog_1,null);
+                ImageView childPic= dialogView.findViewById(R.id.profile_image_recyclerview_child);
+                String imageurlofUser=dataSnapshot.child(chilUid).child("imageurl").getValue(String.class);
+                //Toast.makeText(ParentChildListActivity.this,"Hello : "+imageurlofUser, Toast.LENGTH_LONG).show();
+
+                TextView nameofChild=dialogView.findViewById(R.id.textView49);
                 Button setStepGoal= (Button)dialogView.findViewById(R.id.button7);
                 Button profileView= (Button)dialogView.findViewById(R.id.button8);
+                TextView ageofChild=dialogView.findViewById(R.id.textView50);
                 dialogBuilder.setView(dialogView);
-                AlertDialog alertDialog=dialogBuilder.create();
+                final AlertDialog alertDialog=dialogBuilder.create();
                 alertDialog.show();
+                if(!imageurlofUser.equals("0")){
+                    Picasso.get().load(imageurlofUser).into(childPic);
+                    //progressBarImage.setVisibility(View.INVISIBLE);
+                    //Toast.makeText(ParentChildListActivity.this,"Hello : ", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    //progressBarImage.setVisibility(View.INVISIBLE);
+                }
+                nameofChild.setText(childUser.getName());
+                Calendar calender =Calendar.getInstance();
+                int year=calender.get(Calendar.YEAR);
+                int age =year-childUser.getYear();
+                ageofChild.setText("Age: "+age);
                 setStepGoal.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(ParentChildListActivity.this, "Clicked on Layout "+positon, Toast.LENGTH_LONG).show();
+                       // Toast.makeText(ParentChildListActivity.this, "Clicked on Layout "+positon, Toast.LENGTH_LONG).show();
                         View setgoalDialogView= getLayoutInflater().inflate(R.layout.custom_dialog_2,null);
                         final EditText goal=(EditText) setgoalDialogView.findViewById(R.id.editTextNumber3);
 
                         Button confirmation=(Button) setgoalDialogView.findViewById(R.id.button9);
                         AlertDialog.Builder setGoalBuilder=new AlertDialog.Builder(ParentChildListActivity.this);
                         setGoalBuilder.setView(setgoalDialogView);
-                        AlertDialog goalDialog = setGoalBuilder.create();
+                        final AlertDialog goalDialog = setGoalBuilder.create();
                         goalDialog.show();
                         confirmation.setOnClickListener(new View.OnClickListener(){
                             @Override
@@ -201,8 +240,20 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
                                 }
                                 childUser.setCurrentStepGoal(goalin);
                                 databaseReference.child(chilUid).setValue(childUser);
+                                goalDialog.dismiss();
                             }
                         });
+                        alertDialog.dismiss();
+
+                    }
+                });
+                profileView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ParentChildListActivity.this, ParentSearchResultProfileActivity.class);
+                        intent.putExtra(EXTRA_USERID, chilUid);
+                        startActivity(intent);
+                        alertDialog.dismiss();
                     }
                 });
 
