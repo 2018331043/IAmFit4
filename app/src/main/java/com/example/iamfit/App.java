@@ -1,5 +1,7 @@
 package com.example.iamfit;
-
+/*
+Notiifcation channel for medicine reminder notifications
+*/
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,6 +15,7 @@ public class App extends Application {
         createNotificationChannels();
     }
     private void createNotificationChannels(){
+        //it creates a notification channel base on the build version of the app on the device if it's greater than oreo
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             NotificationChannel notificationChannel=new NotificationChannel(
                     MEDICINE_TAKE,

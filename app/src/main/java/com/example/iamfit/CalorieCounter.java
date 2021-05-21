@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//It is the calorie counter activity that counts the amount of callories one should take everyday to lose a certain amount of weight in one month
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,13 +41,9 @@ public class CalorieCounter extends AppCompatActivity {
             }
         });
         weightResult=findViewById(R.id.textView47);
-        //graphResult=findViewById(R.id.graphResult);
         weightInput=findViewById(R.id.weightInput);
         calculate=findViewById(R.id.button6);
-        //calorieInput=findViewById(R.id.calorieInput);
-       // User currentUser;
         databaseReference= FirebaseDatabase.getInstance().getReference("Users");
-        //currentUser=databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +57,7 @@ public class CalorieCounter extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             currentUser=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
-                            //User temp=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
+
 
                             int weight=0,temp;
                             temp=0;
@@ -109,7 +105,7 @@ public class CalorieCounter extends AppCompatActivity {
                             float totalCaloriesBurned=caloriesBurnedViaMBR+caloriesWillBeBurnedViaSteps;
                             float predictedDecreamentOfWeight=totalCaloriesBurned/7777.78f;
                             float pDOWInRoundFigure= (float) Math.ceil(predictedDecreamentOfWeight);
-                            Toast.makeText(CalorieCounter.this, "Clicked " + pDOWInRoundFigure, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(CalorieCounter.this, "Clicked " + pDOWInRoundFigure, Toast.LENGTH_SHORT).show();
                             if(predictedDecreamentOfWeight<weight){
                                 weightResult.setText("It is not possible to lose that much weight in 30 days");
                             }
@@ -132,15 +128,6 @@ public class CalorieCounter extends AppCompatActivity {
             }
         });
 
-        //Toast.makeText(CalorieCounter.this, "Clicked " + temp.getName(), Toast.LENGTH_SHORT).show();
     }
-    /*public Integer stringToInteger(String value){
-        int weight=0,temp;
-        temp=0;
-        for(int i=value.length()-1;i>=0;i--){
-            weight +=(value.toCharArray()[i]-48) * Math.pow(10,temp);
-            temp++;
-        }
-        return  weight;
-    }*/
+
 }

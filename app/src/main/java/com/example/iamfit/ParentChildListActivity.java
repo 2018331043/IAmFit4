@@ -192,7 +192,7 @@ public class ParentChildListActivity extends AppCompatActivity implements Recycl
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(ParentChildListActivity.this, "Clicked in"+positon, Toast.LENGTH_LONG).show();
+                //Toast.makeText(ParentChildListActivity.this, "Clicked in"+positon, Toast.LENGTH_LONG).show();
                 User currentUser=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                 final String chilUid=currentUser.getChilds().get(positon);
                 final User childUser= dataSnapshot.child(chilUid).getValue(User.class);

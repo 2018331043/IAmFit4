@@ -53,7 +53,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
         //it++;
        // editor.putInt("Iterator",it);
        // editor.commit();
-        Toast.makeText(context,"Hello : "+index+"Size : "+mediciness.size(), Toast.LENGTH_LONG).show();
+       // Toast.makeText(context,"Hello : "+index+"Size : "+mediciness.size(), Toast.LENGTH_LONG).show();
         Log.v("Debuging.........", "index=" + index);
 
 

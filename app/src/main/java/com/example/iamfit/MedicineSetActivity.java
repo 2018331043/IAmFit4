@@ -231,9 +231,10 @@ public class MedicineSetActivity extends AppCompatActivity {
                         intent.putExtra("Iterator",ts.toString());
                         PendingIntent pendingIntent = PendingIntent
                             .getBroadcast(MedicineSetActivity.this, medicine.getIndex(), intent, 0);
-                        alarmManager.set(AlarmManager.RTC_WAKEUP,now+medicine.getDif()*60*1000
+                        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,now+medicine.getDif()*60*1000
                             ,pendingIntent);
-                        Toast.makeText(MedicineSetActivity.this, "Medicine Reminder Set Index No" +medicine.getIndex(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MedicineSetActivity.this, "Medicine Reminder Set Index No" +medicine.getIndex(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MedicineSetActivity.this, "Medicine Reminder Set " + medicine.getDif() +" minutes later", Toast.LENGTH_LONG).show();
                 }
 
                 /*temp = 1;

@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//Model class for user to create their information and save it to the database
 import java.util.ArrayList;
 
 public class User {

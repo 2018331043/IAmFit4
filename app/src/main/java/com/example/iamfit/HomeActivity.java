@@ -74,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //maping all the variable to their respective fields via id
         settingsButton = findViewById(R.id.imageButtonHomeSettings);
         //progressbar
         progressBarImage=(ProgressBar)findViewById(R.id.progressBarHomeImage);
@@ -86,9 +87,9 @@ public class HomeActivity extends AppCompatActivity {
         friendsButton=findViewById(R.id.imageButtonConnection);
         bmiView=findViewById(R.id.textViewBMI);
         Username=findViewById(R.id.textView43);
-        //bmicard=findViewById(R.id.bmicard);
         UserImage=findViewById(R.id.profile_image_recyclerview_child);
         bmiView.setText("N/A");
+        //initiazing the databases
         databaseReference=FirebaseDatabase.getInstance().getReference("Users");
         databaseReference2=FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference3=FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("imageurl");
@@ -107,11 +108,7 @@ public class HomeActivity extends AppCompatActivity {
         fetchLastLocation();
         SharedPreferences sharedPreferences2=getSharedPreferences("DateSaver", Context.MODE_PRIVATE);
         curDate=sharedPreferences2.getString("curDate",null);
-
-
-        /*WorkRequest request = new OneTimeWorkRequest.Builder(FooWorker.class).build();
- workManager.enqueue(request);
- workManager.cancelWorkById(request.getId());*/
+        //implematation of the workmanager to access whether the users steps goal was changed by his/her parent
         PeriodicWorkRequest saveRequest =
                 new PeriodicWorkRequest.Builder(NewStepGoalNotificationChecker.class, 15, TimeUnit.MINUTES)
                         // Constraints
@@ -125,19 +122,12 @@ public class HomeActivity extends AppCompatActivity {
                 Intent i = new Intent(HomeActivity.this, ParentSearchActivity.class);
                 Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),android.R.anim.fade_in,android.R.anim.fade_out).toBundle();
                 startActivity(i,bundle);
-                /*WorkRequest myWorkRequest =
-                        new OneTimeWorkRequest.Builder(NewStepGoalNotificationChecker.class)
-                                .setInitialDelay(20, TimeUnit.SECONDS)
-                                .build();
-                WorkManager
-                        .getInstance(HomeActivity.this)
-                        .enqueue(myWorkRequest);*/
             }
         });
+        //showing a toast if the user clicks on their bmi index stating their level of obesity
         bmiView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(HomeActivity.this, " ", Toast.LENGTH_LONG).show();
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -177,6 +167,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        //map the activities for the menu buttons
         medicinebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,7 +216,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i,bundle);
             }
         });
-        //Username.setText(FirebaseAuth.getInstance().getCurrentUser().get);
+        //access the database to shwo the image at the profile pic option
         databaseReference3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -246,25 +237,20 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        //accessing the database to set the values for the step goal related informations
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //getting all the relevant information from the database to populate all the relevant fields
                 User currentUser2 = dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
                 float h8,w8;
                 String weightn;
                 weightn=currentUser2.getWeight();
-
                 w8=(float)Float.parseFloat(weightn);
                 h8=(float)Float.parseFloat(currentUser2.getHeight());
                 float bmival=w8/(h8*h8*0.3048f*0.3048f);
                 bmiView.setText(String.format("%.2f",bmival));
-
-                //bmiView.setText(currentUser2.getWeight());
                 Username.setText(currentUser2.getName());
-                /*if(!currentUser2.getImageurl().equals("0")){
-                    Picasso.get().load(currentUser2.getImageurl()).into(UserImage);
-                    progressBarImage.setVisibility(View.INVISIBLE);
-                }*/
                 ArrayList<StepCount> stpc = currentUser2.getStepCounts();
                 SimpleDateFormat datef;
                 Date calendar = Calendar.getInstance().getTime();
@@ -272,6 +258,7 @@ public class HomeActivity extends AppCompatActivity {
                 String curD;
                 curD = datef.format(calendar);
                 iter=stpc.size()-1;
+                //getting the current step goal based on the step set by the users parent from the database
                 if (!stpc.get(stpc.size() - 1).getDate().toString().equals(curD)) {
                     StepCount temp=new StepCount(curD,0,currentUser2.getCurrentStepGoal());
                     stpc.add(temp);
@@ -298,6 +285,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        //sensor access and creating the step realted data form the sensor values of accelerometer
         SensorManager sensorManager= (SensorManager) getSystemService(SENSOR_SERVICE);
         final Sensor sensor =sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         final SensorEventListener stepCounter=new SensorEventListener() {
@@ -370,6 +358,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+    //Ask for permission from the user to acces their location
     private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
