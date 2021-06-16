@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//The medicine list activity is an activity that shows all the pending medicines that a user has yet to take
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;

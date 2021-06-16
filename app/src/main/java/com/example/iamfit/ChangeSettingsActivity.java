@@ -1,5 +1,7 @@
 package com.example.iamfit;
-//The change setting activity to update one's info
+/*
+* An activity to let the user change his/her information throuch a form
+* */
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;

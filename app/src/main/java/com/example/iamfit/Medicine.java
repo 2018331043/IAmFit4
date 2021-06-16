@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//A sample class to create medicine and all medicine related data and store them
 public class Medicine {
    private int dif,hour,minute,remainingDays,checkBoxInt,Index;
     private Boolean taken;

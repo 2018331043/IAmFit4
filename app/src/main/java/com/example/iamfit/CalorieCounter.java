@@ -1,5 +1,5 @@
 package com.example.iamfit;
-//It is the calorie counter activity that counts the amount of callories one should take everyday to lose a certain amount of weight in one month
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
-
+/*
+* An activity that users can enter to check how much calories does he/she may have to take to maintain or lose a certain number of weight
+* */
 public class CalorieCounter extends AppCompatActivity {
     private ImageButton imageButton;
     private TextView weightResult,graphResult;
@@ -34,16 +36,20 @@ public class CalorieCounter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calorie_counter);
         imageButton=(ImageButton)findViewById(R.id.imageButton4);
+        //maping the backpress button to go to back
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+        //accessing the necessary views from the xml file
         weightResult=findViewById(R.id.textView47);
         weightInput=findViewById(R.id.weightInput);
         calculate=findViewById(R.id.button6);
         databaseReference= FirebaseDatabase.getInstance().getReference("Users");
+        //currentUser=databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        //seting up the on click listener to calculate button
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +63,7 @@ public class CalorieCounter extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             currentUser=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
-
+                            //User temp=dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue(User.class);
 
                             int weight=0,temp;
                             temp=0;
@@ -105,7 +111,7 @@ public class CalorieCounter extends AppCompatActivity {
                             float totalCaloriesBurned=caloriesBurnedViaMBR+caloriesWillBeBurnedViaSteps;
                             float predictedDecreamentOfWeight=totalCaloriesBurned/7777.78f;
                             float pDOWInRoundFigure= (float) Math.ceil(predictedDecreamentOfWeight);
-                            //Toast.makeText(CalorieCounter.this, "Clicked " + pDOWInRoundFigure, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CalorieCounter.this, "Clicked " + pDOWInRoundFigure, Toast.LENGTH_SHORT).show();
                             if(predictedDecreamentOfWeight<weight){
                                 weightResult.setText("It is not possible to lose that much weight in 30 days");
                             }
@@ -128,6 +134,7 @@ public class CalorieCounter extends AppCompatActivity {
             }
         });
 
+        //Toast.makeText(CalorieCounter.this, "Clicked " + temp.getName(), Toast.LENGTH_SHORT).show();
     }
 
 }
