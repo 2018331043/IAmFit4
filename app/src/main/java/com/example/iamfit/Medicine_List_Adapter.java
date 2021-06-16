@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//The adapter class to use to populate the recycler view in medicine list
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//The mainactivity changed in to the splash screen to navigate a user to home or login page
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;

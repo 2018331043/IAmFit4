@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//a sample class to create a doctor in the firebase database using the relevant information
 public class Doctor {
     private String AppointmentNumber,Name,Speciality;
     private float Lat,Longi;

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 package com.example.iamfit;
-
+//A beta version for finding doctors nearby using gps
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+/* a simple activity to set the about us page showing the developers information*/
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;

@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//The logn activity through which a user logs into their account
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;

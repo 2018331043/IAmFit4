@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
-
+/*
+* An activity that users can enter to check how much calories does he/she may have to take to maintain or lose a certain number of weight
+* */
 public class CalorieCounter extends AppCompatActivity {
     private ImageButton imageButton;
     private TextView weightResult,graphResult;
@@ -34,20 +36,20 @@ public class CalorieCounter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calorie_counter);
         imageButton=(ImageButton)findViewById(R.id.imageButton4);
+        //maping the backpress button to go to back
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+        //accessing the necessary views from the xml file
         weightResult=findViewById(R.id.textView47);
-        //graphResult=findViewById(R.id.graphResult);
         weightInput=findViewById(R.id.weightInput);
         calculate=findViewById(R.id.button6);
-        //calorieInput=findViewById(R.id.calorieInput);
-       // User currentUser;
         databaseReference= FirebaseDatabase.getInstance().getReference("Users");
         //currentUser=databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        //seting up the on click listener to calculate button
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,13 +136,5 @@ public class CalorieCounter extends AppCompatActivity {
 
         //Toast.makeText(CalorieCounter.this, "Clicked " + temp.getName(), Toast.LENGTH_SHORT).show();
     }
-    /*public Integer stringToInteger(String value){
-        int weight=0,temp;
-        temp=0;
-        for(int i=value.length()-1;i>=0;i--){
-            weight +=(value.toCharArray()[i]-48) * Math.pow(10,temp);
-            temp++;
-        }
-        return  weight;
-    }*/
+
 }

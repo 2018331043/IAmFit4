@@ -1,5 +1,5 @@
 package com.example.iamfit;
-
+//a sample class to create a medicine and add it as the users medicine to take
 import android.widget.CheckBox;
 
 public class medicinePageModelClass {
