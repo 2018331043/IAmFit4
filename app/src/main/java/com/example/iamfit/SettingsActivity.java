@@ -186,7 +186,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     downLoadUrl = task.getResult().toString();
                                     databaseReference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("imageurl").setValue(downLoadUrl);
-                                    Toast.makeText(SettingsActivity.this, "Hi "+downLoadUrl, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(SettingsActivity.this, "Hi "+downLoadUrl, Toast.LENGTH_LONG).show();
 
                                 }
                             }

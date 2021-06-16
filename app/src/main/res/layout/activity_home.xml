@@ -374,13 +374,13 @@
         android:id="@+id/textView8"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="Medicine Reminder"
         android:textColor="@android:color/white"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonMedicineReminder"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="@+id/imageButtonMedicineReminder"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonMedicineReminder" />
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,13 +53,15 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
         de.hdodenhof.circleimageview.CircleImageView imageView;
         TextView textView1,textView2;
         RecyclerViewChildAdapter.ResultListener onResultListener1;
+        ProgressBar userProgressBar;
 
         public ViewHolder1(@NonNull View itemView,RecyclerViewChildAdapter.ResultListener  onResultListener1) {
             super(itemView);
             textView1=itemView.findViewById(R.id.textView37);
             textView2=itemView.findViewById(R.id.textView38);
             imageView=itemView.findViewById(R.id.profile_image_recyclerview_child);
-
+            userProgressBar=itemView.findViewById(R.id.progressBar);
+            userProgressBar.setVisibility(View.VISIBLE);
             itemView.setOnClickListener(this);
             this.onResultListener1=onResultListener1;
         }
@@ -66,6 +69,9 @@ public class RecyclerViewChildAdapter extends RecyclerView.Adapter<RecyclerViewC
             //imageView.setImageResource(resource);
             if(!resource.equals("0")){
                 Picasso.get().load(resource).into(imageView);
+                userProgressBar.setVisibility(View.INVISIBLE);
+            }else{
+                userProgressBar.setVisibility(View.INVISIBLE);
             }
             textView1.setText(a);
             textView2.setText(b);
